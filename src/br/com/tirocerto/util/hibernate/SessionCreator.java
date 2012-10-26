@@ -1,4 +1,4 @@
-package br.com.tirocerto.factory;
+package br.com.tirocerto.util.hibernate;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -6,11 +6,12 @@ import javax.annotation.PreDestroy;
 import org.hibernate.Session;
 
 import br.com.caelum.vraptor.ioc.Component;
+import br.com.caelum.vraptor.ioc.ComponentFactory;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 
 @Component
 @RequestScoped
-public class SessionCreator {
+public class SessionCreator implements ComponentFactory<Session> {
 	private final SessionFactoryCreator sessionFactoryCreator;
 	private Session session;
 	

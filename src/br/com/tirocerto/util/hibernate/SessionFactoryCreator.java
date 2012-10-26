@@ -1,4 +1,4 @@
-package br.com.tirocerto.factory;
+package br.com.tirocerto.util.hibernate;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
