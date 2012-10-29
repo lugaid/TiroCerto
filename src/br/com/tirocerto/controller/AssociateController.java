@@ -1,5 +1,7 @@
 package br.com.tirocerto.controller;
 
+import java.util.Map;
+
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -7,6 +9,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.Validator;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.model.Associate;
 
@@ -15,15 +18,21 @@ import br.com.tirocerto.model.Associate;
 public class AssociateController {
 	private Result result;
 	private AssociateDAO associateDAO;
+	private Validator validator;
 	
-	public AssociateController(Result result, AssociateDAO associateDAO) {
+	public AssociateController(Result result, AssociateDAO associateDAO, Validator validator) {
 		this.result = result;
 		this.associateDAO = associateDAO;
+		this.validator = validator;
 	}
 	
 	@Get
 	@Path("")
 	public void form() {
+		
+		for(Object map : result.included().values()) {
+			System.out.println(map);
+		}
 		result.include("AssociateTypes", Associate.AssociateType.values());
 	}
 	
@@ -48,6 +57,9 @@ public class AssociateController {
 	@Put
 	@Path("")
 	public void save(final Associate associate) {
+		validator.validate(associate);
+		validator.onErrorForwardTo(this).form();
+		
 		associateDAO.save(associate);
 		result.forwardTo(this).form();
 	}
