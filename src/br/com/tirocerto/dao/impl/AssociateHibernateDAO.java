@@ -1,6 +1,9 @@
 package br.com.tirocerto.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
@@ -18,27 +21,28 @@ public class AssociateHibernateDAO implements AssociateDAO {
 
 	@Override
 	public void save(Associate associate) {
-		session.beginTransaction();
 		session.save(associate);
-		session.getTransaction().commit();
 	}
 	
 	@Override
 	public void update(Associate associate) {
-		session.beginTransaction();
 		session.update(associate);
-		session.getTransaction().commit();
 	}
 	
 	@Override
 	public void delete(Associate associate) {
-		session.beginTransaction();
 		session.delete(associate);
-		session.getTransaction().commit();
 	}
 	
 	@Override
 	public Associate byId(Long id) {
 		return (Associate) session.get(Associate.class, id);
+	}
+	
+	@Override
+	public boolean existsEmail(Associate associate) {
+		List<?> list = session.createCriteria(Associate.class).add(Restrictions.eq("email", associate.getEmail())).list();
+		
+		return list != null && list.size() > 0;
 	}
 }

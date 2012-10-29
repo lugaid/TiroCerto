@@ -7,4 +7,5 @@ public interface AssociateDAO {
 	void update(Associate associate);
 	void delete(Associate associate);
 	Associate byId(Long id);
+	boolean existsEmail(Associate associate);
 }
