@@ -1,7 +1,5 @@
 package br.com.tirocerto.controller;
 
-import java.util.Map;
-
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -10,6 +8,7 @@ import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.validator.Validations;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.model.Associate;
 
@@ -57,9 +56,13 @@ public class AssociateController {
 	@Put
 	@Path("")
 	public void save(final Associate associate) {
+		//bean validator
 		validator.validate(associate);
+		validator.checking(new Validations() {{
+			that(!associateDAO.existsEmail(associate), "email", "already.exists", associate.getEmail());
+		}});
 		validator.onErrorForwardTo(this).form();
-		
+
 		associateDAO.save(associate);
 		result.forwardTo(this).form();
 	}
@@ -67,6 +70,13 @@ public class AssociateController {
 	@Post
 	@Path("")
 	public void update(final Associate associate) {
+		//bean validator
+		validator.validate(associate);
+		validator.checking(new Validations() {{
+			that(!associateDAO.existsEmail(associate), "email", "already.exists", associate.getEmail());
+		}});
+		validator.onErrorForwardTo(this).form();
+				
 		associateDAO.update(associate);
 		result.forwardTo(this).form();
 	}
@@ -74,6 +84,12 @@ public class AssociateController {
 	@Delete
 	@Path("")
 	public void delete(final Associate associate) {
+		validator.validate(associate);
+		validator.checking(new Validations() {{
+			that(!associateDAO.existsEmail(associate), "email", "already.exists", associate.getEmail());
+		}});
+		validator.onErrorForwardTo(this).form();
+		
 		associateDAO.delete(associate);
 		result.forwardTo(this).form();
 	}
