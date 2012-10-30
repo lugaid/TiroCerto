@@ -38,7 +38,9 @@ public class AssociateController {
 	@Get
 	@Path("/edit/{id}")
 	public void formEdit(Long id) {
-		result.include("associate", associateDAO.byId(id));
+		Associate associate = loadById(id);
+		
+		result.include("associate", associate);
 		result.include("AssociateTypes", Associate.AssociateType.values());
 		result.include("mode", "post");
 		result.forwardTo(this).form();
@@ -47,7 +49,9 @@ public class AssociateController {
 	@Get
 	@Path("/delete/{id}")
 	public void formDelete(Long id) {
-		result.include("associate", associateDAO.byId(id));
+		Associate associate = loadById(id);
+		
+		result.include("associate", associate);
 		result.include("AssociateTypes", Associate.AssociateType.values());
 		result.include("mode", "delete");
 		result.forwardTo(this).form();
@@ -84,13 +88,21 @@ public class AssociateController {
 	@Delete
 	@Path("")
 	public void delete(final Associate associate) {
-		validator.validate(associate);
+		associateDAO.delete(associate);
+		
+		result.forwardTo(this).form();
+	}
+	
+	
+	private Associate loadById(Long id) {
+		final Associate associate = associateDAO.byId(id);
+		
 		validator.checking(new Validations() {{
-			that(!associateDAO.existsEmail(associate), "email", "already.exists", associate.getEmail());
+			that(associate != null, "associate", "not.found");
 		}});
+		
 		validator.onErrorForwardTo(this).form();
 		
-		associateDAO.delete(associate);
-		result.forwardTo(this).form();
+		return associate;
 	}
 }
