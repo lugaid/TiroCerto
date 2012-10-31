@@ -1,5 +1,6 @@
 package br.com.tirocerto.controller;
 
+import static br.com.tirocerto.util.datatable.PagingResults.dataTablesPaging;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -11,6 +12,8 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.model.Associate;
+import br.com.tirocerto.util.datatable.Page;
+import br.com.tirocerto.util.datatable.PageRequest;
 
 @Resource
 @Path("/associate")
@@ -35,6 +38,18 @@ public class AssociateController {
 		result.include("AssociateTypes", Associate.AssociateType.values());
 	}
 	
+	@Get("/list")
+	public void list() {
+		
+	}
+	
+    @Get("/paginate")
+    public void paginate(PageRequest pageRequest) {
+        Page<Associate> associatePage = this.associateDAO.paginate(pageRequest);
+        this.result.use(dataTablesPaging()).from(associatePage);
+        
+    }
+    
 	@Get
 	@Path("/edit/{id}")
 	public void formEdit(Long id) {

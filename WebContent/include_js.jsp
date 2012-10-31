@@ -17,4 +17,6 @@
 <script src="<c:url value="/js/bootstrap-typeahead.js"/>"></script>
 <script src="<c:url value="/js/bootstrap-combobox.js"/>"></script>
 <script src="<c:url value="/js/jquery.validate.min.js"/>"></script>
+<script src="<c:url value="/js/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value="/js/DT_bootstrap.js"/>"></script>
 <script src="<c:url value="/localization/messages_pt_BR.js"/>"></script>
