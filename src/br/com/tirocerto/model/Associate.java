@@ -20,21 +20,23 @@ public class Associate {
 	private Long id;
 
 	@NotEmpty
-	@Length(min=5, max=15)
-	@Column(unique=true, length = 15)
+	@Length(min=1, max=15)
+	@Column(length = 15)
 	private String cr;
 
 	@NotEmpty
-	@Length(min=5, max=15)
+	@Length(min=10, max=50)
 	@Column(length = 50)
 	private String name;
 
 	@Email
 	@NotEmpty
+	@Length(min=5, max=50)
 	@Column(unique=true, length = 50)
 	private String email;
 
 	@Column
+	@NotEmpty
 	private AssociateType associateType;
 
 	@Column
@@ -102,5 +104,30 @@ public class Associate {
 
 	public enum AssociateType {
 		VISITOR, ASSOCIATE;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Associate))
+			return false;
+		Associate other = (Associate) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }

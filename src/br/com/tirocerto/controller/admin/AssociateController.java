@@ -1,6 +1,7 @@
-package br.com.tirocerto.controller;
+package br.com.tirocerto.controller.admin;
 
 import static br.com.tirocerto.util.datatable.PagingResults.dataTablesPaging;
+import br.com.bronx.vraptor.restrictrex.annotation.LoggedIn;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -16,7 +17,8 @@ import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 
 @Resource
-@Path("/associate")
+@Path("/admin/associate")
+@LoggedIn
 public class AssociateController {
 	private Result result;
 	private AssociateDAO associateDAO;
@@ -28,19 +30,23 @@ public class AssociateController {
 		this.validator = validator;
 	}
 	
-	@Get
-	@Path("")
-	public void form() {
+	@Get("")
+	public void list() {
+		
+	}
+	
+	@Get("/new")
+	public void add() {
+		result.forwardTo(this).show();
+	}
+	
+	@Get("/show")
+	public void show() {
 		
 		for(Object map : result.included().values()) {
 			System.out.println(map);
 		}
 		result.include("AssociateTypes", Associate.AssociateType.values());
-	}
-	
-	@Get("/list")
-	public void list() {
-		
 	}
 	
     @Get("/paginate")
@@ -58,7 +64,7 @@ public class AssociateController {
 		result.include("associate", associate);
 		result.include("AssociateTypes", Associate.AssociateType.values());
 		result.include("mode", "post");
-		result.forwardTo(this).form();
+		result.forwardTo(this).show();
 	}
 	
 	@Get
@@ -69,7 +75,7 @@ public class AssociateController {
 		result.include("associate", associate);
 		result.include("AssociateTypes", Associate.AssociateType.values());
 		result.include("mode", "delete");
-		result.forwardTo(this).form();
+		result.forwardTo(this).show();
 	}
 	
 	@Put
@@ -80,10 +86,10 @@ public class AssociateController {
 		validator.checking(new Validations() {{
 			that(!associateDAO.existsEmail(associate), "email", "already.exists", associate.getEmail());
 		}});
-		validator.onErrorForwardTo(this).form();
+		validator.onErrorForwardTo(this).show();
 
 		associateDAO.save(associate);
-		result.forwardTo(this).form();
+		result.forwardTo(this).show();
 	}
 	
 	@Post
@@ -94,10 +100,10 @@ public class AssociateController {
 		validator.checking(new Validations() {{
 			that(!associateDAO.existsEmail(associate), "email", "already.exists", associate.getEmail());
 		}});
-		validator.onErrorForwardTo(this).form();
+		validator.onErrorForwardTo(this).show();
 				
 		associateDAO.update(associate);
-		result.forwardTo(this).form();
+		result.forwardTo(this).show();
 	}
 	
 	@Delete
@@ -105,7 +111,7 @@ public class AssociateController {
 	public void delete(final Associate associate) {
 		associateDAO.delete(associate);
 		
-		result.forwardTo(this).form();
+		result.forwardTo(this).show();
 	}
 	
 	
@@ -116,7 +122,7 @@ public class AssociateController {
 			that(associate != null, "associate", "not.found");
 		}});
 		
-		validator.onErrorForwardTo(this).form();
+		validator.onErrorForwardTo(this).show();
 		
 		return associate;
 	}

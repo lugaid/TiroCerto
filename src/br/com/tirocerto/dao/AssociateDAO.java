@@ -11,4 +11,5 @@ public interface AssociateDAO {
 	Associate byId(Long id);
 	boolean existsEmail(Associate associate);
 	Page<Associate> paginate(PageRequest pageRequest);
+	Associate findByEmailAndPassword(Associate associate);
 }

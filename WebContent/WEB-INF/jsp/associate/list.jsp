@@ -1,7 +1,10 @@
-<%@ include file="/header.jsp"%>
+<%@ include file="/header-admin.jsp"%>
 
-<table style="width: 100%" class="table table-striped table-bordered"
-	id="associateList" width=100%>
+<legend>
+	<fmt:message key="associate.model.description" />
+</legend>
+<table class="table table-striped table-bordered"
+	id="associateList">
 
 </table>
 
@@ -29,16 +32,25 @@
 				"sTitle" : "<fmt:message key="associate.email" />",
 				"mDataProp" : "email",
 				"bSortable" : false,
-			} ],
+			}, {
+				"sTitle" : "<fmt:message key="actions" />",
+				"mDataProp": "id",
+	            "fnRender": function (oObj) {
+	                return '<div class="btn-group" data-toggle="buttons-checkbox">' +
+	                '<a href="/TiroCerto/admin/associate/new" class="btn btn-warning"><fmt:message key="edit" /></a>' +
+	                '<a href="/TiroCerto/admin/associate/new" class="btn btn-danger"><fmt:message key="delete" /></a>' +
+	                '</div>';
+	            }
+			}],
 
-			"oTableTools" : {
-				"sRowSelect" : "single"
-			},
-
+			
+			//<a href=Page/Edit/' + oObj.aData["id"] + '>' + oObj.aData["id"] + '</a>
 			"bServerSide" : true,
-			"sAjaxSource" : '<c:url value="/associate/paginate"/>'
+			"sAjaxSource" : '<c:url value="/admin/associate/paginate"/>'
 		});
 	});
 </script>
 
-<%@ include file="/footer.jsp"%>
+<a href="<c:url value="/admin/associate/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
+
+<%@ include file="/footer-admin.jsp"%>
