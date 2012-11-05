@@ -18,27 +18,26 @@
 			"aoColumns" : [ {
 				"sTitle" : "<fmt:message key="associate.id" />",
 				"mDataProp" : "id",
-				"bSortable" : false,
 				"bVisible" : false,
 			}, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "cr",
-				"bSortable" : true,
+				"sWidth" : "10%"
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "name",
-				"bSortable" : true,
 			}, {
 				"sTitle" : "<fmt:message key="associate.email" />",
 				"mDataProp" : "email",
-				"bSortable" : false,
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
+				"bSortable" : false,
+				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
-	                return '<div class="btn-group" data-toggle="buttons-checkbox">' +
-	                '<a href="/TiroCerto/admin/associate/new" class="btn btn-warning"><fmt:message key="edit" /></a>' +
-	                '<a href="/TiroCerto/admin/associate/new" class="btn btn-danger"><fmt:message key="delete" /></a>' +
+	                return '<div class="btn-group">' +
+	                '<a href="<c:url value="/admin/associate/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
+	                '<a href="<c:url value="/admin/associate/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';
 	            }
 			}],

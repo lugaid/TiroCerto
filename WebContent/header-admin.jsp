@@ -4,8 +4,6 @@
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
 		<li><a href="<c:url value="/admin/associate" />"><i
 				class="icon-chevron-right"></i><fmt:message key="associate.associate" /></a></li>
-		<li><a href="<c:url value="/admin/associate" />"><i
-				class="icon-chevron-right"></i><fmt:message key="associate.associate" /></a></li>
 	</ul>
 </div>
 

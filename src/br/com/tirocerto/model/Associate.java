@@ -1,10 +1,15 @@
 package br.com.tirocerto.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,36 +18,38 @@ import br.com.caelum.vraptor.ioc.Component;
 
 @Entity
 @Component
-public class Associate {
+public class Associate implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotEmpty
-	@Length(min=1, max=15)
+	@Length(min = 1, max = 15)
 	@Column(length = 15)
 	private String cr;
 
 	@NotEmpty
-	@Length(min=10, max=50)
+	@Length(min = 10, max = 50)
 	@Column(length = 50)
 	private String name;
 
 	@Email
 	@NotEmpty
-	@Length(min=5, max=50)
-	@Column(unique=true, length = 50)
+	@Length(min = 5, max = 50)
+	@Column(unique = true, length = 50)
 	private String email;
 
 	@Column
-	@NotEmpty
+	@NotNull
+	@Enumerated(EnumType.ORDINAL)
 	private AssociateType associateType;
 
 	@Column
 	private Boolean adminAccess;
 
-	@Length(min=5, max=50)
+	@Length(min = 5, max = 50)
 	@Column(length = 50)
 	private String password;
 

@@ -37,12 +37,13 @@ body {
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar"
 	data-twttr-rendered="true">
-	
+
 	<!-- navbar -->
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" style="float: left;" href="./index.html"><fmt:message key="project.short.name" /></a>
+				<a class="brand" style="float: left;" href="<c:url value="/"/>"><fmt:message
+						key="project.short.name" /></a>
 				<button type="button" class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
@@ -50,12 +51,14 @@ body {
 				</button>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li class=""><a href="./index.html">Home</a></li>
+						<li class=""><a
+							href="<c:url value="/"/>">Home</a></li>
 					</ul>
 
 					<c:if test="${empty associateLogged.associate}">
 						<form class="navbar-search pull-right"
-							action="<c:url value="/admin/associate/login" />" method="post" id="topLoginForm">
+							action="<c:url value="/admin/associate/login" />" method="post"
+							id="topLoginForm">
 							<input type="text" style="width: 120pt;" class="search-query"
 								placeholder="<fmt:message key="associate.email" />"
 								name="associate.email"> <input type="password"
@@ -68,9 +71,12 @@ body {
 						</form>
 					</c:if>
 					<c:if test="${not empty associateLogged.associate}">
-						<div class="navbar-search pull-right"><fmt:message key="associate.logged" /> 
-						<i><strong>${associateLogged.associate.name}</strong></i>
-						<a href="<c:url value="/admin/associate/logout"/>" class="btn btn-primary btn-mini"><fmt:message key="logout" /> </a>
+						<div class="navbar-search pull-right">
+							<fmt:message key="associate.logged" />
+							<i><strong>${associateLogged.associate.name}</strong></i> <a
+								href="<c:url value="/admin/associate/logout"/>"
+								class="btn btn-primary btn-mini"><fmt:message key="logout" />
+							</a>
 						</div>
 					</c:if>
 				</div>

@@ -48,8 +48,15 @@ public class AssociateHibernateDAO implements AssociateDAO {
 
 	@Override
 	public boolean existsEmail(Associate associate) {
-		List<?> list = session.createCriteria(Associate.class)
-				.add(Restrictions.eq("email", associate.getEmail())).list();
+		Criteria criteria = session.createCriteria(Associate.class);
+		
+		if(associate != null && associate.getId() != null){
+			criteria.add(Restrictions.ne("id", associate.getId()));
+		}
+		
+		criteria.add(Restrictions.eq("email", associate.getEmail()));
+		
+		List<?> list = criteria.list();
 
 		return list != null && list.size() > 0;
 	}
@@ -91,7 +98,8 @@ public class AssociateHibernateDAO implements AssociateDAO {
 	}
 	
 	private Long getRowCount() {
-		return (long) session.createCriteria(Associate.class).list().size();
+		Long count = (Long)session.createQuery("select count(*) from Associate").uniqueResult();
+		return count == null ? 0 : count;
 	}
 
 	private void addSortedColumns(PageRequest pageRequest, Criteria criteria) {
@@ -104,7 +112,7 @@ public class AssociateHibernateDAO implements AssociateDAO {
 				criteria.addOrder(Order.asc(sort.getKey()));
 				break;
 			default:
-				throw new IllegalArgumentException("expected asc or des found " + sort.getKey());
+				throw new IllegalArgumentException("expected asc or des found " + sort.getValue());
 			}
 		}
 	}

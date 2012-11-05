@@ -5,10 +5,11 @@
 		<div class="alert alert-error">
 			<button type="button" class="close" data-dismiss="alert">×</button>
 			<ul>
-			    <c:forEach items="${errors}" var="error">
-			    <li><strong><fmt:message key="${error.category}" /></strong> - ${error.message}</li>
-			    </c:forEach>
-		    </ul>
+				<c:forEach items="${errors}" var="error">
+					<li><strong><fmt:message key="${error.category}" /></strong>
+						- ${error.message}</li>
+				</c:forEach>
+			</ul>
 		</div>
 	</c:if>
 
