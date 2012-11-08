@@ -16,6 +16,7 @@
  */
 package br.com.tirocerto.controller;
 
+import br.com.bronx.vraptor.restrictrex.annotation.AccessDeniedPage;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 
@@ -24,4 +25,7 @@ public class IndexController {
 	@Path("/")
 	public void index() {
 	}
+	
+	@AccessDeniedPage
+	public void accessDenied() {}
 }
