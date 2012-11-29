@@ -4,10 +4,11 @@
 	<div class="alert alert-error">
 		<button type="button" class="close" data-dismiss="alert">×</button>
 		<ul>
-		    <c:forEach items="${errors}" var="error">
-		    <li><strong><fmt:message key="associate.${error.category }" /></strong> - ${error.message }</li>
-		    </c:forEach>
-	    </ul>
+			<c:forEach items="${errors}" var="error">
+				<li><strong><fmt:message
+							key="associate.${error.category }" /></strong> - ${error.message }</li>
+			</c:forEach>
+		</ul>
 	</div>
 </c:if>
 
@@ -41,14 +42,29 @@
 			</div>
 		</div>
 
-		<div class="control-group input-prepend input-append">
-			<label class="control-label" for="associate.email"><fmt:message
-					key="associate.email" /></label>
-			<div class="controls">
-				<span class="add-on">@</span> <input type="text"
-					id="associate.email" name="associate.email"
-					placeholder="<fmt:message key="associate.email"/>"
-					value="${associate.email}">
+		<div class="control-group">
+			<div class="input-prepend input-append">
+				<label class="control-label" for="associate.email"><fmt:message
+						key="associate.email" /></label>
+				<div class="controls">
+					<span class="add-on">@</span> <input type="text"
+						id="associate.email" name="associate.email"
+						placeholder="<fmt:message key="associate.email"/>"
+						value="${associate.email}">
+				</div>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="input-prepend input-append">
+				<label class="control-label" for="associate.confirmEmail"><fmt:message
+						key="associate.confirmEmail" /></label>
+				<div class="controls">
+					<span class="add-on">@</span> <input type="text"
+						id="associate.confirmEmail" name="associate.confirmEmail"
+						placeholder="<fmt:message key="associate.confirmEmail"/>"
+						value="${associate.email}">
+				</div>
 			</div>
 		</div>
 
@@ -124,9 +140,8 @@
 		$('#associateForm').validate({
 			rules : {
 				'associate.cr' : {
-					minlength : 1,
-					maxlength : 15,
-					required : true
+					min: 1,
+					max : 99999999
 				},
 
 				'associate.name' : {
@@ -140,6 +155,14 @@
 					maxlength : 50,
 					required : true,
 					email : true
+				},
+
+				'associate.confirmEmail' : {
+					minlength : 5,
+					maxlength : 50,
+					required : true,
+					email : true,
+					equalTo : "#associate\\.email"
 				},
 
 				'associate.associateType' : {

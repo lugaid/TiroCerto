@@ -1,9 +1,11 @@
 <%@ include file="/header.jsp"%>
 
 <div class="span3 bs-docs-sidebar">
-	<ul class="nav nav-list bs-docs-sidenav affix-top">
+	<ul class="nav nav-list bs-docs-sidenav affix-top" id="adminMenu">
 		<li><a href="<c:url value="/admin/associate" />"><i
-				class="icon-chevron-right"></i><fmt:message key="associate.associate" /></a></li>
+				class="icon-chevron-right"></i><fmt:message key="associate" /></a></li>
+		<li><a href="<c:url value="/admin/modality" />"><i
+				class="icon-chevron-right"></i><fmt:message key="modality" /></a></li>
 	</ul>
 </div>
 

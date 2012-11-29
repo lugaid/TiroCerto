@@ -1,12 +1,10 @@
 package br.com.tirocerto.dao.impl;
 
 import java.util.List;
-import java.util.Map.Entry;
-
+import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.caelum.vraptor.ioc.Component;
@@ -100,21 +98,6 @@ public class AssociateHibernateDAO implements AssociateDAO {
 	private Long getRowCount() {
 		Long count = (Long)session.createQuery("select count(*) from Associate").uniqueResult();
 		return count == null ? 0 : count;
-	}
-
-	private void addSortedColumns(PageRequest pageRequest, Criteria criteria) {
-		for (Entry<String, String> sort : pageRequest.getSort().entrySet()) {
-			switch (sort.getValue()) {
-			case "desc":
-				criteria.addOrder(Order.desc(sort.getKey()));
-				break;
-			case "asc":
-				criteria.addOrder(Order.asc(sort.getKey()));
-				break;
-			default:
-				throw new IllegalArgumentException("expected asc or des found " + sort.getValue());
-			}
-		}
 	}
 	
 	private void fillBlankPasswords(List<Associate> resultList) {

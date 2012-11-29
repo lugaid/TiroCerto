@@ -70,7 +70,13 @@ body {
 							</button>
 						</form>
 					</c:if>
+					
 					<c:if test="${not empty associateLogged.associate}">
+						<ul class="nav">
+							<li class=""><a
+								href="<c:url value="/admin/associate"/>"><fmt:message key="associate" /></a></li>
+						</ul>
+						
 						<div class="navbar-search pull-right">
 							<fmt:message key="associate.logged" />
 							<i><strong>${associateLogged.associate.name}</strong></i> <a

@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.caelum.vraptor.view.Results;
 import br.com.tirocerto.controller.IndexController;
+import br.com.tirocerto.controller.admin.IndexAdminController;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.model.Associate;
 import br.com.tirocerto.session.AssociateLogged;
@@ -40,7 +41,7 @@ public class AssociateLoginController {
 	public void logout() {
 		associateLogged.logout();
 		
-		result.forwardTo(IndexController.class).index();
+		result.redirectTo(IndexController.class).index();
 	}
 	
 	@Post("/login")
@@ -56,13 +57,13 @@ public class AssociateLoginController {
 		final Associate associateLoaded = associateDAO.findByEmailAndPassword(associate);
 		
 		validator.checking(new Validations() {{
-			that(associateLoaded != null, "associate.associate", "not.found");
+			that(associateLoaded != null, "associate", "login.invalid");
 		}});
 		
 		validator.onErrorUse(Results.logic()).redirectTo(AssociateLoginController.class).login();
 
 		this.associateLogged.login(associateLoaded);
 		
-		result.redirectTo(AssociateController.class).list();
+		result.redirectTo(IndexAdminController.class).index();
 	}
 }

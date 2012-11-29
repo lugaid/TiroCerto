@@ -1,14 +1,14 @@
 <%@ include file="/header-admin.jsp"%>
 
 <legend>
-	<fmt:message key="associate.model.description" />
+	<fmt:message key="modality.model.description" />
 </legend>
 
 <c:if test="${not empty success}">
 	<div class="alert alert-success">
 		<button type="button" class="close" data-dismiss="alert">×</button>
 		<ul>
-			<li><strong><fmt:message key="associate" /></strong> - <fmt:message key="success.${success}" /></li>
+			<li><strong><fmt:message key="modality" /></strong> - <fmt:message key="success.${success}" /></li>
 		</ul>
 	</div>
 
@@ -27,7 +27,7 @@
 </c:if>
 
 <table class="table table-striped table-bordered"
-	id="associateList">
+	id="modalityList">
 
 </table>
 
@@ -36,22 +36,16 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$("#associateList").dataTable({
+		$("#modalityList").dataTable({
 
 			"aoColumns" : [ {
-				"sTitle" : "<fmt:message key="associate.id" />",
+				"sTitle" : "<fmt:message key="modality.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
 			}, {
-				"sTitle" : "<fmt:message key="associate.cr" />",
-				"mDataProp" : "cr",
+				"sTitle" : "<fmt:message key="modality.description" />",
+				"mDataProp" : "description",
 				"sDefaultContent" : ""
-			}, {
-				"sTitle" : "<fmt:message key="associate.name" />",
-				"mDataProp" : "name",
-			}, {
-				"sTitle" : "<fmt:message key="associate.email" />",
-				"mDataProp" : "email",
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
@@ -59,19 +53,19 @@
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
-	                '<a href="<c:url value="/admin/associate/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
-	                '<a href="<c:url value="/admin/associate/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
+	                '<a href="<c:url value="/admin/modality/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
+	                '<a href="<c:url value="/admin/modality/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';
 	            }
 			}],
 
 			"bAutoWidth": false,
 			"bServerSide" : true,
-			"sAjaxSource" : '<c:url value="/admin/associate/paginate"/>'
+			"sAjaxSource" : '<c:url value="/admin/modality/paginate"/>'
 		});
 	});
 </script>
 
-<a href="<c:url value="/admin/associate/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
+<a href="<c:url value="modality/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
 
 <%@ include file="/footer-admin.jsp"%>

@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -25,10 +27,10 @@ public class Associate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotEmpty
-	@Length(min = 1, max = 15)
-	@Column(length = 15)
-	private String cr;
+	@Min(value = 1)
+	@Max(value = 99999999)
+	@Column()
+	private Integer cr;
 
 	@NotEmpty
 	@Length(min = 10, max = 50)
@@ -61,11 +63,11 @@ public class Associate implements Serializable {
 		this.id = id;
 	}
 
-	public String getCr() {
+	public Integer getCr() {
 		return cr;
 	}
 
-	public void setCr(String cr) {
+	public void setCr(Integer cr) {
 		this.cr = cr;
 	}
 
@@ -74,7 +76,7 @@ public class Associate implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name == null ? null : name.toUpperCase();
 	}
 
 	public String getEmail() {
@@ -82,7 +84,7 @@ public class Associate implements Serializable {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email == null ? null : email.toLowerCase();
 	}
 
 	public AssociateType getAssociateType() {
