@@ -1,11 +1,9 @@
 package br.com.tirocerto.dao.impl;
 
 import java.util.List;
-import java.util.Map.Entry;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.caelum.vraptor.ioc.Component;
@@ -15,6 +13,7 @@ import br.com.tirocerto.model.Associate;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 import br.com.tirocerto.util.datatable.PageResponse;
+import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
 
 @Component
 @RequestScoped
