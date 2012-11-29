@@ -10,6 +10,9 @@ public interface AssociateDAO {
 	void delete(Associate associate);
 	Associate byId(Long id);
 	boolean existsEmail(Associate associate);
+<<<<<<< HEAD
+=======
 	Page<Associate> paginate(PageRequest pageRequest);
 	Associate findByEmailAndPassword(Associate associate);
+>>>>>>> dd1f53e657aa583b099ddeb5cd701e426f4a33db
 }
