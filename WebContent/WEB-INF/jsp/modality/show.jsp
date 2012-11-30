@@ -59,7 +59,7 @@
 			        <div id="controls" class="controls form-inline">
 			        	<label for="modalityTargetDivision.points"><fmt:message
 							key="modalityTargetDivision.points" /></label>
-						<input type="text" class="input-small" id="modalityTargetDivision[0].points" name="modalityTargetDivision.points"
+						<input type="text" class="input-small" id="modality.modalityTargetDivisions[0].points" name="modality.modalityTargetDivisions[0].points"
 							placeholder="<fmt:message key="modalityTargetDivision.points" />"
 							value="">
 			        </div>

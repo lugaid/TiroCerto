@@ -1,9 +1,6 @@
 package br.com.tirocerto.controller.admin;
 
 import static br.com.tirocerto.util.datatable.PagingResults.dataTablesPaging;
-
-import java.util.List;
-
 import br.com.bronx.vraptor.restrictrex.annotation.LoggedIn;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -16,7 +13,6 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.tirocerto.dao.ModalityDAO;
 import br.com.tirocerto.model.Modality;
-import br.com.tirocerto.model.ModalityTargetDivision;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 
@@ -83,9 +79,7 @@ public class ModalityController {
 	
 	@Put
 	@Path("")
-	public void save(final Modality modality, List<ModalityTargetDivision> modalityTargetDivisions) {
-		System.out.println(modalityTargetDivisions.size());
-		
+	public void save(final Modality modality) {
 		//bean validator
 		validator.validate(modality);
 		validator.onErrorRedirectTo(this).formNew();
