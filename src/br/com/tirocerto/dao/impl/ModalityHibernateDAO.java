@@ -1,5 +1,7 @@
 package br.com.tirocerto.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
 import org.hibernate.Criteria;
@@ -10,6 +12,7 @@ import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.ModalityDAO;
 import br.com.tirocerto.model.Modality;
+import br.com.tirocerto.model.Modality.ModalityPointType;
 import br.com.tirocerto.model.ModalityTargetDivision;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
@@ -19,9 +22,13 @@ import br.com.tirocerto.util.datatable.PageResponse;
 @RequestScoped
 public class ModalityHibernateDAO implements ModalityDAO {
 	private Session session;
+	private ModalityTargetDivisionHibernateDAO modalityTargetDivisionHibernateDAO;
 
-	public ModalityHibernateDAO(Session session) {
+	public ModalityHibernateDAO(
+			Session session,
+			ModalityTargetDivisionHibernateDAO modalityTargetDivisionHibernateDAO) {
 		this.session = session;
+		this.modalityTargetDivisionHibernateDAO = modalityTargetDivisionHibernateDAO;
 	}
 
 	@Override
@@ -33,7 +40,10 @@ public class ModalityHibernateDAO implements ModalityDAO {
 	@Override
 	public void update(Modality modality) {
 		fixModalityTargetDivision(modality);
-		session.update(modality);
+
+		removeModalityTargetDivision(modality);
+
+		session.merge(modality);
 	}
 
 	@Override
@@ -86,6 +96,36 @@ public class ModalityHibernateDAO implements ModalityDAO {
 		for (ModalityTargetDivision modalityTargetDivision : modality
 				.getModalityTargetDivisions()) {
 			modalityTargetDivision.setModality(modality);
+		}
+	}
+
+	private void removeModalityTargetDivision(Modality modality) {
+		Modality modalityOld = byId(modality.getId());
+
+		List<ModalityTargetDivision> oldModalityTargetDivision = modalityOld
+				.getModalityTargetDivisions();
+
+		if (modalityOld == null || oldModalityTargetDivision == null) {
+			return;
+		}
+
+		List<ModalityTargetDivision> removedModalityTargetDivisions = new ArrayList<>();
+
+		removedModalityTargetDivisions.addAll(oldModalityTargetDivision);
+
+		if (modality != null && modality.getModalityTargetDivisions() != null
+				&& modality.getModalityPointType() == ModalityPointType.TARGET) {
+			removedModalityTargetDivisions.removeAll(modality
+					.getModalityTargetDivisions());
+		}
+
+		if (modality != null && modality.getModalityTargetDivisions() != null
+				&& modality.getModalityPointType() != ModalityPointType.TARGET) {
+			modality.getModalityTargetDivisions().clear();
+		}
+
+		for (ModalityTargetDivision removedModalityTargetDivision : removedModalityTargetDivisions) {
+			session.delete(removedModalityTargetDivision);
 		}
 	}
 }

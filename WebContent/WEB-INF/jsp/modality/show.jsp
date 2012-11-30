@@ -51,22 +51,49 @@
 
 		<div id="targetDivisions">
 			<legend>
-				<span class="control-label">Áreas do Alvo</span>
+				<fmt:message key="modality.modalityTargetDivisions" />
 			</legend>
 			
-			<div id="modalityTargetDivisions">
-				<div id="modalityTargetDivision" class="control-group">
-			        <div id="controls" class="controls form-inline">
-			        	<label for="modalityTargetDivision.points"><fmt:message
-							key="modalityTargetDivision.points" /></label>
-						<input type="text" class="input-small" id="modality.modalityTargetDivisions[0].points" name="modality.modalityTargetDivisions[0].points"
-							placeholder="<fmt:message key="modalityTargetDivision.points" />"
-							value="">
-			        </div>
-				</div>
-			</div>
-			
 			<a href="#" id="addModalityTargetDivision"><fmt:message key="add.new" /></a>
+			
+			<c:set var="modalityTargetDivisionsQty" value="0" scope="page"/> 
+
+			
+			<div id="modalityTargetDivisions">
+				<c:forEach var="modalityTargetDivision" items="${modality.modalityTargetDivisions}"  varStatus="iteration">
+					<div id="modalityTargetDivision" class="control-group">
+							<input type="hidden" id="modality.modalityTargetDivisions.id" name="modality.modalityTargetDivisions[${iteration.index}].id"
+								value="${modalityTargetDivision.id}">
+								
+					        <div id="controls" class="controls form-inline">
+					        	<label for="modalityTargetDivision.points"><fmt:message
+									key="modalityTargetDivision.points" /></label>
+								<input type="text" class="input-small" id="modality.modalityTargetDivisions.points" name="modality.modalityTargetDivisions[${iteration.index}].points"
+									placeholder="<fmt:message key="modalityTargetDivision.points" />"
+									value="${modalityTargetDivision.points}">
+									
+							 	<c:if test="${iteration.index != 0}">
+					        		<a href="#" onclick="$(this).closest('#modalityTargetDivision').remove();"><i class="icon-remove-sign"></i></a>
+					        	</c:if>
+					        </div>
+					        
+					        <c:set var="modalityTargetDivisionsQty" value="${iteration.index}" scope="page"/> 
+					</div>
+				</c:forEach>
+				
+				<c:if test="${empty modality.modalityTargetDivisions}">
+					<div id="modalityTargetDivision" class="control-group">
+						<input type="hidden" id="modality.modalityTargetDivisions.id" name="modality.modalityTargetDivisions[0].id">
+							
+				        <div id="controls" class="controls form-inline">
+				        	<label for="modalityTargetDivision.points"><fmt:message
+								key="modalityTargetDivision.points" /></label>
+							<input type="text" class="input-small" id="modality.modalityTargetDivisions.points" name="modality.modalityTargetDivisions[0].points"
+								placeholder="<fmt:message key="modalityTargetDivision.points" />">
+				        </div>
+					</div>
+				</c:if>
+			</div>
 		</div>
 		
 		<div class="control-group">
@@ -117,26 +144,30 @@
 
 <!-- Check-box click action -->
 <script type="text/javascript">
+	var modalityTargetDivisionsQty = ${modalityTargetDivisionsQty};
+
 	$(document).ready(function() {
 		$('#modality\\.modalityPointType').change(function() {
-			if ($('#modality\\.modalityPointType').val() == "POINT" 
-					|| $('#modality\\.modalityPointType').val() == undefined
-					|| $('#modality\\.modalityPointType').val() == "") {
-				$('#targetDivisions').hide();
-			} else {
+			if ($('#modality\\.modalityPointType').val() == "TARGET") {
 				$('#targetDivisions').show();
+			} else {
+				$('#targetDivisions').hide();
 			}
 		}).change();
 	});
 	
 	$(document).ready(function(){
         $("#addModalityTargetDivision").click(function(){
+        	modalityTargetDivisionsQty += 1;
+        	
             var newMod = $("#modalityTargetDivision").clone();
             newMod.children("#controls").
             append('<a href="#" onclick="$(this).closest(\'#modalityTargetDivision\').remove();"><i class="icon-remove-sign"></i></a>');
             
             $(newMod).find(':input').each(function() {
             	$(this).val('');
+            	var newNameValue = $(this).prop('name').replace('[0]', '[' + modalityTargetDivisionsQty + ']');
+            	$(this).prop('name', newNameValue);
             });
             
             $("#modalityTargetDivisions").append(newMod.show());

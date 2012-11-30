@@ -77,6 +77,11 @@ body {
 								href="<c:url value="/admin/associate"/>"><fmt:message key="associate" /></a></li>
 						</ul>
 						
+						<ul class="nav">
+							<li class=""><a
+								href="<c:url value="/admin/modality"/>"><fmt:message key="modality" /></a></li>
+						</ul>
+						
 						<div class="navbar-search pull-right">
 							<fmt:message key="associate.logged" />
 							<i><strong>${associateLogged.associate.name}</strong></i> <a
