@@ -62,13 +62,13 @@
 			<div id="modalityTargetDivisions">
 				<c:forEach var="modalityTargetDivision" items="${modality.modalityTargetDivisions}"  varStatus="iteration">
 					<div id="modalityTargetDivision" class="control-group">
-							<input type="hidden" id="modality.modalityTargetDivisions.id" name="modality.modalityTargetDivisions[${iteration.index}].id"
+							<input type="hidden" id="modality.modalityTargetDivisions[${iteration.index}].id" name="modality.modalityTargetDivisions[${iteration.index}].id"
 								value="${modalityTargetDivision.id}">
 								
 					        <div id="controls" class="controls form-inline">
 					        	<label for="modalityTargetDivision.points"><fmt:message
 									key="modalityTargetDivision.points" /></label>
-								<input type="text" class="input-small" id="modality.modalityTargetDivisions.points" name="modality.modalityTargetDivisions[${iteration.index}].points"
+								<input type="text" class="input-small" id="modality.modalityTargetDivisions[${iteration.index}].points" name="modality.modalityTargetDivisions[${iteration.index}].points"
 									placeholder="<fmt:message key="modalityTargetDivision.points" />"
 									value="${modalityTargetDivision.points}">
 									
@@ -83,12 +83,12 @@
 				
 				<c:if test="${empty modality.modalityTargetDivisions}">
 					<div id="modalityTargetDivision" class="control-group">
-						<input type="hidden" id="modality.modalityTargetDivisions.id" name="modality.modalityTargetDivisions[0].id">
+						<input type="hidden" id="modality.modalityTargetDivisions[0].id" name="modality.modalityTargetDivisions[0].id">
 							
 				        <div id="controls" class="controls form-inline">
 				        	<label for="modalityTargetDivision.points"><fmt:message
 								key="modalityTargetDivision.points" /></label>
-							<input type="text" class="input-small" id="modality.modalityTargetDivisions.points" name="modality.modalityTargetDivisions[0].points"
+							<input type="text" class="input-small" id="modality.modalityTargetDivisions[0].points" name="modality.modalityTargetDivisions[0].points"
 								placeholder="<fmt:message key="modalityTargetDivision.points" />">
 				        </div>
 					</div>
@@ -125,7 +125,7 @@
 				
 				'modality.modalityPointType' : {
 					required : true
-				},
+				}
 			},
 
 			highlight : function(label) {
@@ -138,7 +138,10 @@
 				$(label).closest('.control-group').addClass('success');
 			}
 		});
-
+		
+		$("input:regex(name,^modality\\.modalityTargetDivisions\\[.*\\]\\.points$)").each(function() {
+		    $(this).rules("add", { required : true });
+		});
 	});
 </script>
 
@@ -159,18 +162,22 @@
 	$(document).ready(function(){
         $("#addModalityTargetDivision").click(function(){
         	modalityTargetDivisionsQty += 1;
-        	
-            var newMod = $("#modalityTargetDivision").clone();
-            newMod.children("#controls").
-            append('<a href="#" onclick="$(this).closest(\'#modalityTargetDivision\').remove();"><i class="icon-remove-sign"></i></a>');
             
-            $(newMod).find(':input').each(function() {
-            	$(this).val('');
-            	var newNameValue = $(this).prop('name').replace('[0]', '[' + modalityTargetDivisionsQty + ']');
-            	$(this).prop('name', newNameValue);
-            });
+            var newMod = '<div id="modalityTargetDivision" class="control-group">';
+            newMod += '<input type="hidden" id="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].id" name="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].id">';
+           	newMod += '<div id="controls" class="controls form-inline">';
+            newMod += '<label for="modalityTargetDivision.points"><fmt:message key="modalityTargetDivision.points" /></label>';
+            newMod += '<input type="text" class="input-small" id="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].points" name="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].points"';
+            newMod += 'placeholder="<fmt:message key="modalityTargetDivision.points" />">';
+            newMod += '<a href="#" onclick="$(this).closest(\'#modalityTargetDivision\').remove();"><i class="icon-remove-sign"></i></a>';
+            newMod += '</div>';
+            newMod += '</div>';
             
-            $("#modalityTargetDivisions").append(newMod.show());
+            $("#modalityTargetDivisions").append(newMod);
+            
+            $("input:regex(name,^modality\\.modalityTargetDivisions\\[.*\\]\\.points$)").each(function() {
+    		    $(this).rules("add", { required : true });
+    		});
         });
 	 });
 </script>

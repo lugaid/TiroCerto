@@ -26,6 +26,7 @@ public class Associate implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	@Min(value = 1)
 	@Max(value = 99999999)
 	@Column()

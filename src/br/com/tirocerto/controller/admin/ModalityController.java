@@ -79,7 +79,7 @@ public class ModalityController {
 	
 	@Put
 	@Path("")
-	public void save(final Modality modality) {
+	public void save(final Modality modality) {		
 		//bean validator
 		validator.validate(modality);
 		validator.onErrorRedirectTo(this).formNew();

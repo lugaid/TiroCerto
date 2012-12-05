@@ -1,7 +1,6 @@
 package br.com.tirocerto.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
 import org.hibernate.Criteria;
@@ -125,7 +124,7 @@ public class ModalityHibernateDAO implements ModalityDAO {
 		}
 
 		for (ModalityTargetDivision removedModalityTargetDivision : removedModalityTargetDivisions) {
-			session.delete(removedModalityTargetDivision);
+			modalityTargetDivisionHibernateDAO.delete(removedModalityTargetDivision);
 		}
 	}
 }

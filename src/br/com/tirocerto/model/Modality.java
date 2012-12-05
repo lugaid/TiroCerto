@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -34,7 +35,7 @@ public class Modality {
 	@Enumerated(EnumType.ORDINAL)
 	private ModalityPointType modalityPointType;
 
-	@Column
+	@Valid
 	@OneToMany(mappedBy = "modality", targetEntity = ModalityTargetDivision.class, cascade = CascadeType.ALL)
 	private List<ModalityTargetDivision> modalityTargetDivisions;
 

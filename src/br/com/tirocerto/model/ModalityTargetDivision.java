@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -19,13 +21,15 @@ public class ModalityTargetDivision {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@NotNull
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn
 	private Modality modality;
 	
 	@Column
+	@NotNull
+	@Min(value = 1)
+	@Max(value = 99999999)
 	private Integer points;
 
 	public Long getId() {
