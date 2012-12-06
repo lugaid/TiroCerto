@@ -113,6 +113,15 @@
 
 <!-- Activate form validator -->
 <script type="text/javascript">
+	function addValidatePoints() {
+		$("input:regex(name,^modality\\.modalityTargetDivisions\\[.*\\]\\.points$)").each(function() {
+		    $(this).rules("add", { 
+		    	min: 1,
+				max : 99999999,
+				required : true});
+		});
+	}
+	
 	$(document).ready(function() {
 
 		$('#modalityForm').validate({
@@ -139,14 +148,10 @@
 			}
 		});
 		
-		$("input:regex(name,^modality\\.modalityTargetDivisions\\[.*\\]\\.points$)").each(function() {
-		    $(this).rules("add", { required : true });
-		});
+		addValidatePoints();
 	});
-</script>
 
-<!-- Check-box click action -->
-<script type="text/javascript">
+	<!-- Check-box click action -->
 	var modalityTargetDivisionsQty = ${modalityTargetDivisionsQty};
 
 	$(document).ready(function() {
@@ -175,9 +180,7 @@
             
             $("#modalityTargetDivisions").append(newMod);
             
-            $("input:regex(name,^modality\\.modalityTargetDivisions\\[.*\\]\\.points$)").each(function() {
-    		    $(this).rules("add", { required : true });
-    		});
+            addValidatePoints();
         });
 	 });
 </script>

@@ -11,22 +11,24 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import br.com.tirocerto.dao.ChampionshipDAO;
 import br.com.tirocerto.dao.ModalityDAO;
-import br.com.tirocerto.model.Modality;
+import br.com.tirocerto.model.Championship;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 
-
 @Resource
-@Path("/admin/modality")
+@Path("/admin/championship")
 @LoggedIn
-public class ModalityController {
+public class ChampionshipController {
 	private Result result;
+	private ChampionshipDAO championshipDAO;
 	private ModalityDAO modalityDAO;
 	private Validator validator;
 	
-	public ModalityController(Result result, ModalityDAO modalityDAO, Validator validator) {
+	public ChampionshipController(Result result, ChampionshipDAO championshipDAO, ModalityDAO modalityDAO, Validator validator) {
 		this.result = result;
+		this.championshipDAO = championshipDAO;
 		this.modalityDAO = modalityDAO;
 		this.validator = validator;
 	}
@@ -38,13 +40,13 @@ public class ModalityController {
 	
 	@Get("/show")
 	public void show() {
-		result.include("ModalityPointTypes", Modality.ModalityPointType.values());
+		result.include("Modalities", modalityDAO.listAll());
 	}
 	
 	@Get("/paginate")
     public void paginate(PageRequest pageRequest) {
-        Page<Modality> modalityPage = this.modalityDAO.paginate(pageRequest);
-        this.result.use(dataTablesPaging()).from(modalityPage);
+        Page<Championship> championshipPage = this.championshipDAO.paginate(pageRequest);
+        this.result.use(dataTablesPaging()).from(championshipPage);
         
     }
 	
@@ -56,9 +58,9 @@ public class ModalityController {
 	@Get
 	@Path("/edit/{id}")
 	public void formEdit(Long id) {
-		Modality modality = loadById(id);
+		Championship championship = loadById(id);
 		
-		result.include("modality", modality);
+		result.include("championship", championship);
 		result.include("mode", "post");
 		result.forwardTo(this).show();
 	}
@@ -66,51 +68,51 @@ public class ModalityController {
 	@Get
 	@Path("/delete/{id}")
 	public void formDelete(Long id) {
-		Modality modality = loadById(id);
+		Championship championship = loadById(id);
 		
-		result.include("modality", modality);
+		result.include("modality", championship);
 		result.include("mode", "delete");
 		result.forwardTo(this).show();
 	}
 	
 	@Put
 	@Path("")
-	public void save(final Modality modality) {		
+	public void save(final Championship championship) {		
 		//bean validator
-		validator.validate(modality);
+		validator.validate(championship);
 		validator.onErrorRedirectTo(this).formNew();
 		
-		modalityDAO.save(modality);
+		championshipDAO.save(championship);
 		result.include("success", "new");
 		result.forwardTo(this).list();
 	}
 	
 	@Post
 	@Path("")
-	public void update(final Modality modality) {
+	public void update(final Championship championship) {
 		//bean validator
-		validator.validate(modality);
-		validator.onErrorRedirectTo(this).formEdit(modality.getId());
+		validator.validate(championship);
+		validator.onErrorRedirectTo(this).formEdit(championship.getId());
 		
-		modalityDAO.update(modality);
+		championshipDAO.update(championship);
 		result.include("success", "update");
 		result.forwardTo(this).list();
 	}
 	
 	@Delete
 	@Path("")
-	public void delete(final Modality modality) {
-		modalityDAO.delete(modality);
+	public void delete(final Championship championship) {
+		championshipDAO.delete(championship);
 		result.include("success", "delete");
 		result.forwardTo(this).list();
 	}
 	
 	
-	private Modality loadById(Long id) {
-		final Modality modality = modalityDAO.byId(id);
+	private Championship loadById(Long id) {
+		final Championship modality = championshipDAO.byId(id);
 		
 		validator.checking(new Validations() {{
-			that(modality != null, "modality", "not.found");
+			that(modality != null, "championship", "not.found");
 		}});
 		
 		validator.onErrorRedirectTo(this).list();

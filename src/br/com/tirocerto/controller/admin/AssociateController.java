@@ -37,10 +37,6 @@ public class AssociateController {
 	
 	@Get("/show")
 	public void show() {
-		
-		for(Object map : result.included().values()) {
-			System.out.println(map);
-		}
 		result.include("AssociateTypes", Associate.AssociateType.values());
 	}
 	

@@ -15,6 +15,7 @@
 	rel="stylesheet">
 <link href="<c:url value="/css/DT_bootstrap.css" />" rel="stylesheet">
 <link href="<c:url value="/css/docs.css" />" rel="stylesheet">
+<link href="<c:url value="/css/datepicker.css" />" rel="stylesheet">
 <style type="text/css">
 -->
 body {
@@ -80,6 +81,11 @@ body {
 						<ul class="nav">
 							<li class=""><a
 								href="<c:url value="/admin/modality"/>"><fmt:message key="modality" /></a></li>
+						</ul>
+						
+						<ul class="nav">
+							<li class=""><a
+								href="<c:url value="/admin/championship"/>"><fmt:message key="championship" /></a></li>
 						</ul>
 						
 						<div class="navbar-search pull-right">

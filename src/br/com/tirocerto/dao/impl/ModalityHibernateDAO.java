@@ -51,6 +51,13 @@ public class ModalityHibernateDAO implements ModalityDAO {
 		session.delete(modality);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Modality> listAll() {
+		return session.createCriteria(Modality.class).setReadOnly(
+				true).list();
+	}
+	
 	@Override
 	public Modality byId(Long id) {
 		return (Modality) session.get(Modality.class, id);

@@ -6,6 +6,8 @@
 				class="icon-chevron-right"></i><fmt:message key="associate" /></a></li>
 		<li><a href="<c:url value="/admin/modality" />"><i
 				class="icon-chevron-right"></i><fmt:message key="modality" /></a></li>
+		<li><a href="<c:url value="/admin/championship" />"><i
+				class="icon-chevron-right"></i><fmt:message key="championship" /></a></li>
 	</ul>
 </div>
 

@@ -19,6 +19,7 @@
 <script src="<c:url value="/js/jquery.validate.min.js"/>"></script>
 <script src="<c:url value="/js/jquery.dataTables.min.js"/>"></script>
 <script src="<c:url value="/js/DT_bootstrap.js"/>"></script>
-<script src="<c:url value="/localization/messages_pt_BR.js"/>"></script>
 <script src="<c:url value="/js/jquery.validate.adtional-functions.js"/>"></script>
-
+<script src="<c:url value="/js/bootstrap-datepicker.js"/>"></script>
+<script src="<c:url value="/localization/messages_pt_BR.js"/>"></script>
+<script src="<c:url value="/localization/bootstrap-datepicker.pt-BR.js"/>" charset="iso-8859-1"></script>
