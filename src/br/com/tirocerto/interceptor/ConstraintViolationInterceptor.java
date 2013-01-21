@@ -13,10 +13,10 @@ import br.com.caelum.vraptor.util.hibernate.HibernateTransactionInterceptor;
 import br.com.caelum.vraptor.validator.Message;
   
   
-@Intercepts  
+@Intercepts 
+@SuppressWarnings("unused")
 public class ConstraintViolationInterceptor implements Interceptor {    
-      
-    private final Result result;
+	private final Result result;
     private final Validator validator;
     
     public ConstraintViolationInterceptor(Result result, Validator validator) {    

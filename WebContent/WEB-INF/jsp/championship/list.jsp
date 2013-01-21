@@ -52,6 +52,7 @@
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
+	                '<a href="<c:url value="/admin/championshipenrollment/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-inverse"><fmt:message key="championshipEnrollment.edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';
