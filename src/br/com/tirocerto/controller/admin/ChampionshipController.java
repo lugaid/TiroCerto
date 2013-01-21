@@ -70,7 +70,7 @@ public class ChampionshipController {
 	public void formDelete(Long id) {
 		Championship championship = loadById(id);
 		
-		result.include("modality", championship);
+		result.include("championship", championship);
 		result.include("mode", "delete");
 		result.forwardTo(this).show();
 	}

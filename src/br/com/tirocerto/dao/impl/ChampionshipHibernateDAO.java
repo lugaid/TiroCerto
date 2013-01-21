@@ -2,6 +2,7 @@ package br.com.tirocerto.dao.impl;
 
 import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -21,12 +22,14 @@ import br.com.tirocerto.util.datatable.PageResponse;
 @Component
 @RequestScoped
 public class ChampionshipHibernateDAO implements ChampionshipDAO {
-	private Session session;;
+	private Session session;
+	private ChampionshipStageHibernateDAO championshipStageHibernateDAO;
 
 	public ChampionshipHibernateDAO(
 			Session session,
-			ModalityTargetDivisionHibernateDAO modalityTargetDivisionHibernateDAO) {
+			ChampionshipStageHibernateDAO championshipStageHibernateDAO) {
 		this.session = session;
+		this.championshipStageHibernateDAO = championshipStageHibernateDAO;
 	}
 
 	@Override
@@ -38,6 +41,7 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 	@Override
 	public void update(Championship championship) {
 		fixChampionshipStage(championship);
+		removeChampionshipStages(championship);
 		session.merge(championship);
 	}
 
@@ -93,5 +97,30 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 				.getChampionshipStages()) {
 			championshipStages.setChanpionship(championship);
 		}
+	}
+
+	private void removeChampionshipStages(Championship championship) {
+		if (championship == null) {
+			return;
+		}
+
+		Championship championshipOld = byId(championship.getId());
+
+		List<ChampionshipStage> oldChampinshipStages;
+
+		if (championshipOld == null
+				|| (oldChampinshipStages = championshipOld
+						.getChampionshipStages()) == null) {
+			return;
+		}
+		
+		List<ChampionshipStage> removedChampinshipStages = new ArrayList<>();
+		removedChampinshipStages.addAll(oldChampinshipStages);
+		removedChampinshipStages.removeAll(championship.getChampionshipStages());
+		
+		for (ChampionshipStage removedChampionshipStage : removedChampinshipStages) {
+			championshipStageHibernateDAO
+					.delete(removedChampionshipStage);
+		}		
 	}
 }

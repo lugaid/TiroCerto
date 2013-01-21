@@ -54,10 +54,9 @@ public class ModalityHibernateDAO implements ModalityDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Modality> listAll() {
-		return session.createCriteria(Modality.class).setReadOnly(
-				true).list();
+		return session.createCriteria(Modality.class).setReadOnly(true).list();
 	}
-	
+
 	@Override
 	public Modality byId(Long id) {
 		return (Modality) session.get(Modality.class, id);
@@ -106,12 +105,17 @@ public class ModalityHibernateDAO implements ModalityDAO {
 	}
 
 	private void removeModalityTargetDivision(Modality modality) {
+		if (modality == null) {
+			return;
+		}
+
 		Modality modalityOld = byId(modality.getId());
 
-		List<ModalityTargetDivision> oldModalityTargetDivision = modalityOld
-				.getModalityTargetDivisions();
+		List<ModalityTargetDivision> oldModalityTargetDivision;
 
-		if (modalityOld == null || oldModalityTargetDivision == null) {
+		if (modalityOld == null
+				|| (oldModalityTargetDivision = modalityOld
+						.getModalityTargetDivisions()) == null) {
 			return;
 		}
 
@@ -131,7 +135,8 @@ public class ModalityHibernateDAO implements ModalityDAO {
 		}
 
 		for (ModalityTargetDivision removedModalityTargetDivision : removedModalityTargetDivisions) {
-			modalityTargetDivisionHibernateDAO.delete(removedModalityTargetDivision);
+			modalityTargetDivisionHibernateDAO
+					.delete(removedModalityTargetDivision);
 		}
 	}
 }

@@ -75,11 +75,18 @@
 							<div class="input-append date"
 								id="championship.championshipStages[${iteration.index}].datePicker"
 								name="championship.championshipStages[${iteration.index}].datePicker"
-								 data-date-format="dd/mm/yyyy" data-date-language="pt-BR">
+								 data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+								 data-date="<fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>">
 								<input class="span2" size="16" type="text"
-									readonly="" value="<fmt:formatDate value="${championshipStage.date.time}" pattern="MM/dd/yyyy"/>"><span class="add-on"><i
+									id="championship.championshipStages[${iteration.index}].date"
+									name="championship.championshipStages[${iteration.index}].date"
+									readonly="" value="<fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>"><span class="add-on"><i
 									class="icon-calendar"></i></span>
 							</div>
+							
+							<c:if test="${iteration.index != 0}">
+								<a href="#" onclick="$(this).closest('#championshipStage').remove();"><i class="icon-remove-sign"></i></a>
+							</c:if>
 						</div>
 					</div>
 
@@ -102,6 +109,8 @@
 								name="championship.championshipStages[0].datePicker"
 								 data-date-format="dd/mm/yyyy" data-date-language="pt-BR">
 								<input class="span2" size="16" type="text"
+									id="championship.championshipStages[0].date"
+									name="championship.championshipStages[0].date"
 									readonly=""><span class="add-on"><i
 									class="icon-calendar"></i></span>
 							</div>
@@ -181,8 +190,9 @@
            	newMod += '<div id="controls" class="controls form-inline">';
        		newMod += '<label for="championship.championshipStages[' + championshipStagesQty + '].date"><fmt:message key="championshipStage.date" /></label>';
 			newMod += '<div class="input-append date" id="championship.championshipStages[' + championshipStagesQty + '].datePicker" name="championship.championshipStages[' + championshipStagesQty + '].datePicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR">'; 
-			newMod += '<input class="span2" size="16" type="text" readonly=""><span class="add-on"><i class="icon-calendar"></i></span>';
+			newMod += '<input id="championship.championshipStages[' + championshipStagesQty + '].date" name="championship.championshipStages[' + championshipStagesQty + '].date"class="span2" size="16" type="text" readonly=""><span class="add-on"><i class="icon-calendar"></i></span>';
 			newMod += '</div>';
+			newMod += '<a href="#" onclick="$(this).closest(\'#championshipStage\').remove();"><i class="icon-remove-sign"></i></a>';
 			newMod += '</div>';
             newMod += '</div>';
             
