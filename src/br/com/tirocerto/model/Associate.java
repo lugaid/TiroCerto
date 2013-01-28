@@ -1,18 +1,20 @@
 package br.com.tirocerto.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
@@ -54,7 +56,10 @@ public class Associate implements Serializable {
 	@Length(min = 5, max = 50)
 	@Column(length = 50)
 	private String password;
-
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="associate")
+	private Set<ChampionshipEnrolled> championshipEnrolled;
+	
 	public Long getId() {
 		return id;
 	}
@@ -113,6 +118,15 @@ public class Associate implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<ChampionshipEnrolled> getChampionshipEnrolled() {
+		return championshipEnrolled;
+	}
+
+	public void setChampionshipEnrolled(
+			Set<ChampionshipEnrolled> championshipEnrolled) {
+		this.championshipEnrolled = championshipEnrolled;
 	}
 
 	public enum AssociateType {

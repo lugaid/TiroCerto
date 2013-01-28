@@ -1,6 +1,7 @@
 package br.com.tirocerto.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,8 +43,8 @@ public class Championship {
 	@JoinColumn
 	private Modality modality;
 	
-	@OneToMany(targetEntity = Associate.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Associate> enrolled;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="championship")
+	private Set<ChampionshipEnrolled> championshipEnrolled;
 	
 	public Long getId() {
 		return id;
@@ -77,14 +78,14 @@ public class Championship {
 		this.modality = modality;
 	}
 	
-	public List<Associate> getEnrolled() {
-		return enrolled;
+	public Set<ChampionshipEnrolled> getChampionshipEnrolled() {
+		return championshipEnrolled;
 	}
 
-	public void setEnrolled(List<Associate> enrolled) {
-		this.enrolled = enrolled;
+	public void setChampionshipEnrolled(Set<ChampionshipEnrolled> championshipEnrolled) {
+		this.championshipEnrolled = championshipEnrolled;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

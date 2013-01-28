@@ -30,6 +30,10 @@
 	id="championshipList">
 </table>
 
+
+<div class="modal hide fade" id="res-modal"></div>
+
+
 <%@ include file="/include_js.jsp"%>
 
 <script type="text/javascript">
@@ -52,7 +56,7 @@
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
-	                '<a href="<c:url value="/admin/championshipenrollment/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-inverse"><fmt:message key="championshipEnrollment.edit" /></a>' +
+	                '<a href="#" id="championshipEnrolledEdit" class="btn btn-mini btn-inverse" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/admin/championshipEnrolled/edit/"/>' + oObj.aData['id'] + '"><fmt:message key="championshipEnrolled.edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';
@@ -64,6 +68,12 @@
 			"sAjaxSource" : '<c:url value="/admin/championship/paginate"/>'
 		});
 	});
+	
+    $("#championshipEnrolledEdit").live('click', function() {
+        var url = $(this).attr('url');
+        var modal_id = $(this).attr('data-controls-modal');
+        $("#" + modal_id).load(url).modal('show');
+    });
 </script>
 
 <a href="<c:url value="championship/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
