@@ -44,7 +44,6 @@ public class AssociateController {
     public void paginate(PageRequest pageRequest) {
         Page<Associate> associatePage = this.associateDAO.paginate(pageRequest);
         this.result.use(dataTablesPaging()).from(associatePage);
-        
     }
     
 	@Get("/new")

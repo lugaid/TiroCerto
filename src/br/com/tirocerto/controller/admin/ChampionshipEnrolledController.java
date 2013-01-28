@@ -9,9 +9,8 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.dao.ChampionshipEnrolledDAO;
-import br.com.tirocerto.dao.impl.ChampionshipEnrolledHibernateDAO;
-import br.com.tirocerto.model.Associate;
 import br.com.tirocerto.model.Championship;
+import br.com.tirocerto.model.ChampionshipEnrolled;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 
@@ -21,16 +20,12 @@ import br.com.tirocerto.util.datatable.PageRequest;
 public class ChampionshipEnrolledController {
 	private Result result;
 	private ChampionshipEnrolledDAO championshipEnrolledDAO;
-	private AssociateDAO associateDAO;
-	private Validator validator;
 
 	public ChampionshipEnrolledController(Result result,
 			ChampionshipEnrolledDAO championshipEnrolledDAO,
 			AssociateDAO associateDAO, Validator validator) {
 		this.result = result;
 		this.championshipEnrolledDAO = championshipEnrolledDAO;
-		this.associateDAO = associateDAO;
-		this.validator = validator;
 	}
 	
 	@Get("")
@@ -44,8 +39,8 @@ public class ChampionshipEnrolledController {
 	}
 	
 	@Get("/paginate")
-	public void paginate(PageRequest pageRequest) {
-		Page<Associate> associatePage = this.associateDAO.paginate(pageRequest);
+	public void paginate(PageRequest pageRequest, Long championshipId) {
+		Page<ChampionshipEnrolled> associatePage = this.championshipEnrolledDAO.paginate(pageRequest, championshipId);
 		this.result.use(dataTablesPaging()).from(associatePage);
 	}
 }

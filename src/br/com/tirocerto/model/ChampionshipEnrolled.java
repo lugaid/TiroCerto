@@ -15,12 +15,12 @@ public class ChampionshipEnrolled implements Serializable {
 	private static final long serialVersionUID = -1275977111673169430L;
 
 	@Id
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false)
 	private Championship championship;
 	
 	@Id
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false)
 	private Associate associate;
 	
