@@ -1,5 +1,6 @@
 package br.com.tirocerto.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,12 @@ import br.com.caelum.vraptor.ioc.Component;
 
 @Entity
 @Component
-public class Championship {
+public class Championship implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7238566883027860110L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

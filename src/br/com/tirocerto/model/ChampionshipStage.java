@@ -1,5 +1,6 @@
 package br.com.tirocerto.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,7 +15,12 @@ import br.com.caelum.vraptor.ioc.Component;
 
 @Entity
 @Component
-public class ChampionshipStage {
+public class ChampionshipStage implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1538408257290639939L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

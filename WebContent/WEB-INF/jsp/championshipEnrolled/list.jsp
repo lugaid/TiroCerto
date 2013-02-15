@@ -8,7 +8,7 @@
 	<div class="alert alert-success">
 		<button type="button" class="close" data-dismiss="alert">×</button>
 		<ul>
-			<li><strong><fmt:message key="championship" /></strong> - <fmt:message key="success.${success}" /></li>
+			<li><strong><fmt:message key="championshipEnrolled" /></strong> - <fmt:message key="success.${success}" /></li>
 		</ul>
 	</div>
 
@@ -27,7 +27,7 @@
 </c:if>
 
 <table class="table table-striped table-bordered"
-	id="championshipList">
+	id="championshipEnrolledList">
 </table>
 
 
@@ -39,14 +39,18 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$("#championshipList").dataTable({
+		$("#championshipEnrolledList").dataTable({
 
 			"aoColumns" : [ {
 				"sTitle" : "<fmt:message key="championship.id" />",
-				"mDataProp" : "id",
+				"mDataProp" : "championship.id",
 				"bVisible" : false,
 			}, {
-				"sTitle" : "<fmt:message key="championship.description" />",
+				"sTitle" : "<fmt:message key="associate.id" />",
+				"mDataProp" : "associate.id",
+				"bVisible" : false,
+			}, {
+				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "description",
 				"sDefaultContent" : ""
 			}, {
@@ -56,7 +60,7 @@
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
-	                '<a href="<c:url value="/admin/championshipEnrolled/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-enverse"><fmt:message key="championshipEnrolled.edit" /></a>' +
+	                '<a href="#" id="championshipEnrolledEdit" class="btn btn-mini btn-inverse" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/admin/championshipEnrolled/edit/"/>' + oObj.aData['id'] + '"><fmt:message key="championshipEnrolled.edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';
@@ -65,7 +69,7 @@
 
 			"bAutoWidth": false,
 			"bServerSide" : true,
-			"sAjaxSource" : '<c:url value="/admin/championship/paginate"/>'
+			"sAjaxSource" : '<c:url value="/admin/championshipEnrolled/paginate/${championship.id}"/>'
 		});
 	});
 </script>

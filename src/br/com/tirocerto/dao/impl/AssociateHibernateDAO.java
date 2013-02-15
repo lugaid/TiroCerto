@@ -83,7 +83,7 @@ public class AssociateHibernateDAO implements AssociateDAO {
 
 		return page;
 	}
-
+	
 	@Override
 	public Associate findByEmailAndPassword(Associate associate) {
 		Criteria criteria = session.createCriteria(Associate.class);

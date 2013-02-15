@@ -39,7 +39,7 @@ public class ChampionshipEnrolled implements Serializable {
 	public void setAssociate(Associate associate) {
 		this.associate = associate;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -1,5 +1,6 @@
 package br.com.tirocerto.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,12 @@ import br.com.caelum.vraptor.ioc.Component;
 
 @Entity
 @Component
-public class Modality {
+public class Modality implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6111862081872364561L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
