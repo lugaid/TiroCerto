@@ -1,9 +1,11 @@
 package br.com.tirocerto.controller.admin;
 
-import static br.com.tirocerto.util.datatable.PagingResults.dataTablesPaging;
+
 import br.com.bronx.vraptor.restrictrex.annotation.LoggedIn;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
@@ -25,7 +27,6 @@ public class ChampionshipEnrolledController {
 	private ChampionshipEnrolledDAO championshipEnrolledDAO;
 	private AssociateDAO associateDAO;
 	
-	
 	public ChampionshipEnrolledController(Result result,
 			ChampionshipEnrolledDAO championshipEnrolledDAO,
 			AssociateDAO associateDAO, ChampionshipDAO championshipDAO,
@@ -41,16 +42,6 @@ public class ChampionshipEnrolledController {
 	public void list(Championship championship) {
 		result.include("championship", championshipDAO.byId(championship.getId()));
 	}
-	
-	@Get("/show")
-	public void show() {
-
-	}
-
-	@Get("/edit/{championship.id}/{associate.id}")
-	public void edit(Championship championship, Associate associate) {
-		result.forwardTo(this).show();
-	}
 
 	@Get("/paginate/{championship.id}")
 	public void paginate(Championship championship, PageRequest pageRequest) {
@@ -58,5 +49,19 @@ public class ChampionshipEnrolledController {
 
 		result.include("associatePage", associatePage);
 		result.include("championship", championship);
+	}
+	
+	@Put
+	@Path("")
+	public void save(final ChampionshipEnrolled championshipEnrolled) {
+		championshipEnrolledDAO.save(championshipEnrolled);
+		result.nothing();
+	}
+	
+	@Delete
+	@Path("")
+	public void delete(final ChampionshipEnrolled championshipEnrolled) {
+		championshipEnrolledDAO.delete(championshipEnrolled);
+		result.nothing();
 	}
 }

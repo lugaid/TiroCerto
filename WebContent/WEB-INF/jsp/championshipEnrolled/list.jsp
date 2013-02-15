@@ -1,41 +1,26 @@
-<%@ include file="/header-admin.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<legend>
-	<fmt:message key="championship.model.description" />
-</legend>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+    <h3>${championship.description}</h3>
+</div>
 
-<c:if test="${not empty success}">
-	<div class="alert alert-success">
-		<button type="button" class="close" data-dismiss="alert">×</button>
-		<ul>
-			<li><strong><fmt:message key="championshipEnrolled" /></strong> - <fmt:message key="success.${success}" /></li>
-		</ul>
-	</div>
+<div class="modal-body">
+	<table class="table table-striped table-bordered"
+		id="championshipEnrolledList">
+	</table>
+</div>
 
-</c:if>
-
-<c:if test="${not empty errors}">
-	<div class="alert alert-error">
-		<button type="button" class="close" data-dismiss="alert">×</button>
-		<ul>
-			<c:forEach items="${errors}" var="error">
-				<li><strong><fmt:message
-							key="${error.category}" /></strong> - ${error.message }</li>
-			</c:forEach>
-		</ul>
-	</div>
-</c:if>
-
-<table class="table table-striped table-bordered"
-	id="championshipEnrolledList">
-</table>
-
-
-<div class="modal hide fade" id="res-modal"></div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true"><fmt:message key="close" /></button>
+</div>
 
 
 <%@ include file="/include_js.jsp"%>
-
+  
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -43,37 +28,77 @@
 
 			"aoColumns" : [ {
 				"sTitle" : "<fmt:message key="championship.id" />",
-				"mDataProp" : "championship.id",
+				"mDataProp" : "id",
 				"bVisible" : false,
 			}, {
 				"sTitle" : "<fmt:message key="associate.id" />",
-				"mDataProp" : "associate.id",
+				"mDataProp" : "id",
 				"bVisible" : false,
 			}, {
-				"sTitle" : "<fmt:message key="associate.name" />",
-				"mDataProp" : "description",
-				"sDefaultContent" : ""
-			}, {
 				"sTitle" : "<fmt:message key="actions" />",
-				"mDataProp": "id",
+				"mDataProp": "enrolled",
 				"bSortable" : false,
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
-	                return '<div class="btn-group">' +
-	                '<a href="#" id="championshipEnrolledEdit" class="btn btn-mini btn-inverse" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/admin/championshipEnrolled/edit/"/>' + oObj.aData['id'] + '"><fmt:message key="championshipEnrolled.edit" /></a>' +
-	                '<a href="<c:url value="/admin/championship/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
-	                '<a href="<c:url value="/admin/championship/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
-	                '</div>';
+	            	checkbox = '<input name="enrolled[' + oObj.aData['id'] +']" id="enrolled[' + oObj.aData['id'] +']" type=\"checkbox\" value="'+ oObj.aData['id'] +'"';
+	            	
+	            	if(oObj.aData['enrolled'] =="checked")
+	            		checkbox += 'checked = "'+ oObj.aData['enrolled'] +'"';
+	            	
+	            	checkbox += '>';
+	            	
+	                return  checkbox; 
 	            }
+	        }, {
+				"sTitle" : "<fmt:message key="associate.cr" />",
+				"mDataProp" : "cr",
+				"sDefaultContent" : ""
+			}, {
+				"sTitle" : "<fmt:message key="associate.name" />",
+				"mDataProp" : "name",
+				"sDefaultContent" : ""
+			}, {
+				"sTitle" : "<fmt:message key="associate.email" />",
+				"mDataProp" : "email",
 			}],
 
 			"bAutoWidth": false,
 			"bServerSide" : true,
-			"sAjaxSource" : '<c:url value="/admin/championshipEnrolled/paginate/${championship.id}"/>'
+			"sAjaxSource" : '<c:url value="/admin/championshipEnrolled/paginate/${championship.id}"/>',
+			
+			"fnInitComplete": function(oSettings, json) {
+				$("input:regex(name,^enrolled\\[.*\\]\\$)").each(function() {
+					$(this).change(function() {
+						if($(this).is(':checked')) {
+							method = '&_method=PUT';
+							successMsg = '<fmt:message key="championshipEnrolled" /> - <fmt:message key="success.new" />';
+						} else {
+							method = '&_method=DELETE';
+							successMsg = '<fmt:message key="championshipEnrolled" /> - <fmt:message key="success.delete" />';
+						}
+
+						$.ajax({
+							url: '<c:url value="/admin/championshipEnrolled"/>',
+				            data: 'championshipEnrolled.championship.id=${championship.id}&championshipEnrolled.associate.id=' + $(this).val() + method,
+				            type: 'POST',
+				            dataType: 'json',
+				            success: function(data){
+								alert(successMsg);
+				            }
+						});
+					});
+				});
+			}
 		});
 	});
+	
 </script>
 
-<a href="<c:url value="championship/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
-
-<%@ include file="/footer-admin.jsp"%>
+<script type="text/javascript" charset="utf-8">
+	$.extend(true, $.fn.dataTable.defaults, {
+		"oLanguage": {
+            "sUrl": "<c:url value="/localization/messages_datatables_pt_BR.js" />",
+            "codification": "UTF-8"
+        }
+    });
+</script>
