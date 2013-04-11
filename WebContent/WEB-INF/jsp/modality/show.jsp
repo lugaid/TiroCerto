@@ -33,6 +33,16 @@
 		</div>
 
 		<div class="control-group">
+			<label class="control-label" for="modality.maxSeries"><fmt:message
+					key="modality.maxSeries" /></label>
+			<div class="controls">
+				<input type="text" id="modality.maxSeries" name="modality.maxSeries"
+					placeholder="<fmt:message key="modality.maxSeries" />"
+					value="${modality.maxSeries}">
+			</div>
+		</div>
+		
+		<div class="control-group">
 			<label class="control-label" for="modality.modalityPointType"><fmt:message
 					key="modality.modalityPointType" /></label>
 			<div class="controls">
@@ -48,14 +58,26 @@
 				</select>
 			</div>
 		</div>
-
-		<div class="control-group">
-			<label class="control-label" for="modality.maxSeries"><fmt:message
-					key="modality.maxSeries" /></label>
-			<div class="controls">
-				<input type="text" id="modality.maxSeries" name="modality.maxSeries"
-					placeholder="<fmt:message key="modality.maxSeries" />"
-					value="${modality.maxSeries}">
+		
+		<div id="targetInformations">
+			<div class="control-group">
+				<label class="control-label" for="modality.targetXValue"><fmt:message
+						key="modality.targetXValue" /></label>
+				<div class="controls">
+					<input type="text" id="modality.targetXValue" name="modality.targetXValue"
+						placeholder="<fmt:message key="modality.targetXValue" />"
+						value="${modality.targetXValue}">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="modality.targetQtyDivisions"><fmt:message
+						key="modality.targetQtyDivisions" /></label>
+				<div class="controls">
+					<input type="text" id="modality.targetQtyDivisions" name="modality.targetQtyDivisions"
+						placeholder="<fmt:message key="modality.targetQtyDivisions" />"
+						value="${modality.targetQtyDivisions}">
+				</div>
 			</div>
 		</div>
 		
@@ -94,6 +116,17 @@
 					min: 1,
 					max : 100,
 					required : true
+				},
+				
+				'modality.targetXValue' : {
+					min: 1,
+					required : true
+				},
+				
+				'modality.targetQtyDivisions' : {
+					min: 1,
+					max: 10,
+					required : true
 				}
 			},
 
@@ -107,6 +140,21 @@
 				$(label).closest('.control-group').addClass('success');
 			}
 		});
+	});
+</script>
+
+<!-- Combo-box click action -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#modality\\.modalityPointType').change(function() {
+			if ($('#modality\\.modalityPointType').val() != "TARGET") {
+				$('#targetInformations').hide();
+				$('#modality\\.targetXValue').val("");
+				$('#modality\\.targetQtyDivisions').val("");
+			} else {
+				$('#targetInformations').show();
+			}
+		}).change();
 	});
 </script>
 

@@ -35,7 +35,7 @@
 				"mDataProp" : "id",
 				"bVisible" : false,
 			}, {
-				"sTitle" : "<fmt:message key="actions" />",
+				"sTitle" : "<fmt:message key="championshipEnrolled" />",
 				"mDataProp": "enrolled",
 				"bSortable" : false,
 				"sWidth" : "10%",

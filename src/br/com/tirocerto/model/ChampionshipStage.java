@@ -21,9 +21,6 @@ import br.com.caelum.vraptor.ioc.Component;
 @Entity
 @Component
 public class ChampionshipStage implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1538408257290639939L;
 
 	@Id
@@ -36,11 +33,11 @@ public class ChampionshipStage implements Serializable {
 	
 	@NotNull
 	private Calendar date;
-	
-	@Valid
-	@OneToMany(mappedBy = "championshipStage", targetEntity = ChampionshipSerieResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<ChampionshipSerieResult> championshipStageResult;
 
+	@Valid
+	@OneToMany(mappedBy = "championshipStage", targetEntity = ChampionshipResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ChampionshipResult> championshipResult;
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,11 +46,11 @@ public class ChampionshipStage implements Serializable {
 		this.id = id;
 	}
 
-	public Championship getChanpionship() {
+	public Championship getChampionship() {
 		return championship;
 	}
 
-	public void setChanpionship(Championship championship) {
+	public void setChampionship(Championship championship) {
 		this.championship = championship;
 	}
 
@@ -63,6 +60,14 @@ public class ChampionshipStage implements Serializable {
 
 	public void setDate(Calendar date) {
 		this.date = date;
+	}
+
+	public List<ChampionshipResult> getChampionshipResult() {
+		return championshipResult;
+	}
+
+	public void setChampionshipResult(List<ChampionshipResult> championshipResult) {
+		this.championshipResult = championshipResult;
 	}
 
 	@Override

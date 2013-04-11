@@ -23,8 +23,8 @@
 			value="${championship.id}">
 
 		<div class="control-group">
-			<label class="control-label" for="modality.description"><fmt:message
-					key="modality.description" /></label>
+			<label class="control-label" for="championship.description"><fmt:message
+					key="championship.description" /></label>
 			<div class="controls">
 				<input type="text" id="championship.description"
 					name="championship.description"

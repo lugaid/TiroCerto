@@ -95,7 +95,7 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 
 		for (ChampionshipStage championshipStages : championship
 				.getChampionshipStages()) {
-			championshipStages.setChanpionship(championship);
+			championshipStages.setChampionship(championship);
 		}
 	}
 

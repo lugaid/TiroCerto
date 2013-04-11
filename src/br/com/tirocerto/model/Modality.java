@@ -43,6 +43,14 @@ public class Modality implements Serializable {
 	@Column()
 	private Integer maxSeries;
 	
+	@Min(value = 1)
+	@Column()
+	private Integer targetXValue;
+	
+	@Min(value = 1)
+	@Max(value = 10)
+	@Column()
+	private Integer targetQtyDivisions;
 
 	public Long getId() {
 		return id;
@@ -75,6 +83,23 @@ public class Modality implements Serializable {
 	public void setMaxSeries(Integer maxSeries) {
 		this.maxSeries = maxSeries;
 	}
+
+	public Integer getTargetXValue() {
+		return targetXValue;
+	}
+
+	public void setTargetXValue(Integer targetXValue) {
+		this.targetXValue = targetXValue;
+	}
+
+	public Integer getTargetQtyDivisions() {
+		return targetQtyDivisions;
+	}
+
+	public void setTargetQtyDivisions(Integer targetQtyDivisions) {
+		this.targetQtyDivisions = targetQtyDivisions;
+	}
+
 
 	public enum ModalityPointType {
 		TARGET, POINT;

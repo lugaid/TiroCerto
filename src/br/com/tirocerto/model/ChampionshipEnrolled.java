@@ -30,8 +30,8 @@ public class ChampionshipEnrolled implements Serializable {
 	private Associate associate;
 	
 	@Valid
-	@OneToMany(mappedBy = "championshipEnrolled", targetEntity = ChampionshipSerieResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<ChampionshipSerieResult> championshipStageResult;
+	@OneToMany(mappedBy = "championshipEnrolled", targetEntity = ChampionshipResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ChampionshipResult> championshipResult;
 	
 	public Championship getChampionship() {
 		return championship;
@@ -49,6 +49,14 @@ public class ChampionshipEnrolled implements Serializable {
 		this.associate = associate;
 	}
 	
+	public List<ChampionshipResult> getChampionshipResult() {
+		return championshipResult;
+	}
+
+	public void setChampionshipResult(List<ChampionshipResult> championshipResult) {
+		this.championshipResult = championshipResult;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
