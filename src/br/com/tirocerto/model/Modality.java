@@ -1,9 +1,6 @@
 package br.com.tirocerto.model;
 
 import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,8 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -40,10 +37,12 @@ public class Modality implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private ModalityPointType modalityPointType;
-
-	@Valid
-	@OneToMany(mappedBy = "modality", targetEntity = ModalityTargetDivision.class, cascade = CascadeType.ALL)
-	private List<ModalityTargetDivision> modalityTargetDivisions;
+	
+	@Min(value = 1)
+	@Max(value = 100)
+	@Column()
+	private Integer maxSeries;
+	
 
 	public Long getId() {
 		return id;
@@ -58,7 +57,7 @@ public class Modality implements Serializable {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = description == null ? null : description.toUpperCase();
 	}
 
 	public ModalityPointType getModalityPointType() {
@@ -69,13 +68,12 @@ public class Modality implements Serializable {
 		this.modalityPointType = modalityPointType;
 	}
 
-	public List<ModalityTargetDivision> getModalityTargetDivisions() {
-		return modalityTargetDivisions;
+	public Integer getMaxSeries() {
+		return maxSeries;
 	}
 
-	public void setModalityTargetDivisions(
-			List<ModalityTargetDivision> modalityTargetDivisions) {
-		this.modalityTargetDivisions = modalityTargetDivisions;
+	public void setMaxSeries(Integer maxSeries) {
+		this.maxSeries = maxSeries;
 	}
 
 	public enum ModalityPointType {

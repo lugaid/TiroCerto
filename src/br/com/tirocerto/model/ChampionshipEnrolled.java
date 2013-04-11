@@ -1,11 +1,16 @@
 package br.com.tirocerto.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -23,6 +28,10 @@ public class ChampionshipEnrolled implements Serializable {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false)
 	private Associate associate;
+	
+	@Valid
+	@OneToMany(mappedBy = "championshipEnrolled", targetEntity = ChampionshipSerieResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ChampionshipSerieResult> championshipStageResult;
 	
 	public Championship getChampionship() {
 		return championship;

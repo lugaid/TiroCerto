@@ -1,14 +1,14 @@
 <%@ include file="/header-admin.jsp"%>
 
 <legend>
-	<fmt:message key="championship.model.description" />
+	<fmt:message key="championshipSerieResult.model.description" /> - ${championship.description}
 </legend>
 
 <c:if test="${not empty success}">
 	<div class="alert alert-success">
 		<button type="button" class="close" data-dismiss="alert">×</button>
 		<ul>
-			<li><strong><fmt:message key="championship" /></strong> - <fmt:message key="success.${success}" /></li>
+			<li><strong><fmt:message key="championshipSerieResult" /></strong> - <fmt:message key="success.${success}" /></li>
 		</ul>
 	</div>
 
@@ -29,12 +29,6 @@
 <table class="table table-striped table-bordered"
 	id="championshipList">
 </table>
-
-
-<div class="modal hide fade" id="res-modal">
-
-</div>
-
 
 <%@ include file="/include_js.jsp"%>
 
@@ -79,12 +73,6 @@
    });
 </script>
 
-<style type="text/css">
-#res-modal {
-	width: 700px; /* SET THE WIDTH OF THE MODAL */
-	margin: -250px 0 0 -350px; /* CHANGE MARGINS TO ACCOMODATE THE NEW WIDTH (original = margin: -250px 0 0 -280px;) */
-}
-</style>
 
 <a href="<c:url value="championship/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
 

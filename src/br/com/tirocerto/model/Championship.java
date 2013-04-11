@@ -65,7 +65,7 @@ public class Championship implements Serializable {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = description == null ? null : description.toUpperCase();
 	}
 
 	public List<ChampionshipStage> getChampionshipStages() {

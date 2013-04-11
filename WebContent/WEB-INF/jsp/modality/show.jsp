@@ -49,50 +49,13 @@
 			</div>
 		</div>
 
-		<div id="targetDivisions">
-			<legend>
-				<fmt:message key="modality.modalityTargetDivisions" />
-			</legend>
-			
-			<a href="#" id="addModalityTargetDivision"><fmt:message key="add.new" /></a>
-			
-			<c:set var="modalityTargetDivisionsQty" value="0" scope="page"/> 
-
-			
-			<div id="modalityTargetDivisions">
-				<c:forEach var="modalityTargetDivision" items="${modality.modalityTargetDivisions}"  varStatus="iteration">
-					<div id="modalityTargetDivision" class="control-group">
-							<input type="hidden" id="modality.modalityTargetDivisions[${iteration.index}].id" name="modality.modalityTargetDivisions[${iteration.index}].id"
-								value="${modalityTargetDivision.id}">
-								
-					        <div id="controls" class="controls form-inline">
-					        	<label for="modalityTargetDivision.points"><fmt:message
-									key="modalityTargetDivision.points" /></label>
-								<input type="text" class="input-small" id="modality.modalityTargetDivisions[${iteration.index}].points" name="modality.modalityTargetDivisions[${iteration.index}].points"
-									placeholder="<fmt:message key="modalityTargetDivision.points" />"
-									value="${modalityTargetDivision.points}">
-									
-							 	<c:if test="${iteration.index != 0}">
-					        		<a href="#" onclick="$(this).closest('#modalityTargetDivision').remove();"><i class="icon-remove-sign"></i></a>
-					        	</c:if>
-					        </div>
-					        
-					        <c:set var="modalityTargetDivisionsQty" value="${iteration.index}" scope="page"/> 
-					</div>
-				</c:forEach>
-				
-				<c:if test="${empty modality.modalityTargetDivisions}">
-					<div id="modalityTargetDivision" class="control-group">
-						<input type="hidden" id="modality.modalityTargetDivisions[0].id" name="modality.modalityTargetDivisions[0].id">
-							
-				        <div id="controls" class="controls form-inline">
-				        	<label for="modalityTargetDivision.points"><fmt:message
-								key="modalityTargetDivision.points" /></label>
-							<input type="text" class="input-small" id="modality.modalityTargetDivisions[0].points" name="modality.modalityTargetDivisions[0].points"
-								placeholder="<fmt:message key="modalityTargetDivision.points" />">
-				        </div>
-					</div>
-				</c:if>
+		<div class="control-group">
+			<label class="control-label" for="modality.maxSeries"><fmt:message
+					key="modality.maxSeries" /></label>
+			<div class="controls">
+				<input type="text" id="modality.maxSeries" name="modality.maxSeries"
+					placeholder="<fmt:message key="modality.maxSeries" />"
+					value="${modality.maxSeries}">
 			</div>
 		</div>
 		
@@ -113,15 +76,6 @@
 
 <!-- Activate form validator -->
 <script type="text/javascript">
-	function addValidatePoints() {
-		$("input:regex(name,^modality\\.modalityTargetDivisions\\[.*\\]\\.points$)").each(function() {
-		    $(this).rules("add", { 
-		    	min: 1,
-				max : 99999999,
-				required : true});
-		});
-	}
-	
 	$(document).ready(function() {
 
 		$('#modalityForm').validate({
@@ -133,6 +87,12 @@
 				}, 
 				
 				'modality.modalityPointType' : {
+					required : true
+				},
+				
+				'modality.maxSeries' : {
+					min: 1,
+					max : 100,
 					required : true
 				}
 			},
@@ -147,42 +107,7 @@
 				$(label).closest('.control-group').addClass('success');
 			}
 		});
-		
-		addValidatePoints();
 	});
-
-	<!-- Check-box click action -->
-	var modalityTargetDivisionsQty = ${modalityTargetDivisionsQty};
-
-	$(document).ready(function() {
-		$('#modality\\.modalityPointType').change(function() {
-			if ($('#modality\\.modalityPointType').val() == "TARGET") {
-				$('#targetDivisions').show();
-			} else {
-				$('#targetDivisions').hide();
-			}
-		}).change();
-	});
-	
-	$(document).ready(function(){
-        $("#addModalityTargetDivision").click(function(){
-        	modalityTargetDivisionsQty += 1;
-            
-            var newMod = '<div id="modalityTargetDivision" class="control-group">';
-            newMod += '<input type="hidden" id="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].id" name="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].id">';
-           	newMod += '<div id="controls" class="controls form-inline">';
-            newMod += '<label for="modalityTargetDivision.points"><fmt:message key="modalityTargetDivision.points" /></label>';
-            newMod += '<input type="text" class="input-small" id="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].points" name="modality.modalityTargetDivisions[' + modalityTargetDivisionsQty + '].points"';
-            newMod += 'placeholder="<fmt:message key="modalityTargetDivision.points" />">';
-            newMod += '<a href="#" onclick="$(this).closest(\'#modalityTargetDivision\').remove();"><i class="icon-remove-sign"></i></a>';
-            newMod += '</div>';
-            newMod += '</div>';
-            
-            $("#modalityTargetDivisions").append(newMod);
-            
-            addValidatePoints();
-        });
-	 });
 </script>
 
 <%@ include file="/footer-admin.jsp"%>
