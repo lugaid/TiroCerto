@@ -1,7 +1,8 @@
 <%@ include file="/header-admin.jsp"%>
 
 <legend>
-	<fmt:message key="championshipResult.model.description" /> - ${championshipStage.championship.description} - <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>
+	<p style="text-align: center;">${championshipStage.championship.description} - <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/></p>
+	<fmt:message key="championshipResult.model.description" />
 </legend>
 
 <c:if test="${not empty success}">
@@ -11,7 +12,6 @@
 			<li><strong><fmt:message key="championshipResult" /></strong> - <fmt:message key="success.${success}" /></li>
 		</ul>
 	</div>
-
 </c:if>
 
 <c:if test="${not empty errors}">
@@ -36,7 +36,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$("#associateList").dataTable({
+		$("#championshipResultList").dataTable({
 
 			"aoColumns" : [ {
 				"sTitle" : "<fmt:message key="championshipResult.id" />",
@@ -48,11 +48,11 @@
 				"sDefaultContent" : ""
 			}, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
-				"mDataProp" : "championshipResult.associate.cr",
+				"mDataProp" : "associate.cr",
 				"sDefaultContent" : ""
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
-				"mDataProp" : "championshipResult.associate.name",
+				"mDataProp" : "associate.name",
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
@@ -68,11 +68,11 @@
 
 			"bAutoWidth": false,
 			"bServerSide" : true,
-			"sAjaxSource" : '<c:url value="/admin/championshipResult/paginate"/>'
+			"sAjaxSource" : '<c:url value="/admin/championshipResult/paginateByChampionshipStage/${championshipStage.id}"/>'
 		});
 	});
 </script>
 
-<a href="<c:url value="/admin/championshipResult/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
+<a href="<c:url value="/admin/championshipResult/new/${championshipStage.id}"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
 
 <%@ include file="/footer-admin.jsp"%>

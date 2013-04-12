@@ -159,7 +159,7 @@
 					required : true
 				}, 
 				
-				'championship.modality' : {
+				'championship.modality.id' : {
 					required : true
 				}
 			},

@@ -22,14 +22,14 @@ public class ChampionshipResult implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	private ChampionshipEnrolled championshipEnrolled;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	private ChampionshipStage championshipStage;
 
 	@Min(value = 1)
-	@Column()
+	@Column(nullable=false)
 	private Integer serie;
 	
 	@Min(value = 0)
@@ -83,6 +83,8 @@ public class ChampionshipResult implements Serializable {
 	@Min(value = 0)
 	@Column()
 	private Integer penalty;
+	
+	private transient Integer total;
 	
 	public Long getId() {
 		return id;
@@ -218,6 +220,14 @@ public class ChampionshipResult implements Serializable {
 
 	public void setPenalty(Integer penalty) {
 		this.penalty = penalty;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 
 	@Override
