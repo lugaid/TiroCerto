@@ -7,15 +7,10 @@ import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
-import br.com.tirocerto.dao.ChampionshipDAO;
 import br.com.tirocerto.dao.ChampionshipResultDAO;
 import br.com.tirocerto.dao.ChampionshipStageDAO;
-import br.com.tirocerto.dao.ModalityDAO;
-import br.com.tirocerto.model.Associate;
-import br.com.tirocerto.model.Championship;
 import br.com.tirocerto.model.ChampionshipResult;
 import br.com.tirocerto.model.ChampionshipStage;
-import br.com.tirocerto.model.Modality;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 

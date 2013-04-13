@@ -26,6 +26,12 @@
 		<input type="hidden" id="championshipResult.championshipStage.id" name="championshipResult.championshipStage.id"
 			value="${championshipStage.id}">
 			
+		<input type="hidden" id="championshipResult.championshipEnrolled.championship.id" name="championshipResult.championshipEnrolled.championship.id"
+			value="${championshipResult.championshipEnrolled.championship.id}">
+			
+		<input type="hidden" id="championshipResult.championshipEnrolled.associate.id" name="championshipResult.championshipEnrolled.associate.id"
+			value="${championshipResult.championshipEnrolled.associate.id}">
+			
 		<div class="control-group">
 			<label class="control-label" for="championshipResult.serie"><fmt:message
 					key="championshipResult.serie" /></label>
@@ -42,7 +48,18 @@
 				</select>
 			</div>
 		</div>
-
+		
+		<div class="control-group">
+			<label class="control-label" for="championshipResult.targetDivision"><fmt:message
+					key="championshipResult.targetDivisionX" /> (${championshipStage.championship.modality.targetXValue} <fmt:message
+					key="championshipResult.points"/>)</label>
+			<div class="controls">
+				<input class="input-mini" type="text" id="championshipResult.targetDivisionX" name="championshipResult.targetDivisionX"
+					placeholder="<fmt:message key="championshipResult.targetDivisionX"/>"
+					value="${championshipResult.targetDivisionX}">
+			</div>
+		</div>
+							
 		<c:set var="targetQtyDivisions" value="${championshipStage.championship.modality.targetQtyDivisions}" scope="page" />
 		<c:if test="${championshipStage.championship.modality.modalityPointType == 'TARGET'}">
 			<legend>
