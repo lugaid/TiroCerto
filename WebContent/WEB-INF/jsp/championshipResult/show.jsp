@@ -28,10 +28,7 @@
 			
 		<input type="hidden" id="championshipResult.championshipEnrolled.championship.id" name="championshipResult.championshipEnrolled.championship.id"
 			value="${championshipResult.championshipEnrolled.championship.id}">
-			
-		<input type="hidden" id="championshipResult.championshipEnrolled.associate.id" name="championshipResult.championshipEnrolled.associate.id"
-			value="${championshipResult.championshipEnrolled.associate.id}">
-			
+
 		<div class="control-group">
 			<label class="control-label" for="championshipResult.serie"><fmt:message
 					key="championshipResult.serie" /></label>
@@ -50,13 +47,14 @@
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="championshipResult.targetDivision"><fmt:message
-					key="championshipResult.targetDivisionX" /> (${championshipStage.championship.modality.targetXValue} <fmt:message
-					key="championshipResult.points"/>)</label>
+			<label class="control-label" for="associate.name"><fmt:message
+					key="associate" /></label>
 			<div class="controls">
-				<input class="input-mini" type="text" id="championshipResult.targetDivisionX" name="championshipResult.targetDivisionX"
-					placeholder="<fmt:message key="championshipResult.targetDivisionX"/>"
-					value="${championshipResult.targetDivisionX}">
+				<input type="text" id="associate.name" name="associate.name"
+					placeholder="<fmt:message key="associate.name"/>"
+					value="${championshipResult.championshipEnrolled.associate.name}" readonly="readonly">
+				<input type="hidden" id="championshipResult.championshipEnrolled.associate.id" name="championshipResult.championshipEnrolled.associate.id"
+					value="${championshipResult.championshipEnrolled.associate.id}">
 			</div>
 		</div>
 							
@@ -295,6 +293,34 @@
 
 <!-- Activate form validator -->
 <script type="text/javascript">
+	$(document).ready(function() {
+	
+		$('#championshipResultForm').validate({
+			rules : {
+				'championshipResult.serie' : {
+					min: 1,
+					required : true
+				},
+	
+				'associate.name' : {
+					required : true
+				},
+			},
+	
+			highlight : function(label) {
+				$(label).closest('.control-group').removeClass('success');
+				$(label).closest('.control-group').addClass('error');
+			},
+	
+			success : function(label) {
+				$(label).closest('.control-group').removeClass('error');
+				$(label).closest('.control-group').addClass('success');
+			}
+		});
+	
+	});
+
+
 	function totalRecalc() {
 		var point = $('#championshipResult\\.targetDivisionX').val() * ${championshipStage.championship.modality.targetXValue};
 		point += $('#championshipResult\\.targetDivision10').val() * 10;
