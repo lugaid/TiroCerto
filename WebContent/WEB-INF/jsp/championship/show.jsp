@@ -77,11 +77,12 @@
 								name="championship.championshipStages[${iteration.index}].datePicker"
 								 data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
 								 data-date="<fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>">
+								 <span class="add-on"><i
+									class="icon-calendar"></i></span>
 								<input class="span2" size="16" type="text"
 									id="championship.championshipStages[${iteration.index}].date"
 									name="championship.championshipStages[${iteration.index}].date"
-									readonly="" value="<fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>"><span class="add-on"><i
-									class="icon-calendar"></i></span>
+									readonly="" value="<fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>">
 							</div>
 							
 							<c:if test="${iteration.index != 0}">

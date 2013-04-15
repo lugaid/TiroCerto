@@ -12,10 +12,10 @@ public class PaginateSortedCollumns {
 		for (Entry<String, String> sort : pageRequest.getSort().entrySet()) {
 			switch (sort.getValue()) {
 			case "desc":
-				criteria.addOrder(Order.desc(sort.getKey()));
+				criteria.addOrder(Order.desc(sort.getKey().replace("_", ".")));
 				break;
 			case "asc":
-				criteria.addOrder(Order.asc(sort.getKey()));
+				criteria.addOrder(Order.asc(sort.getKey().replace("_", ".")));
 				break;
 			default:
 				throw new IllegalArgumentException("expected asc or des found " + sort.getValue());

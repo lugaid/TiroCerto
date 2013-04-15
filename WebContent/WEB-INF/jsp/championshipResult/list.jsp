@@ -44,15 +44,15 @@
 				"bVisible" : false,
 			}, {
 				"sTitle" : "<fmt:message key="championshipResult.serie" />",
-				"mDataProp" : "championshipResult.serie",
+				"mDataProp" : "serie",
 				"sDefaultContent" : ""
 			}, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
-				"mDataProp" : "associate.cr",
+				"mDataProp" : "associate_cr",
 				"sDefaultContent" : ""
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
-				"mDataProp" : "associate.name",
+				"mDataProp" : "associate_name",
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
@@ -60,8 +60,8 @@
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
-	                '<a href="<c:url value="/admin/championshipResult/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
-	                '<a href="<c:url value="/admin/championshipResult/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
+	                '<a href="<c:url value="/admin/championshipResult/${championshipStage.id}/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
+	                '<a href="<c:url value="/admin/championshipResult/${championshipStage.id}/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';
 	            }
 			}],
@@ -73,6 +73,6 @@
 	});
 </script>
 
-<a href="<c:url value="/admin/championshipResult/new/${championshipStage.id}"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
+<a href="<c:url value="/admin/championshipResult/${championshipStage.id}/new"/>" class="btn btn-primary"><fmt:message key="add.new" /></a>
 
 <%@ include file="/footer-admin.jsp"%>

@@ -1,8 +1,7 @@
 package br.com.tirocerto.model;
 
 import java.io.Serializable;
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +18,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import br.com.caelum.vraptor.ioc.Component;
+import javax.persistence.CascadeType;
 
 @Entity
 @Component
@@ -57,8 +57,8 @@ public class Associate implements Serializable {
 	@Column(length = 50)
 	private String password;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="associate")
-	private Set<ChampionshipEnrolled> championshipEnrolled;
+	@OneToMany(mappedBy="associate", targetEntity = ChampionshipEnrolled.class, fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	private List<ChampionshipEnrolled> championshipEnrolled;
 	
 	public Long getId() {
 		return id;
@@ -120,12 +120,12 @@ public class Associate implements Serializable {
 		this.password = password;
 	}
 
-	public Set<ChampionshipEnrolled> getChampionshipEnrolled() {
+	public List<ChampionshipEnrolled> getChampionshipEnrolled() {
 		return championshipEnrolled;
 	}
 
 	public void setChampionshipEnrolled(
-			Set<ChampionshipEnrolled> championshipEnrolled) {
+			List<ChampionshipEnrolled> championshipEnrolled) {
 		this.championshipEnrolled = championshipEnrolled;
 	}
 

@@ -43,12 +43,22 @@ public class ChampionshipEnrolledController {
 		result.include("championship", championshipDAO.byId(championship.getId()));
 	}
 
+	@Get("enrolledByChampionship/{championship.id}")
+	public void listEnrolledByChampionship(Championship championship) {
+		result.include("championship", championshipDAO.byId(championship.getId()));
+	}
+	
 	@Get("/paginate/{championship.id}")
 	public void paginate(Championship championship, PageRequest pageRequest) {
 		Page<Associate> associatePage = this.associateDAO.paginate(pageRequest);
 
 		result.include("associatePage", associatePage);
 		result.include("championship", championship);
+	}
+	
+	@Get("/paginateEnrolledByChampionship/{championship.id}")
+	public void paginateEnrolledByChampionship(Championship championship, PageRequest pageRequest) {
+		result.include("championshipEnrolledPage", championshipEnrolledDAO.paginateEnrolledByChampionship(championship, pageRequest));
 	}
 	
 	@Put

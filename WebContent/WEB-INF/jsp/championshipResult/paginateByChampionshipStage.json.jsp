@@ -16,7 +16,7 @@
 		,
 		</c:if>
 		
-		{"id": ${championshipResult.id},"associate.cr": "${championshipResult.championshipEnrolled.associate.cr}","associate.name": "${championshipResult.championshipEnrolled.associate.name}"}
+		{"id": ${championshipResult.id},"serie": ${championshipResult.serie},"associate_cr": "${championshipResult.championshipEnrolled.associate.cr}","associate_name": "${championshipResult.championshipEnrolled.associate.name}"}
 	</c:forEach>
 </c:if>
 
