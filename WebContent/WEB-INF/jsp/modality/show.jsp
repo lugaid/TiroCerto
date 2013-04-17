@@ -43,6 +43,16 @@
 		</div>
 		
 		<div class="control-group">
+			<label class="control-label" for="modality.qtySeries"><fmt:message
+					key="modality.qtySeries" /></label>
+			<div class="controls">
+				<input type="text" id="modality.qtySeries" name="modality.qtySeries"
+					placeholder="<fmt:message key="modality.qtySeries" />"
+					value="${modality.qtySeries}">
+			</div>
+		</div>
+		
+		<div class="control-group">
 			<label class="control-label" for="modality.modalityPointType"><fmt:message
 					key="modality.modalityPointType" /></label>
 			<div class="controls">
@@ -115,6 +125,14 @@
 				'modality.maxSeries' : {
 					min: 1,
 					max : 100,
+					required : true
+				},
+				
+				'modality.qtySeries' : {
+					min: 1,
+					max : function(value, element) {
+						return $('#modality\\.maxSeries').val();
+					} ,
 					required : true
 				},
 				

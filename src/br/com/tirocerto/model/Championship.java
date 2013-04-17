@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -40,6 +42,11 @@ public class Championship implements Serializable {
 	@Column(length = 50)
 	private String description;
 
+	@Min(value = 1)
+	@Max(value = 100)
+	@Column()
+	private Integer qtyStages;
+	
 	@Valid
 	@OneToMany(mappedBy = "championship", targetEntity = ChampionshipStage.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ChampionshipStage> championshipStages;
@@ -66,6 +73,14 @@ public class Championship implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description == null ? null : description.toUpperCase();
+	}
+
+	public Integer getQtyStages() {
+		return qtyStages;
+	}
+
+	public void setQtyStages(Integer qtyStages) {
+		this.qtyStages = qtyStages;
 	}
 
 	public List<ChampionshipStage> getChampionshipStages() {
@@ -99,7 +114,7 @@ public class Championship implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

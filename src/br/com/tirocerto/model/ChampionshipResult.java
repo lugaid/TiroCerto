@@ -8,32 +8,40 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import br.com.caelum.vraptor.ioc.Component;
 
 @Entity
 @Component
-public class ChampionshipResult implements Serializable {
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"championshipEnrolled_championship_id",
+		"championshipEnrolled_associate_id", 
+		"championshipStage_id",
+		"serie"}) })
+public class ChampionshipResult implements Serializable,
+		Comparable<ChampionshipResult> {
 	private static final long serialVersionUID = -3847523785697942107L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@ManyToOne(fetch=FetchType.EAGER, optional=false)
+
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private ChampionshipEnrolled championshipEnrolled;
-	
-	@ManyToOne(fetch=FetchType.EAGER, optional=false)
+
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private ChampionshipStage championshipStage;
 
 	@Min(value = 1)
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Integer serie;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivisionX;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision10;
@@ -41,27 +49,27 @@ public class ChampionshipResult implements Serializable {
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision9;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision8;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision7;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision6;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision5;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision4;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision3;
@@ -69,25 +77,26 @@ public class ChampionshipResult implements Serializable {
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision2;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer targetDivision1;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer points;
-	
+
 	@Min(value = 0)
 	@Column()
 	private Integer penalty;
-	
-	private transient Integer total;
-	
+
+	@Column()
+	private Integer total;
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -96,7 +105,8 @@ public class ChampionshipResult implements Serializable {
 		return championshipEnrolled;
 	}
 
-	public void setChampionshipEnrolled(ChampionshipEnrolled championshipEnrolled) {
+	public void setChampionshipEnrolled(
+			ChampionshipEnrolled championshipEnrolled) {
 		this.championshipEnrolled = championshipEnrolled;
 	}
 
@@ -107,7 +117,7 @@ public class ChampionshipResult implements Serializable {
 	public void setChampionshipStage(ChampionshipStage championshipStage) {
 		this.championshipStage = championshipStage;
 	}
-	
+
 	public Integer getSerie() {
 		return serie;
 	}
@@ -251,5 +261,108 @@ public class ChampionshipResult implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(ChampionshipResult championshipResult) {
+		if (this.getTotal() > championshipResult.getTotal()) {
+			return 1;
+		}
+
+		if (this.getTotal() < championshipResult.getTotal()) {
+			return -1;
+		}
+
+		if (this.getTargetDivisionX() > championshipResult.getTargetDivisionX()) {
+			return 1;
+		}
+
+		if (this.getTargetDivisionX() < championshipResult.getTargetDivisionX()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision10() > championshipResult
+				.getTargetDivision10()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision10() < championshipResult
+				.getTargetDivision10()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision9() > championshipResult.getTargetDivision9()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision9() < championshipResult.getTargetDivision9()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision8() > championshipResult.getTargetDivision8()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision8() < championshipResult.getTargetDivision8()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision7() > championshipResult.getTargetDivision7()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision7() < championshipResult.getTargetDivision7()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision6() > championshipResult.getTargetDivision6()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision6() < championshipResult.getTargetDivision6()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision5() > championshipResult.getTargetDivision5()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision5() < championshipResult.getTargetDivision5()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision4() > championshipResult.getTargetDivision4()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision4() < championshipResult.getTargetDivision4()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision3() > championshipResult.getTargetDivision3()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision3() < championshipResult.getTargetDivision3()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision2() > championshipResult.getTargetDivision2()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision2() < championshipResult.getTargetDivision2()) {
+			return -1;
+		}
+
+		if (this.getTargetDivision1() > championshipResult.getTargetDivision1()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision1() < championshipResult.getTargetDivision1()) {
+			return -1;
+		}
+
+		return 0;
 	}
 }

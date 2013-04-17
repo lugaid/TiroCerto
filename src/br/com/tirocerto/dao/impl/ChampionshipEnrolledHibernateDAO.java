@@ -4,7 +4,6 @@ package br.com.tirocerto.dao.impl;
 import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;

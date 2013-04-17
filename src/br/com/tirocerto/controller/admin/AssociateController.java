@@ -51,8 +51,7 @@ public class AssociateController {
 		result.forwardTo(this).show();
 	}
 	
-	@Get
-	@Path("/edit/{id}")
+	@Get("/edit/{id}")
 	public void formEdit(Long id) {
 		Associate associate = loadById(id);
 		
@@ -61,8 +60,7 @@ public class AssociateController {
 		result.forwardTo(this).show();
 	}
 	
-	@Get
-	@Path("/delete/{id}")
+	@Get("/delete/{id}")
 	public void formDelete(Long id) {
 		Associate associate = loadById(id);
 		
@@ -71,8 +69,12 @@ public class AssociateController {
 		result.forwardTo(this).show();
 	}
 	
-	@Put
-	@Path("")
+	@Post("/validateEmail")
+	public void validateEmail(final Associate associate) {
+		result.include("valid", !associateDAO.existsEmail(associate));
+	}
+	
+	@Put("")
 	public void save(final Associate associate) {
 		//bean validator
 		validator.validate(associate);
@@ -86,8 +88,8 @@ public class AssociateController {
 		result.forwardTo(this).list();
 	}
 	
-	@Post
-	@Path("")
+	
+	@Post("")
 	public void update(final Associate associate) {
 		//bean validator
 		validator.validate(associate);
@@ -101,8 +103,8 @@ public class AssociateController {
 		result.forwardTo(this).list();
 	}
 	
-	@Delete
-	@Path("")
+	
+	@Delete("")
 	public void delete(final Associate associate) {
 		associateDAO.delete(associate);
 		result.include("success", "delete");

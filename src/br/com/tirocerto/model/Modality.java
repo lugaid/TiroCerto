@@ -44,6 +44,11 @@ public class Modality implements Serializable {
 	private Integer maxSeries;
 	
 	@Min(value = 1)
+	@Max(value = 100)
+	@Column()
+	private Integer qtySeries;
+	
+	@Min(value = 1)
 	@Column()
 	private Integer targetXValue;
 	
@@ -84,6 +89,14 @@ public class Modality implements Serializable {
 		this.maxSeries = maxSeries;
 	}
 
+	public Integer getQtySeries() {
+		return qtySeries;
+	}
+
+	public void setQtySeries(Integer qtySeries) {
+		this.qtySeries = qtySeries;
+	}
+
 	public Integer getTargetXValue() {
 		return targetXValue;
 	}
@@ -104,6 +117,7 @@ public class Modality implements Serializable {
 	public enum ModalityPointType {
 		TARGET, POINT;
 	}
+
 
 	@Override
 	public int hashCode() {

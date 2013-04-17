@@ -154,7 +154,24 @@
 					minlength : 5,
 					maxlength : 50,
 					required : true,
-					email : true
+					email : true,
+					remote : {
+						url: '<c:url value="/admin/associate/validateEmail"/>',
+						type: "post",
+				        dataType: "json",
+				        data: {
+				        	'associate.id' : function() {
+				        		return $("#associate\\.id").val();
+				        	}
+				        },
+				        validTest: function(response) {
+				        	alert(response['valid']);
+				            return response['valid'];
+				        },
+				        getInvalidMessage: function(response) {
+				            return response['validation']['messages']['message'];
+				        }
+					}
 				},
 
 				'associate.confirmEmail' : {
@@ -191,6 +208,12 @@
 			success : function(label) {
 				$(label).closest('.control-group').removeClass('error');
 				$(label).closest('.control-group').addClass('success');
+			},
+			
+			messages:{
+				'associate.email' : {
+					remote: jQuery.format("<fmt:message key="already.exists" />")
+				}
 			}
 		});
 

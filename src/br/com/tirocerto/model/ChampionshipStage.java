@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -30,6 +34,12 @@ public class ChampionshipStage implements Serializable {
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn
 	private Championship championship;
+	
+	@NotEmpty
+	@NotNull
+	@Length(min = 10, max = 50)
+	@Column(length = 50)
+	private String description;
 	
 	@NotNull
 	private Calendar date;
@@ -60,6 +70,14 @@ public class ChampionshipStage implements Serializable {
 
 	public void setDate(Calendar date) {
 		this.date = date;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<ChampionshipResult> getChampionshipResult() {
