@@ -11,15 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import br.com.caelum.vraptor.ioc.Component;
 
 @Entity
 @Component
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"championshipEnrolled_championship_id",
-		"championshipEnrolled_associate_id", 
-		"championshipStage_id",
-		"serie"}) })
+		"championshipEnrolled_associate_id", "championshipStage_id", "serie" }) })
 public class ChampionshipResult implements Serializable,
 		Comparable<ChampionshipResult> {
 	private static final long serialVersionUID = -3847523785697942107L;
@@ -84,13 +84,16 @@ public class ChampionshipResult implements Serializable,
 
 	@Min(value = 0)
 	@Column()
+	@NotNull()
 	private Integer points;
 
 	@Min(value = 0)
 	@Column()
+	@NotNull()
 	private Integer penalty;
 
 	@Column()
+	@NotNull()
 	private Integer total;
 
 	public Long getId() {
@@ -265,101 +268,274 @@ public class ChampionshipResult implements Serializable,
 
 	@Override
 	public int compareTo(ChampionshipResult championshipResult) {
-		if (this.getTotal() > championshipResult.getTotal()) {
+		if (this.getTotal() != null && championshipResult.getTotal() == null) {
 			return 1;
 		}
 
-		if (this.getTotal() < championshipResult.getTotal()) {
+		if (this.getTotal() == null && championshipResult.getTotal() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivisionX() > championshipResult.getTargetDivisionX()) {
+		if (this.getTotal() != null && championshipResult.getTotal() != null
+				&& this.getTotal() > championshipResult.getTotal()) {
 			return 1;
 		}
 
-		if (this.getTargetDivisionX() < championshipResult.getTargetDivisionX()) {
+		if (this.getTotal() != null && championshipResult.getTotal() != null
+				&& this.getTotal() < championshipResult.getTotal()) {
+			return -1;
+		}
+		if (this.getTargetDivisionX() != null
+				&& championshipResult.getTargetDivisionX() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivisionX() == null
+				&& championshipResult.getTargetDivisionX() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision10() > championshipResult
-				.getTargetDivision10()) {
+		if (this.getTargetDivisionX() != null
+				&& championshipResult.getTargetDivisionX() != null
+				&& this.getTargetDivisionX() > championshipResult
+						.getTargetDivisionX()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision10() < championshipResult
-				.getTargetDivision10()) {
+		if (this.getTargetDivisionX() != null
+				&& championshipResult.getTargetDivisionX() != null
+				&& this.getTargetDivisionX() < championshipResult
+						.getTargetDivisionX()) {
+			return -1;
+		}
+		if (this.getTargetDivision10() != null
+				&& championshipResult.getTargetDivision10() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision10() == null
+				&& championshipResult.getTargetDivision10() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision9() > championshipResult.getTargetDivision9()) {
+		if (this.getTargetDivision10() != null
+				&& championshipResult.getTargetDivision10() != null
+				&& this.getTargetDivision10() > championshipResult
+						.getTargetDivision10()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision9() < championshipResult.getTargetDivision9()) {
+		if (this.getTargetDivision10() != null
+				&& championshipResult.getTargetDivision10() != null
+				&& this.getTargetDivision10() < championshipResult
+						.getTargetDivision10()) {
+			return -1;
+		}
+		if (this.getTargetDivision9() != null
+				&& championshipResult.getTargetDivision9() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision9() == null
+				&& championshipResult.getTargetDivision9() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision8() > championshipResult.getTargetDivision8()) {
+		if (this.getTargetDivision9() != null
+				&& championshipResult.getTargetDivision9() != null
+				&& this.getTargetDivision9() > championshipResult
+						.getTargetDivision9()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision8() < championshipResult.getTargetDivision8()) {
+		if (this.getTargetDivision9() != null
+				&& championshipResult.getTargetDivision9() != null
+				&& this.getTargetDivision9() < championshipResult
+						.getTargetDivision9()) {
+			return -1;
+		}
+		if (this.getTargetDivision8() != null
+				&& championshipResult.getTargetDivision8() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision8() == null
+				&& championshipResult.getTargetDivision8() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision7() > championshipResult.getTargetDivision7()) {
+		if (this.getTargetDivision8() != null
+				&& championshipResult.getTargetDivision8() != null
+				&& this.getTargetDivision8() > championshipResult
+						.getTargetDivision8()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision7() < championshipResult.getTargetDivision7()) {
+		if (this.getTargetDivision8() != null
+				&& championshipResult.getTargetDivision8() != null
+				&& this.getTargetDivision8() < championshipResult
+						.getTargetDivision8()) {
+			return -1;
+		}
+		if (this.getTargetDivision7() != null
+				&& championshipResult.getTargetDivision7() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision7() == null
+				&& championshipResult.getTargetDivision7() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision6() > championshipResult.getTargetDivision6()) {
+		if (this.getTargetDivision7() != null
+				&& championshipResult.getTargetDivision7() != null
+				&& this.getTargetDivision7() > championshipResult
+						.getTargetDivision7()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision6() < championshipResult.getTargetDivision6()) {
+		if (this.getTargetDivision7() != null
+				&& championshipResult.getTargetDivision7() != null
+				&& this.getTargetDivision7() < championshipResult
+						.getTargetDivision7()) {
+			return -1;
+		}
+		if (this.getTargetDivision6() != null
+				&& championshipResult.getTargetDivision6() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision6() == null
+				&& championshipResult.getTargetDivision6() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision5() > championshipResult.getTargetDivision5()) {
+		if (this.getTargetDivision6() != null
+				&& championshipResult.getTargetDivision6() != null
+				&& this.getTargetDivision6() > championshipResult
+						.getTargetDivision6()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision5() < championshipResult.getTargetDivision5()) {
+		if (this.getTargetDivision6() != null
+				&& championshipResult.getTargetDivision6() != null
+				&& this.getTargetDivision6() < championshipResult
+						.getTargetDivision6()) {
+			return -1;
+		}
+		if (this.getTargetDivision5() != null
+				&& championshipResult.getTargetDivision5() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision5() == null
+				&& championshipResult.getTargetDivision5() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision4() > championshipResult.getTargetDivision4()) {
+		if (this.getTargetDivision5() != null
+				&& championshipResult.getTargetDivision5() != null
+				&& this.getTargetDivision5() > championshipResult
+						.getTargetDivision5()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision4() < championshipResult.getTargetDivision4()) {
+		if (this.getTargetDivision5() != null
+				&& championshipResult.getTargetDivision5() != null
+				&& this.getTargetDivision5() < championshipResult
+						.getTargetDivision5()) {
+			return -1;
+		}
+		if (this.getTargetDivision4() != null
+				&& championshipResult.getTargetDivision4() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision4() == null
+				&& championshipResult.getTargetDivision4() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision3() > championshipResult.getTargetDivision3()) {
+		if (this.getTargetDivision4() != null
+				&& championshipResult.getTargetDivision4() != null
+				&& this.getTargetDivision4() > championshipResult
+						.getTargetDivision4()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision3() < championshipResult.getTargetDivision3()) {
+		if (this.getTargetDivision4() != null
+				&& championshipResult.getTargetDivision4() != null
+				&& this.getTargetDivision4() < championshipResult
+						.getTargetDivision4()) {
+			return -1;
+		}
+		if (this.getTargetDivision3() != null
+				&& championshipResult.getTargetDivision3() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision3() == null
+				&& championshipResult.getTargetDivision3() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision2() > championshipResult.getTargetDivision2()) {
+		if (this.getTargetDivision3() != null
+				&& championshipResult.getTargetDivision3() != null
+				&& this.getTargetDivision3() > championshipResult
+						.getTargetDivision3()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision2() < championshipResult.getTargetDivision2()) {
+		if (this.getTargetDivision3() != null
+				&& championshipResult.getTargetDivision3() != null
+				&& this.getTargetDivision3() < championshipResult
+						.getTargetDivision3()) {
+			return -1;
+		}
+		if (this.getTargetDivision2() != null
+				&& championshipResult.getTargetDivision2() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision2() == null
+				&& championshipResult.getTargetDivision2() != null) {
 			return -1;
 		}
 
-		if (this.getTargetDivision1() > championshipResult.getTargetDivision1()) {
+		if (this.getTargetDivision2() != null
+				&& championshipResult.getTargetDivision2() != null
+				&& this.getTargetDivision2() > championshipResult
+						.getTargetDivision2()) {
 			return 1;
 		}
 
-		if (this.getTargetDivision1() < championshipResult.getTargetDivision1()) {
+		if (this.getTargetDivision2() != null
+				&& championshipResult.getTargetDivision2() != null
+				&& this.getTargetDivision2() < championshipResult
+						.getTargetDivision2()) {
+			return -1;
+		}
+		if (this.getTargetDivision1() != null
+				&& championshipResult.getTargetDivision1() == null) {
+			return 1;
+		}
+
+		if (this.getTargetDivision1() == null
+				&& championshipResult.getTargetDivision1() != null) {
+			return -1;
+		}
+
+		if (this.getTargetDivision1() != null
+				&& championshipResult.getTargetDivision1() != null
+				&& this.getTargetDivision1() > championshipResult
+						.getTargetDivision1()) {
+			return 1;
+		}
+
+		if (this.getTargetDivision1() != null
+				&& championshipResult.getTargetDivision1() != null
+				&& this.getTargetDivision1() < championshipResult
+						.getTargetDivision1()) {
 			return -1;
 		}
 

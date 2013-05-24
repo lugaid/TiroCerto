@@ -1,6 +1,6 @@
 package br.com.tirocerto.dao.impl;
 
-import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,7 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 		List<ChampionshipStage> removedChampinshipStages = new ArrayList<>();
 		removedChampinshipStages.addAll(oldChampinshipStages);
 		removedChampinshipStages.removeAll(championship.getChampionshipStages());
-		
+
 		for (ChampionshipStage removedChampionshipStage : removedChampinshipStages) {
 			championshipStageHibernateDAO
 					.delete(removedChampionshipStage);

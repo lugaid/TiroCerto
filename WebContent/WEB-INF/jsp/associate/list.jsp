@@ -42,10 +42,12 @@
 				"sTitle" : "<fmt:message key="associate.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
+				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "cr",
-				"sDefaultContent" : ""
+				"sDefaultContent" : "",
+				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "name",
@@ -57,6 +59,7 @@
 				"mDataProp": "id",
 				"bSortable" : false,
 				"sWidth" : "10%",
+				"bSearchable" : false,
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
 	                '<a href="<c:url value="/admin/associate/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +

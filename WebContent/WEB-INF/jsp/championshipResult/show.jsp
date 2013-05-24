@@ -303,7 +303,7 @@
 									placeholder="<fmt:message key="championshipResult.points"/>"
 									value="${championshipResult.points}"
 									<c:if test="${championshipStage.championship.modality.modalityPointType == 'TARGET'}">
-										disabled="disabled"
+										readonly="readonly"
 									</c:if> />
 							</div>
 						</div>
@@ -329,7 +329,7 @@
 								<input class="input-mini" type="text"
 									id="championshipResult.total" name="championshipResult.total"
 									placeholder="<fmt:message key="championshipResult.total"/>"
-									value="${championshipResult.total}" disabled="disabled" />
+									value="${championshipResult.total}" readonly="readonly" />
 							</div>
 						</div>
 					</td>

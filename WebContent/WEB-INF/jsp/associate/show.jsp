@@ -163,13 +163,6 @@
 				        	'associate.id' : function() {
 				        		return $("#associate\\.id").val();
 				        	}
-				        },
-				        validTest: function(response) {
-				        	alert(response['valid']);
-				            return response['valid'];
-				        },
-				        getInvalidMessage: function(response) {
-				            return response['validation']['messages']['message'];
 				        }
 					}
 				},

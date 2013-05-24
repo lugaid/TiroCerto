@@ -2,8 +2,6 @@ package br.com.tirocerto.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +55,7 @@ public class Championship implements Serializable {
 	private Modality modality;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="championship")
-	private Set<ChampionshipEnrolled> championshipEnrolled;
+	private List<ChampionshipEnrolled> championshipEnrolled;
 	
 	public Long getId() {
 		return id;
@@ -99,11 +97,11 @@ public class Championship implements Serializable {
 		this.modality = modality;
 	}
 	
-	public Set<ChampionshipEnrolled> getChampionshipEnrolled() {
+	public List<ChampionshipEnrolled> getChampionshipEnrolled() {
 		return championshipEnrolled;
 	}
 
-	public void setChampionshipEnrolled(Set<ChampionshipEnrolled> championshipEnrolled) {
+	public void setChampionshipEnrolled(List<ChampionshipEnrolled> championshipEnrolled) {
 		this.championshipEnrolled = championshipEnrolled;
 	}
 

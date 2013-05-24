@@ -20,7 +20,7 @@ public class ChampionshipEnrolled implements Serializable {
 	private static final long serialVersionUID = -1275977111673169430L;
 
 	@Id
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL , fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false)
 	private Championship championship;
 	
@@ -32,6 +32,14 @@ public class ChampionshipEnrolled implements Serializable {
 	@Valid
 	@OneToMany(mappedBy = "championshipEnrolled", targetEntity = ChampionshipResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ChampionshipResult> championshipResult;
+	
+	@Valid
+	@OneToMany(mappedBy = "championshipEnrolled", targetEntity = ChampionshipStageRanking.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ChampionshipStageRanking> championshipStageRanking;
+	
+	@Valid
+	@OneToMany(mappedBy = "championshipEnrolled", targetEntity = ChampionshipRanking.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ChampionshipRanking> championshipRanking;
 	
 	public Championship getChampionship() {
 		return championship;
@@ -55,6 +63,23 @@ public class ChampionshipEnrolled implements Serializable {
 
 	public void setChampionshipResult(List<ChampionshipResult> championshipResult) {
 		this.championshipResult = championshipResult;
+	}
+
+	public List<ChampionshipStageRanking> getChampionshipStageRanking() {
+		return championshipStageRanking;
+	}
+
+	public void setChampionshipStageRanking(
+			List<ChampionshipStageRanking> championshipStageRanking) {
+		this.championshipStageRanking = championshipStageRanking;
+	}
+
+	public List<ChampionshipRanking> getChampionshipRanking() {
+		return championshipRanking;
+	}
+
+	public void setChampionshipRanking(List<ChampionshipRanking> championshipRanking) {
+		this.championshipRanking = championshipRanking;
 	}
 
 	@Override

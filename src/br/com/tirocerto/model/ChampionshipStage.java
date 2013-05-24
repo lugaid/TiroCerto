@@ -31,7 +31,7 @@ public class ChampionshipStage implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false)
 	@JoinColumn
 	private Championship championship;
 	
@@ -47,6 +47,10 @@ public class ChampionshipStage implements Serializable {
 	@Valid
 	@OneToMany(mappedBy = "championshipStage", targetEntity = ChampionshipResult.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ChampionshipResult> championshipResult;
+	
+	@Valid
+	@OneToMany(mappedBy = "championshipStage", targetEntity = ChampionshipStageRanking.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ChampionshipStageRanking> championshipStageRanking;
 	
 	public Long getId() {
 		return id;
@@ -86,6 +90,15 @@ public class ChampionshipStage implements Serializable {
 
 	public void setChampionshipResult(List<ChampionshipResult> championshipResult) {
 		this.championshipResult = championshipResult;
+	}
+
+	public List<ChampionshipStageRanking> getChampionshipStageRanking() {
+		return championshipStageRanking;
+	}
+
+	public void setChampionshipStageRanking(
+			List<ChampionshipStageRanking> championshipStageRanking) {
+		this.championshipStageRanking = championshipStageRanking;
 	}
 
 	@Override

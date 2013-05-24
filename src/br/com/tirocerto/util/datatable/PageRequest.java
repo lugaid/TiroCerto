@@ -3,6 +3,7 @@
 package br.com.tirocerto.util.datatable;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 public class PageRequest implements Serializable {
@@ -15,6 +16,7 @@ public class PageRequest implements Serializable {
 	private int start;
 	private String search;
 	private Map<String, String> sort;
+	private List<String> searchOn;
 
 	public PageRequest() {
 		this.start = 0;
@@ -68,6 +70,14 @@ public class PageRequest implements Serializable {
 
 	public void setSort(Map<String, String> sort) {
 		this.sort = sort;
+	}
+
+	public List<String> getSearchOn() {
+		return searchOn;
+	}
+
+	public void setSearchOn(List<String> searchOn) {
+		this.searchOn = searchOn;
 	}
 
 	@Override

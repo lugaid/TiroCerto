@@ -1,7 +1,7 @@
 package br.com.tirocerto.dao.impl;
 
 
-import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

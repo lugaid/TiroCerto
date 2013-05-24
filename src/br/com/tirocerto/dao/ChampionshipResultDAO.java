@@ -1,5 +1,7 @@
 package br.com.tirocerto.dao;
 
+import java.util.List;
+
 import br.com.tirocerto.model.ChampionshipResult;
 import br.com.tirocerto.model.ChampionshipStage;
 import br.com.tirocerto.util.datatable.Page;
@@ -10,5 +12,6 @@ public interface ChampionshipResultDAO {
 	void update(ChampionshipResult championshipResult);
 	void delete(ChampionshipResult championshipResult);
 	ChampionshipResult byId(Long id);
+	List<ChampionshipResult> byStage(Long id);
 	Page<ChampionshipResult> paginateByChampionshipStage(PageRequest pageRequest, ChampionshipStage championshipStage);
 }

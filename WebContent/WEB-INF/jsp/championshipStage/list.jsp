@@ -5,7 +5,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>${championship.description}</h3>
+    <h3><fmt:message key="championship.championshipStages"/> - ${championship.description}</h3>
 </div>
 
 <div class="modal-body">
@@ -14,7 +14,8 @@
 			id="championshipStageList">
 			<thead>
 				<tr>
-					<th class="sorting" role="columnheader"><fmt:message key="championship.championshipStages"/></th>
+					<th class="sorting" role="columnheader"><fmt:message key="championshipStage.description"/></th>
+					<th class="sorting" role="columnheader"><fmt:message key="championshipStage.date"/></th>
 					<th class="sorting_disabled" role="columnheader"  style="width: 22%;"><fmt:message key="actions"/></th>
 	   			</tr>
 	 		</thead>
@@ -22,6 +23,7 @@
 		   		<c:forEach var="championshipStage"
 					items="${championship.championshipStages}" varStatus="iteration">
 					<tr>
+						<td>${championshipStage.description}</td>
 						<td><fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/></td>
 						<td><a href="<c:url value="/admin/championshipResult/"/>${championshipStage.id}" class="btn btn-mini btn-info"><fmt:message key="championshipResult.edit" /></a></td>
 					</tr>

@@ -4,11 +4,12 @@ package br.com.tirocerto.util.datatable;
 
 import static com.google.common.base.Objects.firstNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletRequest;
 
 import br.com.caelum.vraptor.Convert;
@@ -31,7 +32,8 @@ public class DatatableRequestConverter implements Converter<PageRequest> {
 
 		convertDefault();
 		convertSort();
-
+		convertSearchOn();
+		
 		return pageRequest;
 	}
 	
@@ -62,6 +64,21 @@ public class DatatableRequestConverter implements Converter<PageRequest> {
 		}
 		
 		pageRequest.setSort(sort);
+	}
+	
+	private void convertSearchOn() {
+		List<String> searchOn = new ArrayList<String>();
+		
+		//find teh iSortCol entries
+		for(Entry<String, String[]> entry : this.request.getParameterMap().entrySet()) {
+			if(entry.getKey().startsWith("bSearchable_") && entry.getValue()[0].equals("true")) {
+				String column = findColumnName(entry.getKey().replaceAll("^(.*)_(.*)$", "$2"));
+				
+				searchOn.add(column);
+			}
+		}
+		
+		pageRequest.setSearchOn(searchOn);
 	}
 	
 	private String findSortDirection(String sort) {

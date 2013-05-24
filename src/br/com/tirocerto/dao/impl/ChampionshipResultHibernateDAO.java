@@ -1,6 +1,6 @@
 package br.com.tirocerto.dao.impl;
 
-import static br.com.tirocerto.util.hibernate.PaginateSortedCollumns.addSortedColumns;
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
 
 import java.util.List;
 import org.hibernate.Criteria;
@@ -9,6 +9,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
+import br.com.tirocerto.business.ChampionshipStageRankingBusiness;
 import br.com.tirocerto.dao.ChampionshipResultDAO;
 import br.com.tirocerto.model.ChampionshipResult;
 import br.com.tirocerto.model.ChampionshipStage;
@@ -20,24 +21,34 @@ import br.com.tirocerto.util.datatable.PageResponse;
 @RequestScoped
 public class ChampionshipResultHibernateDAO implements ChampionshipResultDAO {
 	private Session session;
+	private ChampionshipStageRankingBusiness championshipStageRankingBusiness;
 
-	public ChampionshipResultHibernateDAO(Session session) {
+	public ChampionshipResultHibernateDAO(Session session,
+			ChampionshipStageRankingBusiness championshipStageRankingBusiness) {
 		this.session = session;
+		this.championshipStageRankingBusiness = championshipStageRankingBusiness;
 	}
 
 	@Override
 	public void save(ChampionshipResult championshipResult) {
 		session.save(championshipResult);
+		championshipStageRankingBusiness.recalcRanking(championshipResult
+				.getChampionshipStage().getId());
 	}
 
 	@Override
 	public void update(ChampionshipResult championshipResult) {
 		session.update(championshipResult);
+		championshipStageRankingBusiness.recalcRanking(championshipResult
+				.getChampionshipStage().getId());
 	}
 
 	@Override
 	public void delete(ChampionshipResult championshipResult) {
 		session.delete(championshipResult);
+		session.flush();
+		championshipStageRankingBusiness.recalcRanking(championshipResult
+				.getChampionshipStage().getId());
 	}
 
 	@Override
@@ -52,16 +63,15 @@ public class ChampionshipResultHibernateDAO implements ChampionshipResultDAO {
 
 		String nome = pageRequest.getSearch() == null ? "" : pageRequest
 				.getSearch();
-		
+
 		Criteria criteria = session.createCriteria(ChampionshipResult.class)
 				.setReadOnly(true);
-		
+
 		criteria.createAlias("championshipEnrolled", "ce");
 		criteria.createAlias("ce.associate", "as");
 
-		criteria.add(Restrictions.ilike("as.name",
-				nome, MatchMode.ANYWHERE));
-		
+		criteria.add(Restrictions.ilike("as.name", nome, MatchMode.ANYWHERE));
+
 		criteria.add(Restrictions.eq("championshipStage.id",
 				championshipStage.getId()));
 
@@ -69,7 +79,7 @@ public class ChampionshipResultHibernateDAO implements ChampionshipResultDAO {
 		criteria.setMaxResults(pageRequest.getSize());
 
 		List<ChampionshipResult> resultList = criteria.list();
-		
+
 		addSortedColumns(pageRequest, criteria);
 
 		Page<ChampionshipResult> page = new PageResponse<ChampionshipResult>(
@@ -84,8 +94,19 @@ public class ChampionshipResultHibernateDAO implements ChampionshipResultDAO {
 		Long count = (Long) session
 				.createQuery(
 						"select count(*) from ChampionshipResult where championshipStage.id = :id")
-				.setLong("id", championshipStage.getId())
-				.uniqueResult();
+				.setLong("id", championshipStage.getId()).uniqueResult();
 		return count == null ? 0 : count;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChampionshipResult> byStage(Long id) {
+		Criteria criteria = session.createCriteria(ChampionshipResult.class);
+
+		criteria.createAlias("championshipStage", "cs");
+
+		criteria.add(Restrictions.eq("cd.id", id));
+
+		return criteria.list();
 	}
 }
