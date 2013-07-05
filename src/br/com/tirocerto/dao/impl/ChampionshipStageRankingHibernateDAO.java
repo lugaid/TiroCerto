@@ -1,12 +1,14 @@
 package br.com.tirocerto.dao.impl;
 
 import java.util.List;
-
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.ChampionshipStageRankingDAO;
+import br.com.tirocerto.model.ChampionshipEnrolled;
 import br.com.tirocerto.model.ChampionshipStageRanking;
 
 @Component
@@ -52,5 +54,18 @@ public class ChampionshipStageRankingHibernateDAO implements
 				.createQuery("delete ChampionshipStageRanking where championshipStage.id = :id");
 		query.setLong("id", stageId);
 		query.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChampionshipStageRanking> byEnrolled(ChampionshipEnrolled championshipEnrolled) {
+		Criteria criteria = session.createCriteria(ChampionshipStageRanking.class);
+
+		criteria.createAlias("championshipEnrolled", "ce");
+		
+		criteria.add(Restrictions.eq("ce.championship.id", championshipEnrolled.getChampionship().getId()));
+		criteria.add(Restrictions.eq("ce.associate.id", championshipEnrolled.getAssociate().getId()));
+
+		return criteria.list();
 	}
 }

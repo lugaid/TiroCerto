@@ -55,7 +55,7 @@ public class Championship implements Serializable {
 	private Modality modality;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="championship")
-	private List<ChampionshipEnrolled> championshipEnrolled;
+	private List<ChampionshipEnrolled> championshipEnrolleds;
 	
 	public Long getId() {
 		return id;
@@ -98,11 +98,11 @@ public class Championship implements Serializable {
 	}
 	
 	public List<ChampionshipEnrolled> getChampionshipEnrolled() {
-		return championshipEnrolled;
+		return championshipEnrolleds;
 	}
 
-	public void setChampionshipEnrolled(List<ChampionshipEnrolled> championshipEnrolled) {
-		this.championshipEnrolled = championshipEnrolled;
+	public void setChampionshipEnrolled(List<ChampionshipEnrolled> championshipEnrolleds) {
+		this.championshipEnrolleds = championshipEnrolleds;
 	}
 
 	@Override

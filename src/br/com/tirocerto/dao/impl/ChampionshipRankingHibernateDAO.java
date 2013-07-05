@@ -1,8 +1,9 @@
 package br.com.tirocerto.dao.impl;
 
 import java.util.List;
-import org.hibernate.Query;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.ChampionshipRankingDAO;
@@ -32,6 +33,7 @@ public class ChampionshipRankingHibernateDAO implements ChampionshipRankingDAO {
 		for (ChampionshipRanking championshipRanking : championshipRankings) {
 			save(championshipRanking);
 		}
+		session.flush();
 	}
 
 	@Override
@@ -44,12 +46,20 @@ public class ChampionshipRankingHibernateDAO implements ChampionshipRankingDAO {
 		session.delete(championshipRanking);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteByChampionship(Long championshipId) {
-		Query query = session
-				.createQuery("delete ChampionshipRanking where championshipEnrolled.championship.id = :id");
-		query.setLong("id", championshipId);
-		query.executeUpdate();
+		Criteria criteria = session.createCriteria(ChampionshipRanking.class)
+				.setReadOnly(true);
+
+		criteria.add(Restrictions
+				.eq("championshipEnrolled.championship.id", championshipId));
+		
+		List<ChampionshipRanking> resultList = criteria.list();
+		
+		for(ChampionshipRanking championshipRanking : resultList) {
+			delete(championshipRanking);
+		}
 	}
 
 }

@@ -2,6 +2,7 @@ package br.com.tirocerto.dao;
 
 import java.util.List;
 
+import br.com.tirocerto.model.ChampionshipEnrolled;
 import br.com.tirocerto.model.ChampionshipStageRanking;
 
 public interface ChampionshipStageRankingDAO {
@@ -10,4 +11,5 @@ public interface ChampionshipStageRankingDAO {
 	void update(ChampionshipStageRanking championshipStageRanking);
 	void delete(ChampionshipStageRanking championshipStageRanking);
 	void deleteByStage(Long stageId);
+	List<ChampionshipStageRanking> byEnrolled(ChampionshipEnrolled championshipEnrolled);
 }
