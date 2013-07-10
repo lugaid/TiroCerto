@@ -62,4 +62,18 @@ public class ChampionshipRankingHibernateDAO implements ChampionshipRankingDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChampionshipRanking> byChampionship(Long championshipId) {
+		Criteria criteria = session.createCriteria(ChampionshipRanking.class)
+				.setReadOnly(true);
+
+		criteria.add(Restrictions
+				.eq("championshipEnrolled.championship.id", championshipId));
+		
+		List<ChampionshipRanking> resultList = criteria.list();
+		
+		return resultList;
+	}
+
 }

@@ -35,7 +35,6 @@
 
 </div>
 
-
 <%@ include file="/include_js.jsp"%>
 
 <script type="text/javascript">
@@ -60,6 +59,7 @@
 	                return '<div class="btn-group">' +
 	                '<a href="#" id="championshipEnrolledEdit" class="btn btn-mini btn-inverse" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/admin/championshipEnrolled/"/>' + oObj.aData['id'] + '"><fmt:message key="championshipEnrolled.edit" /></a>' +
 	                '<a href="#" id="championshipEnrolledEdit" class="btn btn-mini btn-info" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/admin/championshipStage/"/>' + oObj.aData['id'] + '"><fmt:message key="championshipResult.edit" /></a>' +
+	                '<a href="#" id="championshipEnrolledEdit" class="btn btn-mini btn-primary" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/championshipRanking/"/>' + oObj.aData['id'] + '"><fmt:message key="championshipRanking" /></a>' +
 	                '<a href="<c:url value="/admin/championship/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +
 	                '<a href="<c:url value="/admin/championship/delete/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-danger"><fmt:message key="delete" /></a>' +
 	                '</div>';

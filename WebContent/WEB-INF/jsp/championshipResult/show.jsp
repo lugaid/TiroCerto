@@ -410,6 +410,11 @@
 					min : 0
 				},
 
+				'championshipResult.penalty' : {
+					min : 0,
+					required : true
+				},
+
 				'championshipResult.point' : {
 					min : 0
 				}

@@ -10,4 +10,5 @@ public interface ChampionshipRankingDAO {
 	void update(ChampionshipRanking championshipRanking);
 	void delete(ChampionshipRanking championshipRanking);
 	void deleteByChampionship(Long championshipId);
+	List<ChampionshipRanking> byChampionship(Long championshipId);
 }

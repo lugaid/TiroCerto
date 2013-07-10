@@ -5,32 +5,32 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3><fmt:message key="championshipStageRanking.model.description"/></h3>
-    <h4>${championshipStage.championship.description} - ${championshipStage.description} - <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/></h4>
+    <h3><fmt:message key="championshipRanking"/></h3>
+    <h4>${championship.description}</h4>
 </div>
 
 <div class="modal-body">
 	<div style="width: 85%; margin: 0px auto;">
 		<table class="table table-striped table-bordered"
-			id="championshipStageList">
+			id="championshipRanking">
 			<thead>
 				<tr>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.position"/></th>
+					<th role="columnheader"><fmt:message key="championshipRanking.position"/></th>
 					<th role="columnheader"><fmt:message key="associate.name"/></th>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.points"/></th>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.penalty"/></th>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.total"/></th>
+					<th role="columnheader"><fmt:message key="championshipRanking.points"/></th>
+					<th role="columnheader"><fmt:message key="championshipRanking.penalty"/></th>
+					<th role="columnheader"><fmt:message key="championshipRanking.total"/></th>
 	   			</tr>
 	 		</thead>
 		   	<tbody>
-		   		<c:forEach var="championshipStageRanking"
-					items="${championshipStage.championshipStageRanking}" varStatus="iteration">
+		   		<c:forEach var="championshipRanking"
+					items="${championshipRanking}" varStatus="iteration">
 					<tr>
-						<td>${championshipStageRanking.position}</td>
-						<td>${championshipStageRanking.championshipEnrolled.associate.name}</td>
-						<td>${championshipStageRanking.points}</td>
-						<td>${championshipStageRanking.penalty}</td>
-						<td>${championshipStageRanking.total}</td>
+						<td>${championshipRanking.position}</td>
+						<td>${championshipRanking.championshipEnrolled.associate.name}</td>
+						<td>${championshipRanking.points}</td>
+						<td>${championshipRanking.penalty}</td>
+						<td>${championshipRanking.total}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
