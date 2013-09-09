@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import br.com.tirocerto.dao.ChampionshipDAO;
 import br.com.tirocerto.dao.ModalityDAO;
 import br.com.tirocerto.model.Modality;
 import br.com.tirocerto.util.datatable.Page;
@@ -24,10 +25,12 @@ public class ModalityController {
 	private Result result;
 	private ModalityDAO modalityDAO;
 	private Validator validator;
+	private ChampionshipDAO championshipDAO;
 	
-	public ModalityController(Result result, ModalityDAO modalityDAO, Validator validator) {
+	public ModalityController(Result result, ModalityDAO modalityDAO, ChampionshipDAO championshipDAO, Validator validator) {
 		this.result = result;
 		this.modalityDAO = modalityDAO;
+		this.championshipDAO = championshipDAO;
 		this.validator = validator;
 	}
 	
@@ -60,6 +63,7 @@ public class ModalityController {
 		
 		result.include("modality", modality);
 		result.include("mode", "post");
+		result.include("existsChampionship", championshipDAO.existsByModality(id));
 		result.forwardTo(this).show();
 	}
 	
@@ -92,7 +96,11 @@ public class ModalityController {
 		validator.validate(modality);
 		validator.onErrorRedirectTo(this).formEdit(modality.getId());
 		
-		modalityDAO.update(modality);
+		if(championshipDAO.existsByModality(modality.getId())) {
+			modalityDAO.updateDescription(modality);
+		} else {
+			modalityDAO.update(modality);
+		}
 		result.include("success", "update");
 		result.forwardTo(this).list();
 	}

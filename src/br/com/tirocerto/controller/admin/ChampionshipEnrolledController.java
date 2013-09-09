@@ -72,6 +72,6 @@ public class ChampionshipEnrolledController {
 	@Path("")
 	public void delete(final ChampionshipEnrolled championshipEnrolled) {
 		championshipEnrolledDAO.delete(championshipEnrolled);
-		result.nothing();
+		result.notFound();
 	}
 }

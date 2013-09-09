@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -122,5 +123,15 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 			championshipStageHibernateDAO
 					.delete(removedChampionshipStage);
 		}		
+	}
+
+	@Override
+	public boolean existsByModality(Long modalityId) {
+		Query query = session.createQuery("select count(*) from Championship where modality.id = :mi");
+		
+		query.setLong("mi", modalityId);
+		
+		Long count = (Long)query.uniqueResult();
+		return count == null || count == 0 ? false : true;
 	}
 }

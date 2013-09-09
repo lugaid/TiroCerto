@@ -10,16 +10,20 @@
 </div>
 
 <div class="modal-body">
-	<div style="width: 85%; margin: 0px auto;">
+	<div style="width: 95%; margin: 0px auto;">
 		<table class="table table-striped table-bordered"
 			id="championshipStageList">
 			<thead>
 				<tr>
 					<th role="columnheader"><fmt:message key="championshipStageRanking.position"/></th>
 					<th role="columnheader"><fmt:message key="associate.name"/></th>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.points"/></th>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.penalty"/></th>
-					<th role="columnheader"><fmt:message key="championshipStageRanking.total"/></th>
+					
+					<c:forEach var="i" begin="1" end="${championshipStage.championship.modality.maxSeries}" step="1">
+						<th role="columnheader">S${i}</th>
+					</c:forEach>
+					
+					<th role="columnheader"><fmt:message key="championshipStageRanking.penalty"/>*</th>
+					<th role="columnheader"><fmt:message key="championshipStageRanking.total"/>*</th>
 	   			</tr>
 	 		</thead>
 		   	<tbody>
@@ -28,13 +32,28 @@
 					<tr>
 						<td>${championshipStageRanking.position}</td>
 						<td>${championshipStageRanking.championshipEnrolled.associate.name}</td>
-						<td>${championshipStageRanking.points}</td>
+						
+						<c:forEach var="i" begin="1" end="${championshipStage.championship.modality.maxSeries}" step="1">
+							<c:set var="championshipStagesSeriePoint" value="0" scope="page" />
+							
+							<c:forEach var="championshipResult"
+								items="${championshipStage.championshipResult}" varStatus="iteration">
+							
+								<c:if test="${championshipStageRanking.championshipEnrolled eq championshipResult.championshipEnrolled && i eq championshipResult.serie}">
+									<c:set var="championshipStagesSeriePoint" value="${championshipResult.points}" scope="page" />
+								</c:if>
+							</c:forEach>
+							
+							<td>${championshipStagesSeriePoint}</td>
+						</c:forEach>
+
 						<td>${championshipStageRanking.penalty}</td>
 						<td>${championshipStageRanking.total}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<p>* - <fmt:message	key="championshipStageRanking.considering"><fmt:param value="${championshipStage.championship.modality.qtySeries}"/></fmt:message></p>
 	</div>
 </div>
 

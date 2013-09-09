@@ -16,8 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.caelum.vraptor.ioc.Component;
@@ -37,7 +35,6 @@ public class ChampionshipStage implements Serializable {
 	
 	@NotEmpty
 	@NotNull
-	@Length(min = 10, max = 50)
 	@Column(length = 50)
 	private String description;
 	

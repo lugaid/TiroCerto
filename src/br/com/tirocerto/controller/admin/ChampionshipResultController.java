@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.validator.Validations;
 import br.com.tirocerto.dao.ChampionshipResultDAO;
 import br.com.tirocerto.dao.ChampionshipStageDAO;
 import br.com.tirocerto.model.ChampionshipResult;
@@ -42,7 +43,7 @@ public class ChampionshipResultController {
 
 	@Get("/show")
 	public void show() {
-		//result.include("ModalityPointType", Modality.ModalityPointType);
+	
 	}
 	
 	@Get("/paginateByChampionshipStage/{championshipStage.id}")
@@ -89,6 +90,9 @@ public class ChampionshipResultController {
 	public void save(final ChampionshipResult championshipResult) {
 		//bean validator
 		validator.validate(championshipResult);
+		validator.checking(new Validations() {{
+			that(!championshipResultDAO.existResult(championshipResult), "associate_serie", "already.exists.noparm");
+		}});
 		validator.onErrorRedirectTo(this).formNew(championshipResult.getChampionshipStage());
 		
 		championshipResultDAO.save(championshipResult);
@@ -100,6 +104,9 @@ public class ChampionshipResultController {
 	public void update(final ChampionshipResult championshipResult) {
 		//bean validator
 		validator.validate(championshipResult);
+		validator.checking(new Validations() {{
+			that(!championshipResultDAO.existResult(championshipResult), "associate_serie", "already.exists.noparm");
+		}});
 		validator.onErrorRedirectTo(this).formEdit(championshipResult.getChampionshipStage(), championshipResult);
 		
 		championshipResultDAO.update(championshipResult);

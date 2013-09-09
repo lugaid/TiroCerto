@@ -10,16 +10,16 @@
 </div>
 
 <div class="modal-body">
-	<div style="width: 85%; margin: 0px auto;">
+	<div style="width: 95%; margin: 0px auto;">
 		<table class="table table-striped table-bordered"
 			id="championshipRanking">
 			<thead>
 				<tr>
 					<th role="columnheader"><fmt:message key="championshipRanking.position"/></th>
 					<th role="columnheader"><fmt:message key="associate.name"/></th>
-					<th role="columnheader"><fmt:message key="championshipRanking.points"/></th>
-					<th role="columnheader"><fmt:message key="championshipRanking.penalty"/></th>
-					<th role="columnheader"><fmt:message key="championshipRanking.total"/></th>
+					<th role="columnheader"><fmt:message key="championshipRanking.points"/>*</th>
+					<th role="columnheader"><fmt:message key="championshipRanking.penalty"/>*</th>
+					<th role="columnheader"><fmt:message key="championshipRanking.total"/>*</th>
 	   			</tr>
 	 		</thead>
 		   	<tbody>
@@ -35,6 +35,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<p>* - <fmt:message	key="championshipRanking.considering"><fmt:param value="${championship.qtyStages}"/></fmt:message></p>
 	</div>
 </div>
 

@@ -84,6 +84,9 @@
 				            dataType: 'json',
 				            success: function(data){
 								alert(successMsg);
+				            },
+				            error: function(data){
+				            	alert("erro");
 				            }
 						});
 					});

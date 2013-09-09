@@ -123,4 +123,25 @@ public class ChampionshipResultHibernateDAO implements ChampionshipResultDAO {
 
 		return criteria.list();
 	}
+
+	@Override
+	public boolean existResult(ChampionshipResult championshipResult) {
+		Criteria criteria = session.createCriteria(ChampionshipResult.class);
+		
+		if(championshipResult.getId() != null){
+			criteria.add(Restrictions.ne("id", championshipResult.getId()));
+		}
+		
+		criteria.createAlias("championshipStage", "cs");
+		criteria.createAlias("championshipEnrolled", "ce");
+		
+		criteria.add(Restrictions.eq("ce.associate.id", championshipResult.getChampionshipEnrolled().getAssociate().getId()));
+		criteria.add(Restrictions.eq("ce.championship.id", championshipResult.getChampionshipEnrolled().getChampionship().getId()));
+		criteria.add(Restrictions.eq("cs.id", championshipResult.getChampionshipStage().getId()));
+		criteria.add(Restrictions.eq("serie", championshipResult.getSerie()));
+		
+		List<?> list = criteria.list();
+
+		return list != null && list.size() > 0;
+	}
 }

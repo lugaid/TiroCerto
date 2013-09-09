@@ -184,8 +184,6 @@
 		
 		$("input:regex(name,^championship\\.championshipStages\\[.*\\]\\.description$)").each(function() {
 		    $(this).rules("add", {
-		    	minlength : 10,
-				maxlength : 50,
 				required : true});
 		});
 		

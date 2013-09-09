@@ -10,4 +10,5 @@ public interface ChampionshipDAO {
 	void delete(Championship championship);
 	Championship byId(Long id);
 	Page<Championship> paginate(PageRequest pageRequest);
+	boolean existsByModality(Long modalityId);
 }

@@ -38,7 +38,10 @@
 			<div class="controls">
 				<input type="text" id="modality.maxSeries" name="modality.maxSeries"
 					placeholder="<fmt:message key="modality.maxSeries" />"
-					value="${modality.maxSeries}">
+					value="${modality.maxSeries}" 
+					<c:if test="${existsChampionship eq true}">
+						readonly="readonly"
+					</c:if>>
 			</div>
 		</div>
 		
@@ -48,7 +51,10 @@
 			<div class="controls">
 				<input type="text" id="modality.qtySeries" name="modality.qtySeries"
 					placeholder="<fmt:message key="modality.qtySeries" />"
-					value="${modality.qtySeries}">
+					value="${modality.qtySeries}"
+					<c:if test="${existsChampionship eq true}">
+						readonly="readonly"
+					</c:if>>
 			</div>
 		</div>
 		
@@ -57,7 +63,10 @@
 					key="modality.modalityPointType" /></label>
 			<div class="controls">
 				<select class="combobox" id="modality.modalityPointType"
-					name="modality.modalityPointType">
+					name="modality.modalityPointType"
+					<c:if test="${existsChampionship eq true}">
+						readonly="readonly"
+					</c:if>>
 					<option></option>
 					<c:forEach var="ModalityPointType" items="${ModalityPointTypes}">
 						<option value="${ModalityPointType}"
@@ -76,7 +85,10 @@
 				<div class="controls">
 					<input type="text" id="modality.targetXValue" name="modality.targetXValue"
 						placeholder="<fmt:message key="modality.targetXValue" />"
-						value="${modality.targetXValue}">
+						value="${modality.targetXValue}"
+						<c:if test="${existsChampionship eq true}">
+							readonly="readonly"
+						</c:if>>
 				</div>
 			</div>
 			
@@ -86,7 +98,10 @@
 				<div class="controls">
 					<input type="text" id="modality.targetQtyDivisions" name="modality.targetQtyDivisions"
 						placeholder="<fmt:message key="modality.targetQtyDivisions" />"
-						value="${modality.targetQtyDivisions}">
+						value="${modality.targetQtyDivisions}"
+						<c:if test="${existsChampionship eq true}">
+							readonly="readonly"
+						</c:if>>
 				</div>
 			</div>
 		</div>

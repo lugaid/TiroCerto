@@ -3,6 +3,7 @@ package br.com.tirocerto.dao.impl;
 import java.util.List;
 import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -32,7 +33,16 @@ public class ModalityHibernateDAO implements ModalityDAO {
 	public void update(Modality modality) {
 		session.merge(modality);
 	}
-
+	
+	@Override
+	public void updateDescription(Modality modality) {
+		Query query = session
+				.createQuery("update Modality set description = :description where id = :id");
+		query.setLong("id", modality.getId());
+		query.setString("description", modality.getDescription());
+		query.executeUpdate();
+	}
+	
 	@Override
 	public void delete(Modality modality) {
 		session.delete(modality);

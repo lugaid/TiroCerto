@@ -12,6 +12,7 @@ public interface ChampionshipResultDAO {
 	void save(ChampionshipResult championshipResult);
 	void update(ChampionshipResult championshipResult);
 	void delete(ChampionshipResult championshipResult);
+	boolean existResult(ChampionshipResult championshipResult);
 	ChampionshipResult byId(Long id);
 	List<ChampionshipResult> byEnrolledAndStage(ChampionshipEnrolled championshipEnrolled, ChampionshipStage championshipStage);
 	Page<ChampionshipResult> paginateByChampionshipStage(PageRequest pageRequest, ChampionshipStage championshipStage);
