@@ -26,6 +26,16 @@ public class ChampionshipStageRankingBusiness {
 		this.championshipStageRankingDAO = championshipStageRankingDAO;
 	}
 
+	public void recalcAllStagesByChampionship(Long id) {
+		List<ChampionshipStage> championshipStages = championshipStageDAO.byChampionshipId(id);
+		
+		if(championshipStages != null && championshipStages.size() > 0) {
+			for(ChampionshipStage championshipStage : championshipStages) {
+				recalcRanking(championshipStage.getId());
+			}
+		}
+	}
+	
 	public void recalcRanking(Long id) {
 		// remove all rankings by Stage
 		championshipStageRankingDAO.deleteByStage(id);
@@ -48,6 +58,17 @@ public class ChampionshipStageRankingBusiness {
 
 			// get the result and sort reverted to get the best results
 			List<ChampionshipResult> championshipResults = championshipEnrolled.getChampionshipResult();
+			
+			//if there are no results insert one blank ranking
+			if(championshipResults == null || championshipResults.size() == 0) {
+				ChampionshipStageRanking championshipStageRanking = new ChampionshipStageRanking(
+						championshipEnrolled, championshipStage);
+
+				championshipStageRankings.add(championshipStageRanking);
+				
+				continue;
+			}
+			
 			Collections.sort(championshipResults, Collections.reverseOrder());
 
 			// get the quantity of objects based to qty of series setted on

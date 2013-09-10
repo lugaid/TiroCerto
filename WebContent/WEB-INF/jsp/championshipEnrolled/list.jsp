@@ -30,14 +30,19 @@
 				"sTitle" : "<fmt:message key="championship.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
+				"bSortable" : false,
+				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
+				"bSortable" : false,
+				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="championshipEnrolled" />",
 				"mDataProp": "enrolled",
 				"bSortable" : false,
+				"bSearchable" : false,
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	            	checkbox = '<input name="enrolled[' + oObj.aData['id'] +']" id="enrolled[' + oObj.aData['id'] +']" type=\"checkbox\" value="'+ oObj.aData['id'] +'"';
@@ -52,6 +57,7 @@
 	        }, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "cr",
+				"bSearchable" : false,
 				"sDefaultContent" : ""
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",

@@ -13,7 +13,7 @@ import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 import br.com.tirocerto.util.datatable.PageResponse;
 import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
-//import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSearchColumns;
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSearchColumns;
 
 @Component
 @RequestScoped
@@ -68,7 +68,7 @@ public class AssociateHibernateDAO implements AssociateDAO {
 		criteria.setMaxResults(pageRequest.getSize());
 
 		addSortedColumns(pageRequest, criteria);
-		//addSearchColumns(pageRequest, criteria);
+		addSearchColumns(pageRequest, criteria);
 		
 		List<Associate> resultList = criteria.list();
 		

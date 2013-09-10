@@ -1,6 +1,5 @@
 package br.com.tirocerto.controller.admin;
 
-
 import br.com.bronx.vraptor.restrictrex.annotation.LoggedIn;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -26,12 +25,12 @@ public class ChampionshipEnrolledController {
 	private ChampionshipDAO championshipDAO;
 	private ChampionshipEnrolledDAO championshipEnrolledDAO;
 	private AssociateDAO associateDAO;
-	
+
 	public ChampionshipEnrolledController(Result result,
 			ChampionshipEnrolledDAO championshipEnrolledDAO,
 			AssociateDAO associateDAO, ChampionshipDAO championshipDAO,
 			Validator validator) {
-		
+
 		this.result = result;
 		this.championshipEnrolledDAO = championshipEnrolledDAO;
 		this.championshipDAO = championshipDAO;
@@ -40,14 +39,16 @@ public class ChampionshipEnrolledController {
 
 	@Get("/{championship.id}")
 	public void list(Championship championship) {
-		result.include("championship", championshipDAO.byId(championship.getId()));
+		result.include("championship",
+				championshipDAO.byId(championship.getId()));
 	}
 
 	@Get("enrolledByChampionship/{championship.id}")
 	public void listEnrolledByChampionship(Championship championship) {
-		result.include("championship", championshipDAO.byId(championship.getId()));
+		result.include("championship",
+				championshipDAO.byId(championship.getId()));
 	}
-	
+
 	@Get("/paginate/{championship.id}")
 	public void paginate(Championship championship, PageRequest pageRequest) {
 		Page<Associate> associatePage = this.associateDAO.paginate(pageRequest);
@@ -55,23 +56,30 @@ public class ChampionshipEnrolledController {
 		result.include("associatePage", associatePage);
 		result.include("championship", championship);
 	}
-	
+
 	@Get("/paginateEnrolledByChampionship/{championship.id}")
-	public void paginateEnrolledByChampionship(Championship championship, PageRequest pageRequest) {
-		result.include("championshipEnrolledPage", championshipEnrolledDAO.paginateEnrolledByChampionship(championship, pageRequest));
+	public void paginateEnrolledByChampionship(Championship championship,
+			PageRequest pageRequest) {
+		result.include("championshipEnrolledPage", championshipEnrolledDAO
+				.paginateEnrolledByChampionship(championship, pageRequest));
 	}
-	
+
 	@Put
 	@Path("")
 	public void save(final ChampionshipEnrolled championshipEnrolled) {
 		championshipEnrolledDAO.save(championshipEnrolled);
+
 		result.nothing();
 	}
-	
+
 	@Delete
 	@Path("")
 	public void delete(final ChampionshipEnrolled championshipEnrolled) {
-		championshipEnrolledDAO.delete(championshipEnrolled);
-		result.notFound();
+		ChampionshipEnrolled championshipEnrolledDelete = championshipEnrolledDAO
+				.getById(championshipEnrolled);
+
+		championshipEnrolledDAO.delete(championshipEnrolledDelete);
+		
+		result.nothing();
 	}
 }

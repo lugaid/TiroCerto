@@ -9,5 +9,6 @@ public interface ChampionshipEnrolledDAO {
 	void save(ChampionshipEnrolled championshipEnrolled);
 	void update(ChampionshipEnrolled championshipEnrolled);
 	void delete(ChampionshipEnrolled championshipEnrolled);
+	ChampionshipEnrolled getById(ChampionshipEnrolled championshipEnrolled);
 	Page<ChampionshipEnrolled> paginateEnrolledByChampionship(Championship championship, PageRequest pageRequest);
 }

@@ -35,7 +35,10 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<p>* - <fmt:message	key="championshipRanking.considering"><fmt:param value="${championship.qtyStages}"/></fmt:message></p>
+		<p>* - <fmt:message	key="championshipRanking.considering">
+		<fmt:param value="${championship.modality.qtySeries}"/>
+		<fmt:param value="${championship.qtyStages}"/>
+		</fmt:message></p>
 	</div>
 </div>
 

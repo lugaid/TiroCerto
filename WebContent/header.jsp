@@ -88,6 +88,11 @@ body {
 								href="<c:url value="/admin/championship"/>"><fmt:message key="championship" /></a></li>
 						</ul>
 						
+						<ul class="nav">
+							<li class=""><a
+								href="<c:url value="/admin/scoreboard/configure"/>"><fmt:message key="scoreboard.configure" /></a></li>
+						</ul>
+						
 						<div class="navbar-search pull-right">
 							<fmt:message key="associate.logged" />
 							<i><strong>${associateLogged.associate.name}</strong></i> <a

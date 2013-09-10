@@ -91,6 +91,13 @@ public class ChampionshipStageRanking implements Serializable, Comparable<Champi
 	}
 	
 	public ChampionshipStageRanking(ChampionshipEnrolled championshipEnrolled,
+			ChampionshipStage championshipStage) {
+		super();
+		this.championshipEnrolled = championshipEnrolled;
+		this.championshipStage = championshipStage;
+	}
+	
+	public ChampionshipStageRanking(ChampionshipEnrolled championshipEnrolled,
 			ChampionshipStage championshipStage, ChampionshipResult championshipResult) {
 		super();
 		this.championshipEnrolled = championshipEnrolled;

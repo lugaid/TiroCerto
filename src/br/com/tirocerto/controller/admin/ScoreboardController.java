@@ -16,15 +16,42 @@
  */
 package br.com.tirocerto.controller.admin;
 
+import java.util.Collections;
+
 import br.com.bronx.vraptor.restrictrex.annotation.LoggedIn;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
+import br.com.caelum.vraptor.Result;
+import br.com.tirocerto.business.SortChampionshipStageRankingByPosition;
+import br.com.tirocerto.dao.ChampionshipStageDAO;
+import br.com.tirocerto.model.ChampionshipStage;
 
 @Resource
-//@LoggedIn
-@Path("/scoreboard")
+@LoggedIn
+@Path("/admin/scoreboard")
 public class ScoreboardController {
-	@Path("")
-	public void index() {
+	private Result result;
+	private ChampionshipStageDAO championshipStageDAO;
+	
+	public ScoreboardController(Result result, ChampionshipStageDAO championshipStageDAO) {
+		this.result = result;
+		this.championshipStageDAO = championshipStageDAO;
+	}
+	
+	@Path("configure")
+	public void configure() {
+	}
+	
+	@Path("show")
+	public void show() {
+	}
+	
+	@Path("/refresh")
+	public void refresh() {
+		ChampionshipStage championshipStage = championshipStageDAO.byId((long) 1);
+		
+		Collections.sort(championshipStage.getChampionshipStageRanking(), new SortChampionshipStageRankingByPosition());
+		
+		result.include("championshipStage", championshipStage);
 	}
 }

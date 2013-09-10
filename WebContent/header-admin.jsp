@@ -8,6 +8,8 @@
 				class="icon-chevron-right"></i><fmt:message key="modality" /></a></li>
 		<li><a href="<c:url value="/admin/championship" />"><i
 				class="icon-chevron-right"></i><fmt:message key="championship" /></a></li>
+		<li><a href="<c:url value="/admin/scoreboard/configure" />"><i
+				class="icon-chevron-right"></i><fmt:message key="scoreboard.configure" /></a></li>
 	</ul>
 </div>
 

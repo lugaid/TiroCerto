@@ -1,7 +1,10 @@
 package br.com.tirocerto.dao.impl;
 
-import org.hibernate.Session;
+import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.ChampionshipStageDAO;
@@ -34,5 +37,18 @@ public class ChampionshipStageHibernateDAO implements ChampionshipStageDAO {
 	@Override
 	public ChampionshipStage byId(Long id) {
 		return (ChampionshipStage) session.get(ChampionshipStage.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChampionshipStage> byChampionshipId(Long id) {
+		Criteria criteria = session.createCriteria(ChampionshipStage.class)
+				.setReadOnly(true);
+
+		criteria.createAlias("championship", "ca");
+		
+		criteria.add(Restrictions.eq("ca.id", id));
+		
+		return (List<ChampionshipStage>) criteria.list();
 	}
 }
