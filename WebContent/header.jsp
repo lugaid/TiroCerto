@@ -90,7 +90,7 @@ body {
 						
 						<ul class="nav">
 							<li class=""><a
-								href="<c:url value="/admin/scoreboard/configure"/>"><fmt:message key="scoreboard.configure" /></a></li>
+								href="<c:url value="/admin/scoreboard"/>"><fmt:message key="scoreboard" /></a></li>
 						</ul>
 						
 						<div class="navbar-search pull-right">

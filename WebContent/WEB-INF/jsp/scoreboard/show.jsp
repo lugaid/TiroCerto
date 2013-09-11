@@ -1,171 +1,110 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<!-- saved from url=(0060)http://getbootstrap.com/2.3.2/examples/starter-template.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<%@ include file="/header-admin.jsp"%>
 
-    <!-- Le styles -->
-    <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-  </head>
+<c:if test="${not empty errors}">
+	<div class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<ul>
+			<c:forEach items="${errors}" var="error">
+				<li><strong><fmt:message
+							key="scoreboard.${error.category }" /></strong> - ${error.message }</li>
+			</c:forEach>
+		</ul>
+	</div>
+</c:if>
 
-  <body>
+<form class="form-horizontal" method="post" id="scoreboardForm"
+	action="<c:url value="/admin/scoreboard"/>">
+	<fieldset>
+		<legend>
+			<fmt:message key="scoreboard.model.description" />
+		</legend>
 
-	<div id="loading" class="modal hide fade">
-		<img alt="" src="<c:url value="/images/ajax-loader.gif" />">
-	</div> <!-- /loading -->
-	
-	<div id="scoreboard">
-	    <div class="navbar navbar-inverse navbar-fixed-top">
-	      <div class="navbar-inner">
-	        <div class="container">
-	          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-	          <div class="nav-collapse collapse">
-	          	<h3 align="center" id="header-text">CAMPEONATO ANUAL - CARABINA 38 - ITU 14/04/2013</h3>
-	          </div><!--/.nav-collapse -->
-	        </div>
-	      </div>
-	    </div>
-	
-	    <div class="container" id="container">
-			<br>
-			<table class="table table-striped table-bordered" id="tbRanking">
-	             <thead>
-	               <tr>
-	                 <th><fmt:message key="championshipStageRanking.position"/></th>
-	                 <th id="associate_name"><fmt:message key="associate.name"/></th>
-	                 <th id="serie_"></th>
-	                 <th id="serie_"></th>
-	                 <th id="serie_"></th>
-	                 <th><fmt:message key="championshipStageRanking.penalty"/>*</th>
-	                 <th><fmt:message key="championshipStageRanking.total"/>*</th>
-	               </tr>
-	             </thead>
-	             <tbody>
-	             </tbody>
-	           </table>
-	    </div> <!-- /container -->
-	</div> <!-- /scoreboard -->
-	
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <%@ include file="/include_js.jsp"%>
-    
-	<script>
-		$(document).ready(function() {
-			//disable on press esc and click
-			$('#loading').modal({
-			  backdrop: 'static',
-			  keyboard: false
-			});
-			
-			startRefresh();
-		});
-		
-		
-		function startRefresh() {
-			//hide page content
-			$('#scoreboard').fadeOut(0);
+		<input type="hidden" id="scoreboard.id" name="scoreboard.id"
+			value="${scoreboard.id}">
 
-			//show loading
-		    $('#loading').modal('show').css({
-                'margin-top': function () {
-                    return -($(this).height() / 2);
-                },
-                'margin-left': function () {
-                    return -($(this).width() / 2);
-                }
-            });
-			
-			//refresh informations
-			refreshInformations();
-			
-		    setTimeout(startRefresh, 15000);
-		}
+		<div class="control-group">
+			<label class="control-label" for="scoreboard.description"><fmt:message
+					key="scoreboard.description" /></label>
+			<div class="controls">
+				<input type="text" id="scoreboard.description" name="scoreboard.description"
+					placeholder="<fmt:message key="scoreboard.description" />"
+					value="${scoreboard.description}">
+			</div>
+		</div>
 		
-		function refreshInformations() {
-	        $.ajax({
-				url: '<c:url value="/admin/scoreboard/refresh"/>',
-				type: "GET",
-		        dataType: "JSON",
-		        success: function(data){
-		        	refreshScreen(data);
-	            },
-	            error: function(data){
-	            	alert('<fmt:message key="error.refreshing.scoreboard" />');
-	            }
-			});  
-		}
+		<div class="control-group">
+			<label class="control-label" for="scoreboard.timeToRefresh"><fmt:message
+					key="scoreboard.timeToRefresh" /></label>
+			<div class="controls">
+				<input type="text" id="scoreboard.timeToRefresh" name="scoreboard.timeToRefresh"
+					placeholder="<fmt:message key="scoreboard.timeToRefresh" />"
+					value="${scoreboard.timeToRefresh}">
+			</div>
+		</div>
 		
-		function refreshScreen(data) {
-			//set title
-			$("title").text(data.description);
-			
-			//set header text
-			$('#header-text').text(data.description);
+		<div class="control-group">
+			<label class="control-label" for="scoreboard.qtyRows"><fmt:message
+					key="scoreboard.qtyRows" /></label>
+			<div class="controls">
+				<input type="text" id="scoreboard.qtyRows" name="scoreboard.qtyRows"
+					placeholder="<fmt:message key="scoreboard.qtyRows" />"
+					value="${scoreboard.qtyRows}">
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn btn-primary"
+					<c:if test="${mode == 'delete'}">name="_method" value="DELETE"</c:if>
+					<c:if test="${empty mode}">name="_method" value="PUT"</c:if>>
+					<fmt:message key="save" />
+				</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
 
-			refreshTable(data);
-			
-			//show content
-			$('#scoreboard').fadeIn(0);
-			
-			//hide loading
-			$('#loading').modal('hide');
-		}
-		
-		function refreshTable(data) {
-			//remove all rows
-			$("#tbRanking").find("tr:gt(0)").remove();
-			
-			//remove serie columns
-			$("#tbRanking").find("th:regex(id,^serie_.*$)").remove();
-			
-			//create column series
-			for (i=data.modalityMaxSeries;i>=1;i--) {
-				var row = '<th id="serie_' + i + '">S' + i + '</th>';
-				$("#tbRanking thead tr:first th:eq(1)").after(row);
-			}
-			
-			//for each all rankings to make the row
-			for (i=0;i<data.championshipStageRankings.length;i++) {
-				var row = '<tr>';
-				row += '<td>' + data.championshipStageRankings[i].position + '</td>';
-				row += '<td>' + data.championshipStageRankings[i].associateName + '</td>';
-				
-				//for each all series
-				for (u=0;u<data.championshipStageRankings[i].championshipResult.length;u++) {
-					row += '<td>' + data.championshipStageRankings[i].championshipResult[u].total + '</td>';
+
+<%@ include file="/include_js.jsp"%>
+
+<!-- Activate form validator -->
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('#scoreboardForm').validate({
+			rules : {
+				'scoreboard.description' : {
+					minlength : 10,
+					maxlength : 50,
+					required : true
+				},
+
+				'scoreboard.timeToRefresh' : {
+					min: 1,
+					max : 99999999,
+					required : true
+				},
+
+				'scoreboard.qtyRows' : {
+					min: 1,
+					max : 99999999,
+					required : true
 				}
-				
-				row += '<td>' + data.championshipStageRankings[i].penalty + '</td>';
-				row += '<td>' + data.championshipStageRankings[i].total + '</td>';
-				row += '</tr>';
-				
-				$("#tbRanking > tbody").append(row);
-			}
-		}
-	</script>
-</body>
+			},
 
-<style type="text/css">
-	#loading {
-		width: 100px; /* SET THE WIDTH OF THE MODAL */
-	}
-	</style>
-</html>
+			highlight : function(label) {
+				$(label).closest('.control-group').removeClass('success');
+				$(label).closest('.control-group').addClass('error');
+			},
+
+			success : function(label) {
+				$(label).closest('.control-group').removeClass('error');
+				$(label).closest('.control-group').addClass('success');
+			}
+		});
+
+	});
+</script>
+
+<%@ include file="/footer-admin.jsp"%>
+

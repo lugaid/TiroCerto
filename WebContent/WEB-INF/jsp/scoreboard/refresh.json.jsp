@@ -2,9 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-{"description" : "${championshipStage.championship.description} - ${championshipStage.championship.modality.description} - ${championshipStage.description} <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>", 
-"qtyRows" : 0, 
-"modalityMaxSeries" : ${championshipStage.championship.modality.maxSeries}, 
+{"description" : "${scoreboard.description}", 
+"qtyRows" : ${scoreboard.qtyRows},
+"timeToRefresh" : ${scoreboard.timeToRefresh},
+"descriptionTitle" : "${championshipStage.championship.description} - ${championshipStage.championship.modality.description} - ${championshipStage.description} <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/>",
+"modalityMaxSeries" : ${championshipStage.championship.modality.maxSeries},
 "championshipStageRankings" : [
 <c:set var="firstStageRanking" value="true" scope="page" />
 <c:forEach var="championshipStageRanking" items="${championshipStage.championshipStageRanking}">

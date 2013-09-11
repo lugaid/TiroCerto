@@ -48,6 +48,9 @@ public class ChampionshipStage implements Serializable {
 	@Valid
 	@OneToMany(mappedBy = "championshipStage", targetEntity = ChampionshipStageRanking.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ChampionshipStageRanking> championshipStageRanking;
+
+	@OneToMany(mappedBy = "championshipStage", targetEntity = ScoreboardStage.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<ScoreboardStage> scoreboardStage;
 	
 	public Long getId() {
 		return id;
@@ -98,6 +101,14 @@ public class ChampionshipStage implements Serializable {
 		this.championshipStageRanking = championshipStageRanking;
 	}
 
+	public List<ScoreboardStage> getScoreboardStage() {
+		return scoreboardStage;
+	}
+
+	public void setScoreboardStage(List<ScoreboardStage> scoreboardStage) {
+		this.scoreboardStage = scoreboardStage;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
