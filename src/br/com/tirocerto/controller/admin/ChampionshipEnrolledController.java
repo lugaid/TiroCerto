@@ -8,6 +8,8 @@ import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.tirocerto.business.ChampionshipRankingBusiness;
+import br.com.tirocerto.business.ChampionshipStageRankingBusiness;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.dao.ChampionshipDAO;
 import br.com.tirocerto.dao.ChampionshipEnrolledDAO;
@@ -25,16 +27,22 @@ public class ChampionshipEnrolledController {
 	private ChampionshipDAO championshipDAO;
 	private ChampionshipEnrolledDAO championshipEnrolledDAO;
 	private AssociateDAO associateDAO;
-
+	private ChampionshipRankingBusiness championshipRankingBusiness;
+	private ChampionshipStageRankingBusiness championshipStageRankingBusiness;
+	
 	public ChampionshipEnrolledController(Result result,
 			ChampionshipEnrolledDAO championshipEnrolledDAO,
 			AssociateDAO associateDAO, ChampionshipDAO championshipDAO,
-			Validator validator) {
+			Validator validator,
+			ChampionshipRankingBusiness championshipRankingBusiness,
+			ChampionshipStageRankingBusiness championshipStageRankingBusiness) {
 
 		this.result = result;
 		this.championshipEnrolledDAO = championshipEnrolledDAO;
 		this.championshipDAO = championshipDAO;
 		this.associateDAO = associateDAO;
+		this.championshipRankingBusiness = championshipRankingBusiness;
+		this.championshipStageRankingBusiness = championshipStageRankingBusiness;
 	}
 
 	@Get("/{championship.id}")
@@ -69,6 +77,9 @@ public class ChampionshipEnrolledController {
 	public void save(final ChampionshipEnrolled championshipEnrolled) {
 		championshipEnrolledDAO.save(championshipEnrolled);
 
+		//recalc ranking
+		recalcRankingByChanpionshipId(championshipEnrolled.getChampionship().getId());
+		
 		result.nothing();
 	}
 
@@ -80,6 +91,15 @@ public class ChampionshipEnrolledController {
 
 		championshipEnrolledDAO.delete(championshipEnrolledDelete);
 		
+		//recalc ranking
+		recalcRankingByChanpionshipId(championshipEnrolledDelete.getChampionship().getId());
+		
 		result.nothing();
+	}
+	
+	private void recalcRankingByChanpionshipId(Long id) {
+		championshipStageRankingBusiness.recalcAllStagesByChampionship(id);
+		
+		championshipRankingBusiness.recalcRanking(id);
 	}
 }

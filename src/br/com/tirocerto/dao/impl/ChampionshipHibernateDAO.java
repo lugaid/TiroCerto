@@ -44,6 +44,8 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 		fixChampionshipStage(championship);
 		removeChampionshipStages(championship);
 		session.merge(championship);
+		session.flush();
+		session.clear();
 	}
 
 	@Override

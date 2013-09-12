@@ -9,8 +9,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
-import br.com.tirocerto.business.ChampionshipRankingBusiness;
-import br.com.tirocerto.business.ChampionshipStageRankingBusiness;
 import br.com.tirocerto.dao.AssociateDAO;
 import br.com.tirocerto.dao.ChampionshipEnrolledDAO;
 import br.com.tirocerto.model.Championship;
@@ -24,44 +22,29 @@ import br.com.tirocerto.util.datatable.PageResponse;
 public class ChampionshipEnrolledHibernateDAO implements
 		ChampionshipEnrolledDAO {
 	private Session session;
-	private ChampionshipRankingBusiness championshipRankingBusiness;
-	private ChampionshipStageRankingBusiness championshipStageRankingBusiness;
 	
 	public ChampionshipEnrolledHibernateDAO(Session session,
-			AssociateDAO associateDAO,
-			ChampionshipRankingBusiness championshipRankingBusiness,
-			ChampionshipStageRankingBusiness championshipStageRankingBusiness) {
+			AssociateDAO associateDAO) {
 		
 		this.session = session;
-		this.championshipRankingBusiness = championshipRankingBusiness;
-		this.championshipStageRankingBusiness = championshipStageRankingBusiness;
 	}
 
 	@Override
 	public void save(ChampionshipEnrolled championshipEnrolled) {
 		session.save(championshipEnrolled);
 		session.flush();
-		
-		//recalc ranking
-		recalcRankingByChanpionshipId(championshipEnrolled.getChampionship().getId());
 	}
 
 	@Override
 	public void update(ChampionshipEnrolled championshipEnrolled) {
 		session.merge(championshipEnrolled);
 		session.flush();
-		
-		//recalc ranking
-		recalcRankingByChanpionshipId(championshipEnrolled.getChampionship().getId());
 	}
 
 	@Override
 	public void delete(ChampionshipEnrolled championshipEnrolled) {
 		session.delete(championshipEnrolled);
 		session.flush();
-		
-		//recalc ranking
-		recalcRankingByChanpionshipId(championshipEnrolled.getChampionship().getId());
 	}
 	
 	@Override
@@ -117,11 +100,5 @@ public class ChampionshipEnrolledHibernateDAO implements
 						"select count(*) from ChampionshipEnrolled where championship.id = :id")
 				.setLong("id", championship.getId()).uniqueResult();
 		return count == null ? 0 : count;
-	}
-
-	private void recalcRankingByChanpionshipId(Long id) {
-		championshipStageRankingBusiness.recalcAllStagesByChampionship(id);
-		
-		championshipRankingBusiness.recalcRanking(id);
 	}
 }

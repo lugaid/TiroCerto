@@ -9,8 +9,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
-import br.com.tirocerto.business.ChampionshipRankingBusiness;
-import br.com.tirocerto.business.ChampionshipStageRankingBusiness;
 import br.com.tirocerto.dao.ChampionshipResultDAO;
 import br.com.tirocerto.model.ChampionshipEnrolled;
 import br.com.tirocerto.model.ChampionshipResult;
@@ -23,43 +21,27 @@ import br.com.tirocerto.util.datatable.PageResponse;
 @RequestScoped
 public class ChampionshipResultHibernateDAO implements ChampionshipResultDAO {
 	private Session session;
-	private ChampionshipStageRankingBusiness championshipStageRankingBusiness;
-	private ChampionshipRankingBusiness championshipRankingBusiness;
 
-	public ChampionshipResultHibernateDAO(Session session,
-			ChampionshipStageRankingBusiness championshipStageRankingBusiness,
-			ChampionshipRankingBusiness championshipRankingBusiness) {
+
+	public ChampionshipResultHibernateDAO(Session session) {
+		
 		this.session = session;
-		this.championshipStageRankingBusiness = championshipStageRankingBusiness;
-		this.championshipRankingBusiness = championshipRankingBusiness;
 	}
 
 	@Override
 	public void save(ChampionshipResult championshipResult) {
 		session.save(championshipResult);
-		championshipStageRankingBusiness.recalcRanking(championshipResult
-				.getChampionshipStage().getId());
-		championshipRankingBusiness.recalcRanking(championshipResult
-				.getChampionshipEnrolled().getChampionship().getId());
 	}
 
 	@Override
 	public void update(ChampionshipResult championshipResult) {
 		session.update(championshipResult);
-		championshipStageRankingBusiness.recalcRanking(championshipResult
-				.getChampionshipStage().getId());
-		championshipRankingBusiness.recalcRanking(championshipResult
-				.getChampionshipEnrolled().getChampionship().getId());
 	}
 
 	@Override
 	public void delete(ChampionshipResult championshipResult) {
 		session.delete(championshipResult);
 		session.flush();
-		championshipStageRankingBusiness.recalcRanking(championshipResult
-				.getChampionshipStage().getId());
-		championshipRankingBusiness.recalcRanking(championshipResult
-				.getChampionshipEnrolled().getChampionship().getId());
 	}
 
 	@Override

@@ -54,6 +54,10 @@ public class ChampionshipStageRankingBusiness {
 		List<ChampionshipEnrolled> championshipEnrolleds = championshipStage
 				.getChampionship().getChampionshipEnrolled();
 
+		if(championshipEnrolleds == null) {
+			return championshipStageRankings;
+		}
+		
 		for (ChampionshipEnrolled championshipEnrolled : championshipEnrolleds) {
 
 			// get the result and sort reverted to get the best results
@@ -74,10 +78,14 @@ public class ChampionshipStageRankingBusiness {
 			// get the quantity of objects based to qty of series setted on
 			// modality
 			int i = 0;
+			boolean existResults = false;
+			
 			for (ChampionshipResult championshipResult : championshipResults) {
 				if (!championshipResult.getChampionshipStage().equals(championshipStage)) {
 					continue;
 				}
+				
+				existResults = true;
 				
 				if (i++ >= modality.getQtySeries()) {
 					break;
@@ -98,6 +106,16 @@ public class ChampionshipStageRankingBusiness {
 									.indexOf(championshipStageRanking)).sum(
 							championshipResult);
 				}
+			}
+			
+			//if there are no results to this stage insert blank
+			if(existResults == false) {
+				ChampionshipStageRanking championshipStageRanking = new ChampionshipStageRanking(
+						championshipEnrolled, championshipStage);
+
+				championshipStageRankings.add(championshipStageRanking);
+				
+				continue;
 			}
 		}
 

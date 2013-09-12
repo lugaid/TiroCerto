@@ -46,6 +46,10 @@ public class ChampionshipRankingBusiness {
 		// get all enrolleds
 		List<ChampionshipEnrolled> championshipEnrolleds = championship.getChampionshipEnrolled();
 
+		if(championshipEnrolleds == null) {
+			return championshipRankings;
+		}
+		
 		for (ChampionshipEnrolled championshipEnrolled : championshipEnrolleds) {
 
 			// get the result and sort reverted to get the best results

@@ -54,7 +54,7 @@ public class Championship implements Serializable {
 	@JoinColumn
 	private Modality modality;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="championship")
+	@OneToMany(mappedBy="championship", targetEntity = ChampionshipEnrolled.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ChampionshipEnrolled> championshipEnrolleds;
 	
 	public Long getId() {
