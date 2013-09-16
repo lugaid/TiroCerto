@@ -52,6 +52,42 @@
 			</div>
 		</div>
 		
+		<div id="stages">
+			<legend>
+				<fmt:message key="championship.championshipStages" />
+			</legend>
+			
+			<table class="table table-striped table-bordered" id="championshipStages">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th><fmt:message key="championship" /></th>
+						<th><fmt:message key="modality" /></th>
+						<th><fmt:message key="championshipStage" /></th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="championshipStage"
+					items="${championshipStages}" varStatus="iteration">
+					
+					<c:set var="checked" value="" scope="page" />
+					<c:forEach var="scoreboardStage" items="${scoreboard.scoreboardStage}">
+						<c:if test="${championshipStage eq scoreboardStage.championshipStage}">
+							<c:set var="checked" value="checked" scope="page" />
+						</c:if>
+					</c:forEach>
+					
+					<tr>
+						<td><input type="checkbox" name="scoreboard.scoreboardStage[${iteration.index}].championshipStage.id" id="scoreboard.scoreboardStage[${iteration.index}].championshipStage.id" value="${championshipStage.id}" <c:if test="${checked eq 'checked'}">checked="checked"</c:if>/></td>
+						<td>${championshipStage.championship.description}</td>
+						<td>${championshipStage.championship.modality.description}</td>
+						<td>${championshipStage.description}</td>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		
 		<div class="control-group">
 			<div class="controls">
 				<button type="submit" class="btn btn-primary"
@@ -70,7 +106,8 @@
 <!-- Activate form validator -->
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		$('#championshipStages').dataTable({"bAutoWidth": true});
+		
 		$('#scoreboardForm').validate({
 			rules : {
 				'scoreboard.description' : {

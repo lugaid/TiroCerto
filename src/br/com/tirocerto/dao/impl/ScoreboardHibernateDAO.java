@@ -7,6 +7,7 @@ import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.ScoreboardDAO;
 import br.com.tirocerto.model.Scoreboard;
+import br.com.tirocerto.model.ScoreboardStage;
 import br.com.tirocerto.util.datatable.Page;
 import br.com.tirocerto.util.datatable.PageRequest;
 import br.com.tirocerto.util.datatable.PageResponse;
@@ -24,16 +25,19 @@ public class ScoreboardHibernateDAO implements ScoreboardDAO {
 
 	@Override
 	public void save(Scoreboard scoreboard) {
+		fixScoreboardStage(scoreboard);
 		session.save(scoreboard);
 	}
 
 	@Override
 	public void update(Scoreboard scoreboard) {
+		fixScoreboardStage(scoreboard);
 		session.update(scoreboard);
 	}
 
 	@Override
 	public void delete(Scoreboard scoreboard) {
+		fixScoreboardStage(scoreboard);
 		session.delete(scoreboard);
 	}
 
@@ -64,5 +68,17 @@ public class ScoreboardHibernateDAO implements ScoreboardDAO {
 	private Long getRowCount() {
 		Long count = (Long)session.createQuery("select count(*) from Scoreboard").uniqueResult();
 		return count == null ? 0 : count;
+	}
+	
+	private void fixScoreboardStage(Scoreboard scoreboard) {
+		if (scoreboard == null
+				|| scoreboard.getScoreboardStage() == null) {
+			
+			return;
+		}
+		
+		for(ScoreboardStage scoreboardStage : scoreboard.getScoreboardStage()) {
+			scoreboardStage.setScoreboard(scoreboard);
+		}
 	}
 }

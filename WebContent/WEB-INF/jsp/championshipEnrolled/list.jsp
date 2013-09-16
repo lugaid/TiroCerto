@@ -75,26 +75,35 @@
 			"fnInitComplete": function(oSettings, json) {
 				$("input:regex(name,^enrolled\\[.*\\]\\$)").each(function() {
 					$(this).change(function() {
+						var conf = true;
+						
 						if($(this).is(':checked')) {
 							method = '&_method=PUT';
 							successMsg = '<fmt:message key="championshipEnrolled" /> - <fmt:message key="success.new" />';
 						} else {
 							method = '&_method=DELETE';
 							successMsg = '<fmt:message key="championshipEnrolled" /> - <fmt:message key="success.delete" />';
+							conf = confirm('<fmt:message key="championshipEnrolled.confirmDelete" />');
+							
+							if(conf == false) {
+								$(this).attr('checked', true);
+							}
 						}
-
-						$.ajax({
-							url: '<c:url value="/admin/championshipEnrolled"/>',
-				            data: 'championshipEnrolled.championship.id=${championship.id}&championshipEnrolled.associate.id=' + $(this).val() + method,
-				            type: 'POST',
-				            dataType: 'json',
-				            success: function(data){
-								alert(successMsg);
-				            },
-				            error: function(data){
-				            	alert("erro");
-				            }
-						});
+						
+						if(conf == true) {
+							$.ajax({
+								url: '<c:url value="/admin/championshipEnrolled"/>',
+					            data: 'championshipEnrolled.championship.id=${championship.id}&championshipEnrolled.associate.id=' + $(this).val() + method,
+					            type: 'POST',
+					            dataType: 'json',
+					            success: function(data){
+									alert(successMsg);
+					            },
+					            error: function(data){
+					            	alert("erro");
+					            }
+							});
+						}
 					});
 				});
 			}

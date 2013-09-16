@@ -29,6 +29,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.tirocerto.business.SortChampionshipStageRankingByPosition;
+import br.com.tirocerto.dao.ChampionshipStageDAO;
 import br.com.tirocerto.dao.ScoreboardDAO;
 import br.com.tirocerto.model.Scoreboard;
 import br.com.tirocerto.session.ScoreboardRefresh;
@@ -43,13 +44,15 @@ public class ScoreboardController {
 	private ScoreboardDAO scoreboardDAO;
 	private Validator validator;
 	private ScoreboardRefresh scoreboardRefresh;
+	private ChampionshipStageDAO championshipStageDAO;
 
 	public ScoreboardController(Result result, ScoreboardDAO scoreboardDAO,
-			Validator validator, ScoreboardRefresh scoreboardRefresh) {
+			Validator validator, ScoreboardRefresh scoreboardRefresh, ChampionshipStageDAO championshipStageDAO) {
 		this.result = result;
 		this.scoreboardDAO = scoreboardDAO;
 		this.validator = validator;
 		this.scoreboardRefresh = scoreboardRefresh;
+		this.championshipStageDAO = championshipStageDAO;
 	}
 
 	@Get("")
@@ -59,6 +62,7 @@ public class ScoreboardController {
 
 	@Path("/show")
 	public void show() {
+		result.include("championshipStages", championshipStageDAO.allStages());
 	}
 
 	@Path("/showPanel/{id}")

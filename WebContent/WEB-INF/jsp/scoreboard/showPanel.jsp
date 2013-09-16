@@ -68,6 +68,13 @@
     <%@ include file="/include_js.jsp"%>
     
 	<script>
+		//default time to refresh
+		var timeToRefresh = 15000;
+		var rowIni = 0;
+		var rowFin = 0;
+		var iterations = 0;
+		var timeFade = 0;
+		
 		$(document).ready(function() {
 			//disable on press esc and click
 			$('#loading').modal({
@@ -81,7 +88,7 @@
 		
 		function startRefresh() {
 			//hide page content
-			$('#scoreboard').fadeOut(0);
+			$('#scoreboard').hide();
 
 			//show loading
 		    $('#loading').modal('show').css({
@@ -95,8 +102,6 @@
 			
 			//refresh informations
 			refreshInformations();
-			
-		    setTimeout(startRefresh, 15000);
 		}
 		
 		function refreshInformations() {
@@ -108,7 +113,10 @@
 		        	refreshScreen(data);
 	            },
 	            error: function(data){
-	            	alert('<fmt:message key="error.refreshing.scoreboard" />');
+	            	$('#loading').modal('hide');
+	            	$('#scoreboard').show('fast');
+	            	
+	            	setTimeout(startRefresh, timeToRefresh);
 	            }
 			});  
 		}
@@ -120,19 +128,35 @@
 			//set header text
 			$('#header-text').text(data.descriptionTitle);
 
+			//refresh
 			refreshTable(data);
-			
-			//show content
-			$('#scoreboard').fadeIn(0);
 			
 			//hide loading
 			$('#loading').modal('hide');
+			
+			//show content
+			$('#scoreboard').show('fast', function() {
+				rowIni = 0;
+				rowFin = 0;
+				iterations = 0;
+				timeFade = 0;
+				
+				refreshRows(data);
+				
+				//start refresh
+				if(data.timeToRefresh > 0) {
+					timeToRefresh = data.timeToRefresh * 1000;
+				}
+				
+				var timetoRefreshPaginated = timeToRefresh * Math.ceil(data.championshipStageRankings.length / data.qtyRows);
+				
+				console.log("Atualizando dados em " + timetoRefreshPaginated);
+				
+			    setTimeout(startRefresh, timetoRefreshPaginated);
+			});
 		}
 		
 		function refreshTable(data) {
-			//remove all rows
-			$("#tbRanking").find("tr:gt(0)").remove();
-			
 			//remove serie columns
 			$("#tbRanking").find("th:regex(id,^serie_.*$)").remove();
 			
@@ -141,9 +165,31 @@
 				var row = '<th id="serie_' + i + '">S' + i + '</th>';
 				$("#tbRanking thead tr:first th:eq(1)").after(row);
 			}
+		}
+		
+		function refreshRows(data) {
+			if(data.championshipStageRankings.length == 0) {
+				return;	
+			}
+			
+			if(iterations > 0 ) {
+				rowIni = rowFin + 1;
+				timeFade = 5000;
+			}
+			
+			rowFin = rowIni + data.qtyRows - 1;
+			
+			if(rowFin > (data.championshipStageRankings.length - 1)) {
+				rowFin = (data.championshipStageRankings.length - 1);
+			}
+
+			console.log("Mostrando linha de " + rowIni + ' até ' + rowFin + ' em ' + new Date());
+			
+			//remove all rows
+			$("#tbRanking").find("tr:gt(0)").remove();
 			
 			//for each all rankings to make the row
-			for (i=0;i<data.championshipStageRankings.length;i++) {
+			for (i=rowIni;i<=rowFin;i++) {
 				var row = '<tr>';
 				row += '<td>' + data.championshipStageRankings[i].position + '</td>';
 				row += '<td>' + data.championshipStageRankings[i].associateName + '</td>';
@@ -158,6 +204,13 @@
 				row += '</tr>';
 				
 				$("#tbRanking > tbody").append(row);
+			}
+			
+			iterations++;
+			
+			if(rowFin < (data.championshipStageRankings.length - 1)) {
+				console.log("Atualizando linhas em " + timeToRefresh);
+				setTimeout(function(){refreshRows(data);}, timeToRefresh);
 			}
 		}
 	</script>

@@ -51,4 +51,12 @@ public class ChampionshipStageHibernateDAO implements ChampionshipStageDAO {
 		
 		return (List<ChampionshipStage>) criteria.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChampionshipStage> allStages() {
+		Criteria criteria = session.createCriteria(ChampionshipStage.class)
+				.setReadOnly(true);
+		return (List<ChampionshipStage>) criteria.list();
+	}
 }

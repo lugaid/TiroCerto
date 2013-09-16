@@ -10,4 +10,5 @@ public interface ChampionshipStageDAO {
 	void delete(ChampionshipStage championshipStage);
 	ChampionshipStage byId(Long id);
 	List<ChampionshipStage> byChampionshipId(Long id);
+	List<ChampionshipStage> allStages();
 }
