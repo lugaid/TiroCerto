@@ -1,15 +1,13 @@
 package br.com.tirocerto.dao.impl;
 
 import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
-
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSearchColumns;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Projections;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
@@ -62,34 +60,39 @@ public class ChampionshipHibernateDAO implements ChampionshipDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page<Championship> paginate(PageRequest pageRequest) {
-		String nome = pageRequest.getSearch() == null ? "" : pageRequest
-				.getSearch();
-
 		Criteria criteria = session.createCriteria(Championship.class)
 				.setReadOnly(true);
-
-		criteria.add(Restrictions
-				.ilike("description", nome, MatchMode.ANYWHERE));
 
 		criteria.setFirstResult(pageRequest.getStart());
 		criteria.setMaxResults(pageRequest.getSize());
 
+		criteria.createAlias("modality", "modality");
+		
 		addSortedColumns(pageRequest, criteria);
+		addSearchColumns(pageRequest, criteria);
 
 		List<Championship> resultList = criteria.list();
 
 		Page<Championship> page = new PageResponse<Championship>(resultList,
-				pageRequest, getRowCount());
+				pageRequest, getRowCount(), getRowCountRestriction(pageRequest));
 
 		return page;
 	}
 
 	private Long getRowCount() {
-		Long count = (Long) session.createQuery(
-				"select count(*) from Championship").uniqueResult();
-		return count == null ? 0 : count;
+		Criteria criteria = session.createCriteria(Championship.class); 
+		criteria.setProjection(Projections.rowCount());
+		return ((Long)criteria.list().get(0));
 	}
-
+	
+	private Long getRowCountRestriction(PageRequest pageRequest) {
+		Criteria criteria = session.createCriteria(Championship.class); 
+		criteria.setProjection(Projections.rowCount());
+		criteria.createAlias("modality", "modality");
+		addSearchColumns(pageRequest, criteria);
+		return ((Long)criteria.list().get(0));
+	}
+	
 	private void fixChampionshipStage(Championship championship) {
 		if (championship == null
 				|| championship.getChampionshipStages() == null) {

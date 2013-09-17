@@ -1,6 +1,5 @@
 package br.com.tirocerto.controller.admin;
 
-import static br.com.tirocerto.util.datatable.PagingResults.dataTablesPaging;
 import br.com.bronx.vraptor.restrictrex.annotation.LoggedIn;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -57,8 +56,8 @@ public class ChampionshipController {
 	public void paginate(PageRequest pageRequest) {
 		Page<Championship> championshipPage = this.championshipDAO
 				.paginate(pageRequest);
-		this.result.use(dataTablesPaging()).from(championshipPage);
 
+		result.include("championshipPage", championshipPage);
 	}
 
 	@Get("/new")

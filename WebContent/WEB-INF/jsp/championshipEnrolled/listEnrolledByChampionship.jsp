@@ -30,15 +30,20 @@
 				"sTitle" : "<fmt:message key="championship.id" />",
 				"mDataProp" : "championship_id",
 				"bVisible" : false,
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.id" />",
 				"mDataProp" : "associate_id",
 				"bVisible" : false,
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="select" />",
 				"mDataProp": "associate_id",
-				"bSortable" : false,
 				"sWidth" : "10%",
+				"bSearchable" : false,
+				"bSortable" : false,
 	            "fnRender": function (oObj) {
 	            	checkbox = '<i class="icon-ok-sign" data-dismiss="modal" aria-hidden="true" onclick="returnAssociate(' + oObj.aData['championship_id']  + ',' + oObj.aData['associate_id']  + ',\'' + oObj.aData['associate_name']  + '\');"></i>';
 	            	
@@ -47,7 +52,9 @@
 	        }, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "associate_cr",
-				"sDefaultContent" : ""
+				"sDefaultContent" : "",
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "associate_name",

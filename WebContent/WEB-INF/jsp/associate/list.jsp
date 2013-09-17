@@ -47,19 +47,20 @@
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "cr",
 				"sDefaultContent" : "",
-				"bSearchable" : false
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "name",
 			}, {
 				"sTitle" : "<fmt:message key="associate.email" />",
-				"mDataProp" : "email",
+				"mDataProp" : "email"
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
-				"bSortable" : false,
 				"sWidth" : "10%",
 				"bSearchable" : false,
+				"bSortable" : false,
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
 	                '<a href="<c:url value="/admin/associate/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +

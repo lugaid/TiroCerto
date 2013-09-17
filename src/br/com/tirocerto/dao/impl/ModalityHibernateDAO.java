@@ -1,12 +1,13 @@
 package br.com.tirocerto.dao.impl;
 
 import java.util.List;
+
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSearchColumns;
 import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Projections;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.ModalityDAO;
@@ -19,8 +20,8 @@ import br.com.tirocerto.util.datatable.PageResponse;
 @RequestScoped
 public class ModalityHibernateDAO implements ModalityDAO {
 	private Session session;
-	public ModalityHibernateDAO(
-			Session session) {
+
+	public ModalityHibernateDAO(Session session) {
 		this.session = session;
 	}
 
@@ -33,7 +34,7 @@ public class ModalityHibernateDAO implements ModalityDAO {
 	public void update(Modality modality) {
 		session.merge(modality);
 	}
-	
+
 	@Override
 	public void updateDescription(Modality modality) {
 		Query query = session
@@ -42,7 +43,7 @@ public class ModalityHibernateDAO implements ModalityDAO {
 		query.setString("description", modality.getDescription());
 		query.executeUpdate();
 	}
-	
+
 	@Override
 	public void delete(Modality modality) {
 		session.delete(modality);
@@ -62,31 +63,33 @@ public class ModalityHibernateDAO implements ModalityDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page<Modality> paginate(PageRequest pageRequest) {
-		String nome = pageRequest.getSearch() == null ? "" : pageRequest
-				.getSearch();
-
 		Criteria criteria = session.createCriteria(Modality.class).setReadOnly(
 				true);
-
-		criteria.add(Restrictions
-				.ilike("description", nome, MatchMode.ANYWHERE));
 
 		criteria.setFirstResult(pageRequest.getStart());
 		criteria.setMaxResults(pageRequest.getSize());
 
 		addSortedColumns(pageRequest, criteria);
+		addSearchColumns(pageRequest, criteria);
 
 		List<Modality> resultList = criteria.list();
 
 		Page<Modality> page = new PageResponse<Modality>(resultList,
-				pageRequest, getRowCount());
+				pageRequest, getRowCount(), getRowCountRestriction(pageRequest));
 
 		return page;
 	}
 
 	private Long getRowCount() {
-		Long count = (Long) session
-				.createQuery("select count(*) from Modality").uniqueResult();
-		return count == null ? 0 : count;
+		Criteria criteria = session.createCriteria(Modality.class);
+		criteria.setProjection(Projections.rowCount());
+		return ((Long) criteria.list().get(0));
+	}
+
+	private Long getRowCountRestriction(PageRequest pageRequest) {
+		Criteria criteria = session.createCriteria(Modality.class);
+		criteria.setProjection(Projections.rowCount());
+		addSearchColumns(pageRequest, criteria);
+		return ((Long) criteria.list().get(0));
 	}
 }

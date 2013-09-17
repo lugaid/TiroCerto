@@ -15,7 +15,7 @@ public class DataTable {
 	public DataTable(Page<?> page) {
 
 		this.sEcho = String.valueOf(new Date().getTime());
-		this.iTotalDisplayRecords = page.getTotalElements();
+		this.iTotalDisplayRecords = page.getNumberOfElements();
 		this.iTotalRecords = page.getTotalElements();
 		this.aaData = page.getContent().toArray();
 

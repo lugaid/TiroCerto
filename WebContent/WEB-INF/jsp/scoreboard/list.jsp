@@ -42,7 +42,8 @@
 				"sTitle" : "<fmt:message key="scoreboard.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
-				"bSearchable" : false
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="scoreboard.description" />",
 				"mDataProp" : "description",
@@ -50,9 +51,9 @@
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
-				"bSortable" : false,
 				"sWidth" : "10%",
 				"bSearchable" : false,
+				"bSortable" : false,
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
 	                '<button onclick="showPanel(' + oObj.aData['id'] + ')" type="button" class="btn btn-mini btn-info"><fmt:message key="scoreboard.showPanel" /></button>' +

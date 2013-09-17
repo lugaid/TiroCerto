@@ -35,7 +35,7 @@ public interface Page<T> extends Iterable<T> {
 	 * 
 	 * @return the number of elements currently on this page
 	 */
-	int getNumberOfElements();
+	long getNumberOfElements();
 
 	/**
 	 * Returns the total amount of elements.

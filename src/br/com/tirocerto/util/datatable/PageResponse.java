@@ -17,7 +17,8 @@ public class PageResponse<T> implements Page<T>, Serializable {
 	private final PageRequest pageable;
 
 	private final long total;
-
+	private final long numberOfElements;
+	
 	/**
 	 * @param content
 	 *            the content of this page
@@ -26,7 +27,7 @@ public class PageResponse<T> implements Page<T>, Serializable {
 	 * @param total
 	 *            the total amount of items available
 	 */
-	public PageResponse(List<T> content, PageRequest pageable, long total) {
+	public PageResponse(List<T> content, PageRequest pageable, long total, long numberOfElements) {
 
 		if (null == content) {
 			throw new IllegalArgumentException("Content must not be null!");
@@ -35,6 +36,7 @@ public class PageResponse<T> implements Page<T>, Serializable {
 		this.content.addAll(content);
 		this.total = total;
 		this.pageable = pageable;
+		this.numberOfElements = numberOfElements;
 	}
 
 	/**
@@ -46,7 +48,7 @@ public class PageResponse<T> implements Page<T>, Serializable {
 	 */
 	public PageResponse(List<T> content) {
 
-		this(content, null, (null == content) ? 0 : content.size());
+		this(content, null, (null == content) ? 0 : content.size(), (null == content) ? 0 : content.size());
 	}
 
 	public int getNumber() {
@@ -63,9 +65,9 @@ public class PageResponse<T> implements Page<T>, Serializable {
 				/ (double) getSize());
 	}
 
-	public int getNumberOfElements() {
+	public long getNumberOfElements() {
 
-		return content.size();
+		return numberOfElements;
 	}
 
 	public long getTotalElements() {

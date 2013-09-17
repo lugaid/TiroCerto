@@ -1,11 +1,12 @@
 package br.com.tirocerto.dao.impl;
 
 
+import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSearchColumns;
 import static br.com.tirocerto.util.hibernate.PaginateCollumns.addSortedColumns;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
@@ -61,8 +62,6 @@ public class ChampionshipEnrolledHibernateDAO implements
 	@SuppressWarnings("unchecked")
 	public Page<ChampionshipEnrolled> paginateEnrolledByChampionship(
 			Championship championship, PageRequest pageRequest) {
-		String nome = pageRequest.getSearch() == null ? "" : pageRequest
-				.getSearch();
 		
 		Criteria criteria = session.createCriteria(ChampionshipEnrolled.class);
 		
@@ -70,35 +69,37 @@ public class ChampionshipEnrolledHibernateDAO implements
 		criteria.createAlias("associate", "associate");
 		
 		criteria.add(Restrictions.eq("championship.id", championship.getId()));
-		
-		criteria.add(Restrictions.ilike("associate.name", nome, MatchMode.ANYWHERE));
-		
+
 		criteria.setFirstResult(pageRequest.getStart());
 		criteria.setMaxResults(pageRequest.getSize());
 
 		addSortedColumns(pageRequest, criteria);
-
+		addSearchColumns(pageRequest, criteria);
+		
 		List<ChampionshipEnrolled> resultList = criteria.list();
 
 		Page<ChampionshipEnrolled> page = new PageResponse<ChampionshipEnrolled>(
 				resultList, pageRequest,
-				getRowCountByChampionship(championship));
+				getRowCountByChampionship(championship), getRowCountByChampionshipRestriction(pageRequest, championship));
 
 		return page;
 	}
 
-	@SuppressWarnings("unused")
-	private Long getRowCount() {
-		Long count = (Long) session.createQuery(
-				"select count(*) from ChampionshipEnrolled").uniqueResult();
-		return count == null ? 0 : count;
-	}
-
 	private Long getRowCountByChampionship(Championship championship) {
-		Long count = (Long) session
-				.createQuery(
-						"select count(*) from ChampionshipEnrolled where championship.id = :id")
-				.setLong("id", championship.getId()).uniqueResult();
-		return count == null ? 0 : count;
+		Criteria criteria = session.createCriteria(ChampionshipEnrolled.class); 
+		criteria.setProjection(Projections.rowCount());
+		criteria.createAlias("championship", "championship");
+		criteria.add(Restrictions.eq("championship.id", championship.getId()));
+		return ((Long)criteria.list().get(0));
+	}
+	
+	private Long getRowCountByChampionshipRestriction(PageRequest pageRequest, Championship championship) {
+		Criteria criteria = session.createCriteria(ChampionshipEnrolled.class); 
+		criteria.setProjection(Projections.rowCount());
+		criteria.createAlias("championship", "championship");
+		criteria.createAlias("associate", "associate");
+		criteria.add(Restrictions.eq("championship.id", championship.getId()));
+		addSearchColumns(pageRequest, criteria);
+		return ((Long)criteria.list().get(0));
 	}
 }

@@ -150,6 +150,10 @@
 				
 				var timetoRefreshPaginated = timeToRefresh * Math.ceil(data.championshipStageRankings.length / data.qtyRows);
 				
+				if(timetoRefreshPaginated == 0) {
+					timetoRefreshPaginated = timeToRefresh;
+				}
+				
 				console.log("Atualizando dados em " + timetoRefreshPaginated);
 				
 			    setTimeout(startRefresh, timetoRefreshPaginated);

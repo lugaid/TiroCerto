@@ -3,8 +3,8 @@ package br.com.tirocerto.dao.impl;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
 import br.com.tirocerto.dao.AssociateDAO;
@@ -75,7 +75,7 @@ public class AssociateHibernateDAO implements AssociateDAO {
 		fillBlankPasswords(resultList);
 		
 		Page<Associate> page = new PageResponse<Associate>(resultList,
-				pageRequest, getRowCount());
+				pageRequest, getRowCount(), getRowCountRestriction(pageRequest));
 
 		return page;
 	}
@@ -92,11 +92,18 @@ public class AssociateHibernateDAO implements AssociateDAO {
 	}
 	
 	private Long getRowCount() {
-		Long count = (Long)session.createQuery("select count(*) from Associate").uniqueResult();
-		return count == null ? 0 : count;
+		Criteria criteria = session.createCriteria(Associate.class); 
+		criteria.setProjection(Projections.rowCount());
+		return ((Long)criteria.list().get(0));
 	}
-
-
+	
+	private Long getRowCountRestriction(PageRequest pageRequest) {
+		Criteria criteria = session.createCriteria(Associate.class); 
+		criteria.setProjection(Projections.rowCount());
+		addSearchColumns(pageRequest, criteria);
+		return ((Long)criteria.list().get(0));
+	}
+	
 	private void fillBlankPasswords(List<Associate> resultList) {
 		if(resultList != null) {
 			for(Associate associate : resultList) {

@@ -42,6 +42,8 @@
 				"sTitle" : "<fmt:message key="modality.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="modality.description" />",
 				"mDataProp" : "description",
@@ -49,8 +51,9 @@
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
-				"bSortable" : false,
 				"sWidth" : "10%",
+				"bSearchable" : false,
+				"bSortable" : false,
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
 	                '<a href="<c:url value="/admin/modality/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +

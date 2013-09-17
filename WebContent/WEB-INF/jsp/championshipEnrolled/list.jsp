@@ -27,16 +27,9 @@
 		$("#championshipEnrolledList").dataTable({
 
 			"aoColumns" : [ {
-				"sTitle" : "<fmt:message key="championship.id" />",
-				"mDataProp" : "id",
-				"bVisible" : false,
-				"bSortable" : false,
-				"bSearchable" : false
-			}, {
 				"sTitle" : "<fmt:message key="associate.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
-				"bSortable" : false,
 				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="championshipEnrolled" />",
@@ -57,8 +50,9 @@
 	        }, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "cr",
+				"sDefaultContent" : "",
 				"bSearchable" : false,
-				"sDefaultContent" : ""
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "name",

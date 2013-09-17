@@ -4,6 +4,7 @@ package br.com.tirocerto.util.hibernate;
 import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -27,9 +28,25 @@ public class PaginateCollumns {
 	}
 	
 	public static void addSearchColumns(PageRequest pageRequest, Criteria criteria) {
+		if(pageRequest.getSearchOn() == null) {
+			return;
+		}
+		
+		Criterion criterion = null;
+				
 		for (String search : pageRequest.getSearchOn()) {
 			String value = pageRequest.getSearch() == null ? "" : pageRequest.getSearch();
-			criteria.add(Restrictions.ilike(search, value, MatchMode.ANYWHERE));
+			Criterion criterionLocal = Restrictions.ilike(search.replace("_", "."), value, MatchMode.ANYWHERE);
+
+			if(criterion == null) {
+				criterion = Restrictions.or(criterionLocal);
+			} else {
+				criterion = Restrictions.or(criterionLocal, criterion);
+			}
+		}
+
+		if(criterion != null) {
+			criteria.add(criterion);
 		}
 	}
 }

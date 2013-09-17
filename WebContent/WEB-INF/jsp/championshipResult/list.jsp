@@ -1,7 +1,7 @@
 <%@ include file="/header-admin.jsp"%>
 
 <legend>
-	<p style="text-align: center;">${championshipStage.championship.description} - <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/></p>
+	<p style="text-align: center;">${championshipStage.championship.description} - ${championshipStage.description} - <fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/></p>
 	<fmt:message key="championshipResult.model.description" />
 </legend>
 
@@ -42,22 +42,27 @@
 				"sTitle" : "<fmt:message key="championshipResult.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="championshipResult.serie" />",
 				"mDataProp" : "serie",
-				"sDefaultContent" : ""
+				"sDefaultContent" : "",
+				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.cr" />",
 				"mDataProp" : "associate_cr",
-				"sDefaultContent" : ""
+				"sDefaultContent" : "",
+				"bSearchable" : false
 			}, {
 				"sTitle" : "<fmt:message key="associate.name" />",
 				"mDataProp" : "associate_name",
 			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
-				"bSortable" : false,
 				"sWidth" : "10%",
+				"bSearchable" : false,
+				"bSortable" : false,
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
 	                '<a href="<c:url value="/admin/championshipResult/${championshipStage.id}/edit/"/>' + oObj.aData['id'] + '" class="btn btn-mini btn-warning"><fmt:message key="edit" /></a>' +

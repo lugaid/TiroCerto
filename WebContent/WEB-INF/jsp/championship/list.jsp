@@ -46,14 +46,21 @@
 				"sTitle" : "<fmt:message key="championship.id" />",
 				"mDataProp" : "id",
 				"bVisible" : false,
+				"bSearchable" : false,
+				"bSortable" : false
 			}, {
 				"sTitle" : "<fmt:message key="championship.description" />",
 				"mDataProp" : "description",
 				"sDefaultContent" : ""
 			}, {
+				"sTitle" : "<fmt:message key="modality" />",
+				"mDataProp" : "modality_description",
+				"sDefaultContent" : "",
+			}, {
 				"sTitle" : "<fmt:message key="actions" />",
 				"mDataProp": "id",
 				"bSortable" : false,
+				"bSearchable" : false,
 				"sWidth" : "10%",
 	            "fnRender": function (oObj) {
 	                return '<div class="btn-group">' +
