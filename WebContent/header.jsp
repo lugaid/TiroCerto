@@ -3,6 +3,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
+<link rel="icon" 
+      type="image/png" 
+      href="<c:url value="/images/fav-target.png" />">
 <title><fmt:message key="project.name" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">

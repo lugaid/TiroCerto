@@ -38,7 +38,7 @@ public class ScoreboardHibernateDAO implements ScoreboardDAO {
 	public void update(Scoreboard scoreboard) {
 		fixScoreboardStage(scoreboard);
 		removeScoreboardStages(scoreboard);
-		session.merge(scoreboard);
+		session.update(scoreboard);
 	}
 
 	@Override
@@ -118,6 +118,6 @@ public class ScoreboardHibernateDAO implements ScoreboardDAO {
 		for (ScoreboardStage removedChampionshipStage : removedScoreboardStage) {
 			scoreboardStageDAO
 					.delete(removedChampionshipStage);
-		}		
+		}
 	}
 }

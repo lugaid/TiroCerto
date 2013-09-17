@@ -15,12 +15,12 @@ public class ScoreboardStage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(nullable=false)
 	private Scoreboard scoreboard;
 	
 	@Id
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(nullable=false)
 	private ChampionshipStage championshipStage;
 

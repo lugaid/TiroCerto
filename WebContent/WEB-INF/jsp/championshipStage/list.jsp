@@ -25,8 +25,12 @@
 					<tr>
 						<td>${championshipStage.description}</td>
 						<td><fmt:formatDate value="${championshipStage.date.time}" pattern="dd/MM/yyyy"/></td>
-						<td style="width: 11%;"><a href="<c:url value="/admin/championshipResult/"/>${championshipStage.id}" class="btn btn-mini btn-info"><fmt:message key="championshipResult.edit" /></a></td>
-						<td style="width: 11%;"><a href="#" id="championshipStageRanking" class="btn btn-mini btn-primary" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/championshipStageRanking/"/>${championshipStage.id}"><fmt:message key="championshipStageRanking" /></a></td>
+						<td style="width: 11%;">
+							<div class="btn-group">
+								<a href="<c:url value="/admin/championshipResult/"/>${championshipStage.id}" class="btn btn-mini btn-info"><fmt:message key="championshipResult.edit" /></a>
+								<a href="#" id="championshipStageRanking" class="btn btn-mini btn-primary" data-backdrop="true" data-controls-modal="res-modal" data-keyboard="true" url="<c:url value="/championshipStageRanking/"/>${championshipStage.id}"><fmt:message key="championshipStageRanking" /></a>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
