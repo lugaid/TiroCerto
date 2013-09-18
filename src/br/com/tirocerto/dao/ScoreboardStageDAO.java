@@ -6,4 +6,5 @@ public interface ScoreboardStageDAO {
 	void save(ScoreboardStage scoreboardStage);
 	void update(ScoreboardStage scoreboardStage);
 	void delete(ScoreboardStage scoreboardStage);
+	void deleteSql(ScoreboardStage removedChampionshipStage);
 }

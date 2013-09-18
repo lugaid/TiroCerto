@@ -38,7 +38,11 @@ public class ScoreboardHibernateDAO implements ScoreboardDAO {
 	public void update(Scoreboard scoreboard) {
 		fixScoreboardStage(scoreboard);
 		removeScoreboardStages(scoreboard);
+		session.flush();
+		session.clear();
 		session.update(scoreboard);
+		session.flush();
+		session.clear();
 	}
 
 	@Override
@@ -113,11 +117,13 @@ public class ScoreboardHibernateDAO implements ScoreboardDAO {
 		
 		List<ScoreboardStage> removedScoreboardStage = new ArrayList<>();
 		removedScoreboardStage.addAll(oldChampinshipStages);
-		removedScoreboardStage.removeAll(scoreboard.getScoreboardStage());
+		
+		if(scoreboard.getScoreboardStage() != null)
+			removedScoreboardStage.removeAll(scoreboard.getScoreboardStage());
 
 		for (ScoreboardStage removedChampionshipStage : removedScoreboardStage) {
 			scoreboardStageDAO
-					.delete(removedChampionshipStage);
+					.deleteSql(removedChampionshipStage);
 		}
 	}
 }

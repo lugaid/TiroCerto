@@ -1,5 +1,6 @@
 package br.com.tirocerto.dao.impl;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
@@ -28,5 +29,14 @@ public class ScoreboardStageHibernateDAO implements ScoreboardStageDAO {
 	@Override
 	public void delete(ScoreboardStage scoreboardStage) {
 		session.delete(scoreboardStage);
+	}
+
+	@Override
+	public void deleteSql(ScoreboardStage championshipStage) {
+		Query query = session
+				.createQuery("delete ScoreboardStage where scoreboard_id = :scoreboard_id and championshipStage_id = :championshipStage_id");
+		query.setLong("scoreboard_id", championshipStage.getScoreboard().getId());
+		query.setLong("championshipStage_id", championshipStage.getChampionshipStage().getId());
+		query.executeUpdate();
 	}
 }
