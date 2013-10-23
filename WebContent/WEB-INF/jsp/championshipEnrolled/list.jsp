@@ -66,7 +66,7 @@
 			"bServerSide" : true,
 			"sAjaxSource" : '<c:url value="/admin/championshipEnrolled/paginate/${championship.id}"/>',
 			
-			"fnInitComplete": function(oSettings, json) {
+			"fnDrawCallback": function(oSettings) {
 				$("input:regex(name,^enrolled\\[.*\\]\\$)").each(function() {
 					$(this).change(function() {
 						var conf = true;
